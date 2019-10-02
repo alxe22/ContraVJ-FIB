@@ -1,0 +1,16 @@
+﻿  TileMap.cpp
+  Texture.cpp
+  Sprite.cpp
+  ShaderProgram.cpp
+  Shader.cpp
+  Scene.cpp
+  Player.cpp
+  main.cpp
+  Game.cpp
+  Generating Code...
+SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'C:\Users\avall\Desktop\FIB\C4 Q1\VJ\2DGame\02-Bubble\Debug\vc100.pdb'; linking object as if no debug info
+SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'C:\Users\avall\Desktop\FIB\C4 Q1\VJ\2DGame\02-Bubble\Debug\vc100.pdb'; linking object as if no debug info
+SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'C:\Users\avall\Desktop\FIB\C4 Q1\VJ\2DGame\02-Bubble\Debug\vc100.pdb'; linking object as if no debug info
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'C:\Users\avall\Desktop\FIB\C4 Q1\VJ\2DGame\02-Bubble\Debug\vc100.pdb'; linking object as if no debug info
+  02-Bubble.vcxproj -> C:\Users\avall\Desktop\FIB\C4 Q1\VJ\2DGame\02-Bubble\Debug\02-Bubble.exe
+  02-Bubble.vcxproj -> C:\Users\avall\Desktop\FIB\C4 Q1\VJ\2DGame\02-Bubble\Debug\02-Bubble.pdb (Full PDB)
