@@ -31,3 +31,8 @@
 *.exe
 *.out
 *.app
+Contra/2DGame/ContraGame/ContraGame.VC.db
+Contra/2DGame/ContraGame/ContraGame.VC.VC.opendb
+Contra/2DGame/ContraGame/.vs/ContraGame/v14/.suo
+Contra/2DGame/ContraGame/ContraGame/ContraGame.vcxproj.user
+Contra/2DGame/ContraGame/ContraGame/Release/ContraGame.Build.CppClean.log
