@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
-
+#include "SoundSystem.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -39,6 +39,7 @@ void Scene::init()
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
+	SoundSystem *sy = SoundSystem::createSoundSystem("level01");
 }
 
 void Scene::update(int deltaTime)
