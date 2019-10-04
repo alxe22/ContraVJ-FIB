@@ -164,8 +164,11 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		if(map[y*mapSize.x+x] == 0)
+		/*if(map[y*mapSize.x+x] == 0)
+			return true;*/
+		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 			return true;
+		}
 	}
 	
 	return false;
@@ -180,8 +183,19 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		if(map[y*mapSize.x+x] == 0)
+		/*if(map[y*mapSize.x+x] == 0)
+			return true;*/
+		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 			return true;
+		}
+
+		else if (map[y*mapSize.x + x] == 58 || map[y*mapSize.x + x] == 63
+			|| map[y*mapSize.x + x] == 68 || map[y*mapSize.x + x] == 72
+			|| map[y*mapSize.x + x] == 76 || map[y*mapSize.x + x] == 80
+			|| map[y*mapSize.x + x] == 84 || map[y*mapSize.x + x] == 88
+			|| map[y*mapSize.x + x] == 92 || map[y*mapSize.x + x] == 96) {
+			return true;
+		}
 	}
 	
 	return false;
@@ -203,7 +217,14 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 				*posY = tileSize * y - size.y;
 				return true;
 			}*/
-			if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
+			// special case. We need to ensure that the main character collides 
+			// with the last water tile, not the first one as it would cause unrealistic efect
+			if (map[y*mapSize.x + x] == 1 && y == 14) {
+				*posY = tileSize * y - size.y;
+				return true;
+			}
+			else if (map[y*mapSize.x + x] == 7 || map[y*mapSize.x + x] == 8 ||
+				map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 				*posY = tileSize * y - size.y;
 				return true;
 			}
