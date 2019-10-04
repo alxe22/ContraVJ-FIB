@@ -45,6 +45,16 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	CameraUpdate();
+}
+
+void Scene::CameraUpdate()
+{
+	glm::ivec2 pos = player->getPosition();
+	float posCameraX = 0.0f;
+	if (pos.x >= 240) posCameraX = pos.x-240;
+
+	projection = glm::ortho(posCameraX, float(SCREEN_WIDTH - 1)+posCameraX, float(SCREEN_HEIGHT - 1), 0.f);
 }
 
 void Scene::render()
