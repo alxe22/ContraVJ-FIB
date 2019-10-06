@@ -4,6 +4,7 @@
 #include "Sprite.h"
 
 
+//Crees un quad de mida quadSize i agafant el troç de spritesheet que diu el sizeInSpritesheet. Aixi et queda el personatge amb el que has seleccionat spritesheet i mida quadsize
 Sprite *Sprite::createSprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Texture *spritesheet, ShaderProgram *program)
 {
 	Sprite *quad = new Sprite(quadSize, sizeInSpritesheet, spritesheet, program);
@@ -67,24 +68,28 @@ void Sprite::free()
 	glDeleteBuffers(1, &vbo);
 }
 
+//Numero d animacions total
 void Sprite::setNumberAnimations(int nAnimations)
 {
 	animations.clear();
 	animations.resize(nAnimations);
 }
 
+//Defineix la velocitat a la que ha d anar l animacio
 void Sprite::setAnimationSpeed(int animId, int keyframesPerSec)
 {
 	if(animId < int(animations.size()))
 		animations[animId].millisecsPerKeyframe = 1000.f / keyframesPerSec;
 }
 
+//Afegeix els frames a una animacio concreta
 void Sprite::addKeyframe(int animId, const glm::vec2 &displacement)
 {
 	if(animId < int(animations.size()))
 		animations[animId].keyframeDispl.push_back(displacement);
 }
 
+//Canvia Current animation
 void Sprite::changeAnimation(int animId)
 {
 	if(animId < int(animations.size()))
