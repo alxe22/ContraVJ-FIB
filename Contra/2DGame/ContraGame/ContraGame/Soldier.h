@@ -14,7 +14,7 @@ class Soldier: public Enemy
 public:
 
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) override;
-	void update(int deltaTime) override;
+	void update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime) override;
 	void render() override;
 
 	void setTileMap(TileMap *tileMap) override;

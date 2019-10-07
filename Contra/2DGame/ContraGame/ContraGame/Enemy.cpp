@@ -4,7 +4,7 @@ void Enemy::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 }
 
-void Enemy::update(int deltaTime)
+void Enemy::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 }
 

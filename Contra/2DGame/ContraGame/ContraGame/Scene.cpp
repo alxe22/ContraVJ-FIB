@@ -51,7 +51,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	enemy->update(deltaTime);
+	enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
 	CameraUpdate();
 }
 
