@@ -3,10 +3,11 @@
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
+#define IN_RANGE 20
 
 enum PlayerAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, LAY_DOWN
+	STAND_LEFT, MOVE_LEFT, LAY_DOWN
 };
 
 void Soldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
@@ -38,6 +39,25 @@ void Soldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Soldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
+	if (posPlayer.x - posPlayer1.x <= 10*32) {
+		if (posPlayer.y == posPlayer1.y) {
+			if (sprite->animation() != STAND_LEFT) {
+				sprite->changeAnimation(STAND_LEFT);
+				// and here will go the code to fire the gun of the soldier
+			}
+		}
+		else {
+			if (sprite->animation() != MOVE_LEFT)
+				sprite->changeAnimation(MOVE_LEFT);
+			posPlayer.x -= 2;
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
+			{
+				posPlayer.x += 2;
+				sprite->changeAnimation(STAND_LEFT);
+			}
+		}
+	}
+	/*sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		if (sprite->animation() != MOVE_LEFT)
@@ -97,7 +117,7 @@ void Soldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTi
 		}
 	}
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));*/
 }
 
 void Soldier::render()

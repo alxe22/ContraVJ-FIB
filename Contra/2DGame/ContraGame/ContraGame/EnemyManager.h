@@ -14,8 +14,9 @@ public:
 		return EM;
 	}
 
-	void initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets);
+	void initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap);
 	void updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime);
+	void render();
 
 private:
 	vector<Enemy *> enemies;
