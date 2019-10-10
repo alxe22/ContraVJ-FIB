@@ -15,7 +15,7 @@ void Soldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	bJumping = false;
 	spritesheet.loadFromFile("images/soldier.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25f, 0.25f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(10);
+	sprite->setNumberAnimations(7);
 	
 	sprite->setAnimationSpeed(STAND_LEFT, 8);
 	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.75f, 0.25f));
@@ -26,7 +26,6 @@ void Soldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.5f, 0.f));
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.75f, 0.f));
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.25f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.25f, 0.5f));
 
 	sprite->setAnimationSpeed(LAY_DOWN, 1);
 	sprite->addKeyframe(LAY_DOWN, glm::vec2(0.25f, 0.5f));
@@ -39,8 +38,8 @@ void Soldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Soldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
-	if (posPlayer.x - posPlayer1.x <= 10*32) {
-		if (posPlayer.y == posPlayer1.y) {
+	if (posPlayer.x - posPlayer1.x <= 15*32) {
+		if (posPlayer.y == posPlayer1.y && posPlayer.x - posPlayer1.x <= 4*32 && posPlayer.x - posPlayer1.x > 0) {
 			if (sprite->animation() != STAND_LEFT) {
 				sprite->changeAnimation(STAND_LEFT);
 				// and here will go the code to fire the gun of the soldier
@@ -57,6 +56,20 @@ void Soldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTi
 			}
 		}
 	}
+	posPlayer.y += FALL_STEP;
+	if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
+	{
+		if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+		{
+			bJumping = true;
+			jumpAngle = 0;
+			startY = posPlayer.y;
+		}
+	}
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+
+
 	/*sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
