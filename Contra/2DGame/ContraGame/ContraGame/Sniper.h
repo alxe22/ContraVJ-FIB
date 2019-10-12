@@ -19,6 +19,7 @@ public:
 
 	void setTileMap(TileMap *tileMap) override;
 	void setPosition(const glm::vec2 &pos) override;
+	void setAnimation(int animNum) override;
 	glm::ivec2 getPosition() override;
 
 private:

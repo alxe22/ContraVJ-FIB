@@ -9,10 +9,41 @@
 #define LEVEL01_TILE_WIDTH 208
 #define LEVEL01_TILE_HEIGHT 15
 
+void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) {
+	Enemy *enemy;
+	enemy = new Sniper();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(18 * tileMap->getTileSize(), 9 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Sniper();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(38 * tileMap->getTileSize(), 9 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Sniper();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(78 * tileMap->getTileSize(), 2 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemy->setAnimation(10);
+	enemies.push_back(enemy);
+
+	enemy = new Sniper();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(113 * tileMap->getTileSize(), 9 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+}
+
 void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
 	int nSoldiers = 0;
 	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
 	int xTileInterval = xTileInc, yTileInterval = 1;
+	
+	//snipers
+	loadSnipers("", shaderProgram, tileMap);
 
 	/*while (nSoldiers < nSoldier) {
 		Enemy *enemy;
@@ -37,12 +68,12 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);*/
-	Enemy *enemy;
+	/*Enemy *enemy;
 	enemy = new Turret();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
-	enemies.push_back(enemy);
+	enemies.push_back(enemy);*/
 }
 
 void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime) {

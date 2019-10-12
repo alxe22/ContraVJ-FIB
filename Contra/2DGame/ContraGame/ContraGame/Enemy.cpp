@@ -21,6 +21,10 @@ void Enemy::setPosition(const glm::vec2 &pos)
 {
 }
 
+void Enemy::setAnimation(int animNum) {
+
+}
+
 glm::ivec2 Enemy::getPosition()
 {
 	return glm::ivec2(-1, -1);

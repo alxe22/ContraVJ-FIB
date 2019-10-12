@@ -14,6 +14,7 @@ public:
 
 	virtual void setTileMap(TileMap *tileMap);
 	virtual void setPosition(const glm::vec2 &pos);
+	virtual void setAnimation(int animNum);
 	virtual glm::ivec2 getPosition();
 };
 

@@ -18,7 +18,7 @@ void Sniper::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
 	spritesheet.loadFromFile("images/sniper.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 64), glm::vec2(0.25f, 0.25f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(64, 128), glm::vec2(0.25f, 0.25f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(14);
 
 	sprite->setAnimationSpeed(FRONT_LEFT, 8);
@@ -171,6 +171,11 @@ void Sniper::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Sniper::setAnimation(int animNum) 
+{
+	sprite->changeAnimation(animNum);
 }
 
 glm::ivec2 Sniper::getPosition()

@@ -1,5 +1,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Enemy.h"
+#include <String.h>
 
 class EnemyManager
 {
@@ -17,6 +18,8 @@ public:
 	void initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap);
 	void updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime);
 	void render();
+
+	void loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap);
 
 private:
 	vector<Enemy *> enemies;
