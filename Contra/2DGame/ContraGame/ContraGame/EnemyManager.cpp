@@ -84,7 +84,19 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	Enemy *enemy;
 	enemy = new SuperTurret();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(197 * tileMap->getTileSize(), 1 * tileMap->getTileSize()));
+	enemy->setPosition(glm::vec2(124 * tileMap->getTileSize(), 7.5f * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new SuperTurret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(132 * tileMap->getTileSize(), 1.5f * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new SuperTurret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(168 * tileMap->getTileSize(), 5.5f * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);
 
