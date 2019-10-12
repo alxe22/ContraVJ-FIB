@@ -20,6 +20,7 @@ public:
 	void render();
 
 	void loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap);
+	void loadTurrets(string level, ShaderProgram &shaderProgram, TileMap *tileMap);
 
 private:
 	vector<Enemy *> enemies;
