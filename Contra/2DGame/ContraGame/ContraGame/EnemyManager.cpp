@@ -73,14 +73,8 @@ void EnemyManager::loadTurrets(string level, ShaderProgram &shaderProgram, TileM
 	enemies.push_back(enemy);
 }
 
-void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
-	int nSoldiers = 0;
-	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
-	int xTileInterval = xTileInc, yTileInterval = 1;
-	
-	//snipers
-	/*loadSnipers("", shaderProgram, tileMap);
-	loadTurrets("", shaderProgram, tileMap);*/
+void EnemyManager::loadSuperTurrets(string level, ShaderProgram &shaderProgram, TileMap *tileMap)
+{
 	Enemy *enemy;
 	enemy = new SuperTurret();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -99,6 +93,18 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	enemy->setPosition(glm::vec2(168 * tileMap->getTileSize(), 5.5f * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);
+}
+
+void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
+	int nSoldiers = 0;
+	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
+	int xTileInterval = xTileInc, yTileInterval = 1;
+	
+	//snipers
+	loadSnipers("", shaderProgram, tileMap);
+	loadTurrets("", shaderProgram, tileMap);
+	loadSuperTurrets("", shaderProgram, tileMap);
+	
 
 	/*while (nSoldiers < nSoldier) {
 		Enemy *enemy;
