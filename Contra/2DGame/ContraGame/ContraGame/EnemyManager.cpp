@@ -9,7 +9,8 @@
 #define LEVEL01_TILE_WIDTH 208
 #define LEVEL01_TILE_HEIGHT 15
 
-void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) {
+void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) 
+{
 	Enemy *enemy;
 	enemy = new Sniper();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -37,6 +38,40 @@ void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileM
 	enemies.push_back(enemy);
 }
 
+void EnemyManager::loadTurrets(string level, ShaderProgram &shaderProgram, TileMap *tileMap) 
+{
+	Enemy *enemy;
+	enemy = new Turret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(77 * tileMap->getTileSize(), 8 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Turret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(95 * tileMap->getTileSize(), 7 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Turret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(121 * tileMap->getTileSize(), 8 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Turret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(182 * tileMap->getTileSize(), 10 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Turret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(192 * tileMap->getTileSize(), 11 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+}
+
 void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
 	int nSoldiers = 0;
 	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
@@ -44,6 +79,7 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	
 	//snipers
 	loadSnipers("", shaderProgram, tileMap);
+	loadTurrets("", shaderProgram, tileMap);
 
 	/*while (nSoldiers < nSoldier) {
 		Enemy *enemy;

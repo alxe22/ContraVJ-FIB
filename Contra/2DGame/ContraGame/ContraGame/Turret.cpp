@@ -16,7 +16,7 @@ void Turret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
 	spritesheet.loadFromFile("images/turret2.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 30), glm::vec2(0.111111111111111f, 0.25f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(64, 60), glm::vec2(0.111111111111111f, 0.25f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
 
 	sprite->setAnimationSpeed(DEGREE_0, 8);
@@ -80,7 +80,7 @@ void Turret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(DEGREE_320, glm::vec2(0.55f, 0.f));
 
 
-	sprite->changeAnimation(0);
+	sprite->changeAnimation(6);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
