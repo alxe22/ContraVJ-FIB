@@ -94,6 +94,34 @@ void Sniper::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTim
 	if (Game::instance().getKey('s')) sprite->changeAnimation(12);
 	if (Game::instance().getKey('d')) sprite->changeAnimation(13);
 
+	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) || 
+		(posPlayer1.x - posPlayer.x > 0 && posPlayer1.x - posPlayer.x < 310)) {
+		// turn left
+		if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
+			if (sprite->animation() == WATER_LEFT || sprite->animation() == FIRE_WATER_LEFT || sprite->animation() == WATER_RIGHT ||
+					sprite->animation() == FIRE_WATER_RIGHT) sprite->changeAnimation(WATER_LEFT);
+			else if (posPlayer1.y < posPlayer.y) {
+				if (sprite->animation() != UP_LEFT) sprite->changeAnimation(UP_LEFT);
+			}
+			else if (sprite->animation() != FRONT_LEFT && sprite->animation()) sprite->changeAnimation(FRONT_LEFT);
+			// decide wether you need to turn up or down if needed
+		}
+		//turn right
+		else {
+			if (sprite->animation() == WATER_LEFT || sprite->animation() == FIRE_WATER_LEFT || sprite->animation() == WATER_RIGHT ||
+				sprite->animation() == FIRE_WATER_RIGHT) sprite->changeAnimation(WATER_RIGHT);
+			else if (posPlayer1.y < posPlayer.y) {
+				if (sprite->animation() != UP_RIGHT) sprite->changeAnimation(UP_RIGHT);
+			}
+			else if (sprite->animation() != FRONT_RIGHT) {
+				sprite->changeAnimation(FRONT_RIGHT);
+				// decide wether you need to turn up or down if needed
+			}
+		}
+		
+	}
+
+
 	/*sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{

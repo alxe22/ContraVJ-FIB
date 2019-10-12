@@ -1,4 +1,5 @@
 #include "Turret.h"
+#include "Math.h"
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
@@ -102,8 +103,23 @@ void Turret::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTim
 	if (Game::instance().getKey('p')) sprite->changeAnimation(10);
 	if (Game::instance().getKey('a')) sprite->changeAnimation(11);
 	if (Game::instance().getKey('s')) sprite->changeAnimation(0);
-	/*sprite->update(deltaTime);
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+	sprite->update(deltaTime);
+
+	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) ||
+		(posPlayer1.x - posPlayer.x > 0 && posPlayer1.x - posPlayer.x < 310)) {
+		// turn left
+		if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
+			if ((sprite->animation() != DEGREE_180) && posPlayer1.y == posPlayer.y) sprite->changeAnimation(DEGREE_180);
+			else if(sprite->animation() != DEGREE_120 && posPlayer1.y - posPlayer.y <= 20) sprite->changeAnimation(DEGREE_120);
+
+		}
+		//turn right
+		else {
+			if ((sprite->animation() != DEGREE_0) && posPlayer1.y == posPlayer.y) sprite->changeAnimation(DEGREE_0);
+			}
+		}
+
+	/*if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 	if (sprite->animation() != MOVE_LEFT)
 	sprite->changeAnimation(MOVE_LEFT);

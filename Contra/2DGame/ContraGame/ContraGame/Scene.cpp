@@ -10,8 +10,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 170
-#define INIT_PLAYER_Y_TILES 0
+#define INIT_PLAYER_X_TILES 60
+#define INIT_PLAYER_Y_TILES 1
 
 
 Scene::Scene()
@@ -41,7 +41,7 @@ void Scene::init()
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
-	SoundSystem *sy = SoundSystem::createSoundSystem("level01");
+	//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
 	/*enemy = new Soldier();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	enemy->setPosition(glm::vec2(INIT_PLAYER_X_TILES+3 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
