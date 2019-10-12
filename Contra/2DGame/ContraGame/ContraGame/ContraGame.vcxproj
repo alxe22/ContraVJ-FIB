@@ -23,6 +23,7 @@
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SuperTurret.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Turret.h" />
@@ -40,6 +41,7 @@
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SuperTurret.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Turret.cpp" />

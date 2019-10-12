@@ -2,6 +2,7 @@
 #include "Soldier.h"
 #include "Sniper.h"
 #include "Turret.h"
+#include "SuperTurret.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -78,8 +79,14 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	int xTileInterval = xTileInc, yTileInterval = 1;
 	
 	//snipers
-	loadSnipers("", shaderProgram, tileMap);
-	loadTurrets("", shaderProgram, tileMap);
+	/*loadSnipers("", shaderProgram, tileMap);
+	loadTurrets("", shaderProgram, tileMap);*/
+	Enemy *enemy;
+	enemy = new SuperTurret();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(197 * tileMap->getTileSize(), 1 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
 
 	/*while (nSoldiers < nSoldier) {
 		Enemy *enemy;
