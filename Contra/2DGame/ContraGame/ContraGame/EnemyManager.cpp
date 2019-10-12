@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 #include "Soldier.h"
+#include "Sniper.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -29,6 +30,12 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);*/
+	Enemy *enemy;
+	enemy = new Sniper();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
 }
 
 void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime) {
