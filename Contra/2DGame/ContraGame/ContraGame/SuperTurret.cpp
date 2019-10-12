@@ -35,7 +35,15 @@ void SuperTurret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgra
 void SuperTurret::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) ||
+		(posPlayer1.x - posPlayer.x >= 0 && posPlayer1.x - posPlayer.x < 310)) {
+		// turn left
+		if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
+			if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y >= -64) sprite->changeAnimation(DEGREE_120);
+			else if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y > -128) sprite->changeAnimation(DEGREE_140);
+			else if (posPlayer1.y - posPlayer.y > 0 && posPlayer1.y - posPlayer.y < 64) sprite->changeAnimation(DEGREE_180);
+		}
+	}
 }
 
 void SuperTurret::render()

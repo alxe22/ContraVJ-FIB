@@ -7,8 +7,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define LEVEL01_TILE_WIDTH 208
-#define LEVEL01_TILE_HEIGHT 15
+#define LEVEL01_TILE_WIDTH 77
+#define LEVEL01_TILE_HEIGHT 8
 
 void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) 
 {

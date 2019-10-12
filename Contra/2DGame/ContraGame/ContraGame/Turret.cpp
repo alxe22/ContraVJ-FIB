@@ -1,11 +1,13 @@
 #include "Turret.h"
 #include "Math.h"
+#include <math.h>
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
 #define IN_RANGE 20
 
+# define M_PI 3.14159265358979323846
 
 enum PlayerAnims
 {
@@ -106,79 +108,28 @@ void Turret::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTim
 	sprite->update(deltaTime);
 
 	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) ||
-		(posPlayer1.x - posPlayer.x > 0 && posPlayer1.x - posPlayer.x < 310)) {
+		(posPlayer1.x - posPlayer.x >= 0 && posPlayer1.x - posPlayer.x < 310)) {
 		// turn left
 		if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
-			if ((sprite->animation() != DEGREE_180) && posPlayer1.y == posPlayer.y) sprite->changeAnimation(DEGREE_180);
-			else if(sprite->animation() != DEGREE_120 && posPlayer1.y - posPlayer.y <= 20) sprite->changeAnimation(DEGREE_120);
-
+			if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y >= -64) sprite->changeAnimation(DEGREE_120);
+			else if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y > -128) sprite->changeAnimation(DEGREE_140);
+			else if (posPlayer1.y - posPlayer.y > 0 && posPlayer1.y - posPlayer.y < 64) sprite->changeAnimation(DEGREE_180);
+			else if (posPlayer1.y - posPlayer.y > 64 && posPlayer1.y - posPlayer.y < 128) sprite->changeAnimation(DEGREE_210);
+			else if (posPlayer1.y - posPlayer.y > 128 && posPlayer1.y - posPlayer.y < 192) sprite->changeAnimation(DEGREE_230);
+			else if (posPlayer1.y > posPlayer.y && ((posPlayer1.x - posPlayer.x > -64) && (posPlayer1.x - posPlayer.x < 64))) sprite->changeAnimation(DEGREE_270);
+			else if (posPlayer1.y < posPlayer.y && ((posPlayer1.x - posPlayer.x > -64) && (posPlayer1.x - posPlayer.x < 64))) sprite->changeAnimation(DEGREE_90);
 		}
 		//turn right
 		else {
-			if ((sprite->animation() != DEGREE_0) && posPlayer1.y == posPlayer.y) sprite->changeAnimation(DEGREE_0);
-			}
+			if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y >= -64)  sprite->changeAnimation(DEGREE_30);
+			else if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y > -128) sprite->changeAnimation(DEGREE_50);
+			else if (posPlayer1.y - posPlayer.y > 0 && posPlayer1.y - posPlayer.y < 64) sprite->changeAnimation(DEGREE_0);
+			else if (posPlayer1.y - posPlayer.y > 64 && posPlayer1.y - posPlayer.y < 128) sprite->changeAnimation(DEGREE_320);
+			else if (posPlayer1.y - posPlayer.y > 128 && posPlayer1.y - posPlayer.y < 192) sprite->changeAnimation(DEGREE_300);
+			else if (posPlayer1.y > posPlayer.y && ((posPlayer1.x - posPlayer.x > -64) && (posPlayer1.x - posPlayer.x < 64))) sprite->changeAnimation(DEGREE_270);
+			else if (posPlayer1.y < posPlayer.y && ((posPlayer1.x - posPlayer.x > -64) && (posPlayer1.x - posPlayer.x < 64))) sprite->changeAnimation(DEGREE_90);
 		}
-
-	/*if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-	if (sprite->animation() != MOVE_LEFT)
-	sprite->changeAnimation(MOVE_LEFT);
-	posPlayer.x -= 2;
-	if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
-	{
-	posPlayer.x += 2;
-	sprite->changeAnimation(STAND_LEFT);
 	}
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
-	{
-	if (sprite->animation() != MOVE_RIGHT)
-	sprite->changeAnimation(MOVE_RIGHT);
-	posPlayer.x += 2;
-	if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
-	{
-	posPlayer.x -= 2;
-	sprite->changeAnimation(STAND_RIGHT);
-	}
-	}
-	else
-	{
-	if (sprite->animation() == MOVE_LEFT)
-	sprite->changeAnimation(STAND_LEFT);
-	else if (sprite->animation() == MOVE_RIGHT)
-	sprite->changeAnimation(STAND_RIGHT);
-	}
-
-	if (bJumping)
-	{
-	jumpAngle += JUMP_ANGLE_STEP;
-	if (jumpAngle == 180)
-	{
-	bJumping = false;
-	posPlayer.y = startY;
-	}
-	else
-	{
-	posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-	if (jumpAngle > 90)
-	bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
-	}
-	}
-	else
-	{
-	posPlayer.y += FALL_STEP;
-	if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
-	{
-	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
-	{
-	bJumping = true;
-	jumpAngle = 0;
-	startY = posPlayer.y;
-	}
-	}
-	}
-
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));*/
 }
 
 void Turret::render()
