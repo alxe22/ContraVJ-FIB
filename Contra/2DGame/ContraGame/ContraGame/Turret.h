@@ -1,5 +1,5 @@
-#ifndef _SNIPER_INCLUDE
-#define _SNIPER_INCLUDE
+#ifndef _TURRET_INCLUDE
+#define _TURRET_INCLUDE
 
 #include "Game.h"
 #include <cmath>

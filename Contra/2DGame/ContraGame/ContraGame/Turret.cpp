@@ -8,63 +8,76 @@
 
 enum PlayerAnims
 {
-	LEFT, RIGHT, UP, UP_LEFT, UP_RIGHT, DOWN, DOWN_LEFT, DOWN_RIGHT 
+	DEGREE_0, DEGREE_30, DEGREE_50, DEGREE_90, DEGREE_120, DEGREE_140, DEGREE_180, DEGREE_210,
+	DEGREE_230, DEGREE_270, DEGREE_300, DEGREE_320
 };
 
 void Turret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
-	spritesheet.loadFromFile("images/turret.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 64), glm::vec2(0.25f, 0.25f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(14);
+	spritesheet.loadFromFile("images/turret2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(32, 30), glm::vec2(0.111111111111111f, 0.25f), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(12);
 
-	sprite->setAnimationSpeed(FRONT_LEFT, 8);
-	sprite->addKeyframe(FRONT_LEFT, glm::vec2(0.f, 0.f));
+	sprite->setAnimationSpeed(DEGREE_0, 8);
+	sprite->addKeyframe(DEGREE_0, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(DEGREE_0, glm::vec2(0.11f, 0.f));
+	sprite->addKeyframe(DEGREE_0, glm::vec2(0.22f, 0.f));
 
-	sprite->setAnimationSpeed(FIRE_FRONT_LEFT, 8);
-	sprite->addKeyframe(FIRE_FRONT_LEFT, glm::vec2(0.25f, 0.f));
+	sprite->setAnimationSpeed(DEGREE_30, 8);
+	sprite->addKeyframe(DEGREE_30, glm::vec2(0.66f, 0.75f));
+	sprite->addKeyframe(DEGREE_30, glm::vec2(0.77f, 0.75f));
+	sprite->addKeyframe(DEGREE_30, glm::vec2(0.88f, 0.75f));
 
-	sprite->setAnimationSpeed(UP_LEFT, 8);
-	sprite->addKeyframe(UP_LEFT, glm::vec2(0.5f, 0.f));
+	sprite->setAnimationSpeed(DEGREE_50, 8);
+	sprite->addKeyframe(DEGREE_50, glm::vec2(0.33f, 0.75f));
+	sprite->addKeyframe(DEGREE_50, glm::vec2(0.44f, 0.75f));
+	sprite->addKeyframe(DEGREE_50, glm::vec2(0.55f, 0.75f));
 
-	sprite->setAnimationSpeed(FIRE_UP_LEFT, 8);
-	sprite->addKeyframe(FIRE_UP_LEFT, glm::vec2(0.75f, 0.f));
+	sprite->setAnimationSpeed(DEGREE_90, 8);
+	sprite->addKeyframe(DEGREE_90, glm::vec2(0.f, 0.75f));
+	sprite->addKeyframe(DEGREE_90, glm::vec2(0.11f, 0.75f));
+	sprite->addKeyframe(DEGREE_90, glm::vec2(0.22f, 0.75f));
 
+	sprite->setAnimationSpeed(DEGREE_120, 8);
+	sprite->addKeyframe(DEGREE_120, glm::vec2(0.66f, 0.5f));
+	sprite->addKeyframe(DEGREE_120, glm::vec2(0.77f, 0.5f));
+	sprite->addKeyframe(DEGREE_120, glm::vec2(0.88f, 0.5f));
 
+	sprite->setAnimationSpeed(DEGREE_140, 8);
+	sprite->addKeyframe(DEGREE_140, glm::vec2(0.33f, 0.5f));
+	sprite->addKeyframe(DEGREE_140, glm::vec2(0.44f, 0.5f));
+	sprite->addKeyframe(DEGREE_140, glm::vec2(0.55f, 0.5f));
 
-	sprite->setAnimationSpeed(FRONT_RIGHT, 8);
-	sprite->addKeyframe(FRONT_RIGHT, glm::vec2(0.75f, 0.25f));
+	sprite->setAnimationSpeed(DEGREE_180, 8);
+	sprite->addKeyframe(DEGREE_180, glm::vec2(0.f, 0.5f));
+	sprite->addKeyframe(DEGREE_180, glm::vec2(0.11f, 0.5f));
+	sprite->addKeyframe(DEGREE_180, glm::vec2(0.22f, 0.5f));
 
-	sprite->setAnimationSpeed(FIRE_FRONT_RIGHT, 8);
-	sprite->addKeyframe(FIRE_FRONT_RIGHT, glm::vec2(0.5f, 0.25f));
+	sprite->setAnimationSpeed(DEGREE_210, 8);
+	sprite->addKeyframe(DEGREE_210, glm::vec2(0.66f, 0.25f));
+	sprite->addKeyframe(DEGREE_210, glm::vec2(0.77f, 0.25f));
+	sprite->addKeyframe(DEGREE_210, glm::vec2(0.88f, 0.25f));
 
-	sprite->setAnimationSpeed(UP_RIGHT, 8);
-	sprite->addKeyframe(UP_RIGHT, glm::vec2(0.25f, 0.25f));
+	sprite->setAnimationSpeed(DEGREE_230, 8);
+	sprite->addKeyframe(DEGREE_230, glm::vec2(0.33f, 0.25f));
+	sprite->addKeyframe(DEGREE_230, glm::vec2(0.44f, 0.25f));
+	sprite->addKeyframe(DEGREE_230, glm::vec2(0.55f, 0.25f));
 
-	sprite->setAnimationSpeed(FIRE_UP_RIGHT, 8);
-	sprite->addKeyframe(FIRE_UP_RIGHT, glm::vec2(0.f, 0.25f));
+	sprite->setAnimationSpeed(DEGREE_270, 8);
+	sprite->addKeyframe(DEGREE_270, glm::vec2(0.f, 0.25f));
+	sprite->addKeyframe(DEGREE_270, glm::vec2(0.11f, 0.25f));
+	sprite->addKeyframe(DEGREE_270, glm::vec2(0.22f, 0.25f));
 
+	sprite->setAnimationSpeed(DEGREE_300, 8);
+	sprite->addKeyframe(DEGREE_300, glm::vec2(0.66f, 0.f));
+	sprite->addKeyframe(DEGREE_300, glm::vec2(0.77f, 0.f));
+	sprite->addKeyframe(DEGREE_300, glm::vec2(0.88f, 0.f));
 
-
-	sprite->setAnimationSpeed(DOWN_LEFT, 8);
-	sprite->addKeyframe(DOWN_LEFT, glm::vec2(0.f, 0.5f));
-
-	sprite->setAnimationSpeed(DOWN_RIGHT, 8);
-	sprite->addKeyframe(DOWN_RIGHT, glm::vec2(0.75f, 0.25f));
-
-
-
-	sprite->setAnimationSpeed(WATER_LEFT, 8);
-	sprite->addKeyframe(WATER_LEFT, glm::vec2(0.25f, 0.5f));
-
-	sprite->setAnimationSpeed(FIRE_WATER_LEFT, 8);
-	sprite->addKeyframe(FIRE_WATER_LEFT, glm::vec2(0.5f, 0.5f));
-
-	sprite->setAnimationSpeed(WATER_RIGHT, 8);
-	sprite->addKeyframe(WATER_RIGHT, glm::vec2(0.f, 0.75f));
-
-	sprite->setAnimationSpeed(FIRE_WATER_RIGHT, 8);
-	sprite->addKeyframe(FIRE_WATER_RIGHT, glm::vec2(0.75f, 0.5f));
+	sprite->setAnimationSpeed(DEGREE_320, 8);
+	sprite->addKeyframe(DEGREE_320, glm::vec2(0.33f, 0.f));
+	sprite->addKeyframe(DEGREE_320, glm::vec2(0.44f, 0.f));
+	sprite->addKeyframe(DEGREE_320, glm::vec2(0.55f, 0.f));
 
 
 	sprite->changeAnimation(0);
@@ -88,9 +101,7 @@ void Turret::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTim
 	if (Game::instance().getKey('o')) sprite->changeAnimation(9);
 	if (Game::instance().getKey('p')) sprite->changeAnimation(10);
 	if (Game::instance().getKey('a')) sprite->changeAnimation(11);
-	if (Game::instance().getKey('s')) sprite->changeAnimation(12);
-	if (Game::instance().getKey('d')) sprite->changeAnimation(13);
-
+	if (Game::instance().getKey('s')) sprite->changeAnimation(0);
 	/*sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{

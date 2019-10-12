@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "Soldier.h"
 #include "Sniper.h"
+#include "Turret.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -13,7 +14,7 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
 	int xTileInterval = xTileInc, yTileInterval = 1;
 
-	while (nSoldiers < nSoldier) {
+	/*while (nSoldiers < nSoldier) {
 		Enemy *enemy;
 		enemy = new Soldier();
 		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -23,15 +24,21 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 		xTileInterval += xTileInc;
 		++nSoldiers;
 		enemies.push_back(enemy);
-	}
+	}*/
 	/*Enemy *enemy;
 	enemy = new Soldier();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);*/
-	Enemy *enemy;
+	/*Enemy *enemy;
 	enemy = new Sniper();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);*/
+	Enemy *enemy;
+	enemy = new Turret();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
 	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
