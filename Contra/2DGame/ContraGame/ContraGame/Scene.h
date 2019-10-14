@@ -3,6 +3,7 @@
 
 
 #include <glm/glm.hpp>
+#include <String.h>
 #include "ShaderProgram.h"
 #include "TileMap.h"
 #include "Player.h"
@@ -19,7 +20,9 @@ public:
 	Scene();
 	~Scene();
 	void loadMenu();
+	void loadControls();
 	void menuUpdate(int deltaTime);
+	void controlsUpdate(int deltaTime);
 	void init();
 	void update(int deltaTime);
 	void CameraUpdate();
@@ -29,9 +32,10 @@ private:
 	void initShaders();
 
 private:
+	string state = "MENU"; // MENU, CONTROLS, PLAYING
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector;
-	Sprite *sprite, *spriteSelector;
+	Texture spritesheet, spritesheetSelector, spritesheetControls;
+	Sprite *sprite, *spriteSelector, *spriteControls;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;

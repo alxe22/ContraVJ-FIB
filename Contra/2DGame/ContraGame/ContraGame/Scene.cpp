@@ -41,31 +41,48 @@ void Scene::loadMenu() {
 	spritesheetSelector.loadFromFile("images/selector.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spriteSelector = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetSelector, &texProgram);
 	spriteSelector->setNumberAnimations(0);
-	spriteSelector->setPosition(glm::vec2(float(200), float(248)));
+	spriteSelector->setPosition(glm::vec2(float(200), float(263)));
 }
 
 void Scene::menuUpdate(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		glm::vec2 posSelector = spriteSelector->getPosition();
-		if(posSelector.y < 278) posSelector.y += 15.f;
+		if(posSelector.y < 293) posSelector.y += 15.f;
 		//posSelector.y += 5.f;
 		spriteSelector->setPosition(posSelector);
 		spriteSelector->render();
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		glm::vec2 posSelector = spriteSelector->getPosition();
-		if (posSelector.y > 248) posSelector.y -= 15.f;
+		if (posSelector.y > 263) posSelector.y -= 15.f;
 		//posSelector.y -= 5.f;
 		spriteSelector->setPosition(posSelector);
 		spriteSelector->render();
 	}
 	// return key == 13
 	else if (Game::instance().getKey(13)) {
-		int specialKey = Game::instance().getKey(13);
-		playing = true;
+		if ((spriteSelector->getPosition()).y == 263 || 
+			(spriteSelector->getPosition()).y == 278) state = "PLAYING";
+		else state = "CONTROLS";
 		init();
 	}
+}
+
+void Scene::controlsUpdate(int deltaTime) {
+	spriteControls->update(deltaTime);
+	if (Game::instance().getKey('b') || Game::instance().getKey('B')) {
+		state = "MENU";
+		init();
+	}
+}
+
+void Scene::loadControls() {
+	// controls
+	spritesheetControls.loadFromFile("images/controls.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteControls = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f, 1.f), &spritesheetControls, &texProgram);
+	spriteControls->setNumberAnimations(0);
+	spriteControls->setPosition(glm::vec2(float(0), float(0)));
 }
 
 void Scene::init()
@@ -73,7 +90,8 @@ void Scene::init()
 	initShaders();
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
-	if (!playing) loadMenu();
+	if (state == "MENU") loadMenu();
+	else if (state == "CONTROLS") loadControls();
 	else {
 		map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
 		player = new Player();
@@ -83,10 +101,6 @@ void Scene::init()
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		currentTime = 0.0f;
 		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
-		/*enemy = new Soldier();
-		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		enemy->setPosition(glm::vec2(INIT_PLAYER_X_TILES+3 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-		enemy->setTileMap(map);*/
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 	}
 }
@@ -94,8 +108,11 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	if (!playing) {
+	if (state == "MENU") {
 		menuUpdate(deltaTime);
+	}
+	else if (state == "CONTROLS") {
+		controlsUpdate(deltaTime);
 	}
 	else {
 		player->update(deltaTime);
@@ -124,9 +141,12 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	if (!playing) {
+	if (state == "MENU") {
 		sprite->render();
 		spriteSelector->render();
+	}
+	else if (state == "CONTROLS") {
+		spriteControls->render();
 	}
 	else {
 		map->render();
