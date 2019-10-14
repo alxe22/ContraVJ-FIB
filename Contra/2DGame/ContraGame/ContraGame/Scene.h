@@ -18,7 +18,8 @@ class Scene
 public:
 	Scene();
 	~Scene();
-
+	void loadMenu();
+	void menuUpdate(int deltaTime);
 	void init();
 	void update(int deltaTime);
 	void CameraUpdate();
@@ -29,11 +30,14 @@ private:
 
 private:
 	TileMap *map;
+	Texture spritesheet, spritesheetSelector;
+	Sprite *sprite, *spriteSelector;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;
 	float currentTime;
 	glm::mat4 projection;
+	bool playing = false;
 
 };
 

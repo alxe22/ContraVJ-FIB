@@ -10,8 +10,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 125
-#define INIT_PLAYER_Y_TILES 9
+#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_Y_TILES 1
 
 
 Scene::Scene()
@@ -28,34 +28,81 @@ Scene::~Scene()
 		delete player;
 }
 
+void Scene::loadMenu() {
+	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	
+	// background
+	spritesheet.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f, 1.f), &spritesheet, &texProgram);
+	sprite->setNumberAnimations(0);
+	sprite->setPosition(glm::vec2(float(0), float(0)));
+	
+	// selector
+	spritesheetSelector.loadFromFile("images/selector.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteSelector = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetSelector, &texProgram);
+	spriteSelector->setNumberAnimations(0);
+	spriteSelector->setPosition(glm::vec2(float(200), float(248)));
+}
+
+void Scene::menuUpdate(int deltaTime) {
+	sprite->update(deltaTime);
+	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+		glm::vec2 posSelector = spriteSelector->getPosition();
+		if(posSelector.y < 278) posSelector.y += 15.f;
+		//posSelector.y += 5.f;
+		spriteSelector->setPosition(posSelector);
+		spriteSelector->render();
+	}
+	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+		glm::vec2 posSelector = spriteSelector->getPosition();
+		if (posSelector.y > 248) posSelector.y -= 15.f;
+		//posSelector.y -= 5.f;
+		spriteSelector->setPosition(posSelector);
+		spriteSelector->render();
+	}
+	// return key == 13
+	else if (Game::instance().getKey(13)) {
+		int specialKey = Game::instance().getKey(13);
+		playing = true;
+		init();
+	}
+}
 
 void Scene::init()
 {
 	initShaders();
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
-	map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
-	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize())-32, INIT_PLAYER_Y_TILES * map->getTileSize()));
-	player->setTileMap(map);
-	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-	currentTime = 0.0f;
-	//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
-	/*enemy = new Soldier();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	enemy->setPosition(glm::vec2(INIT_PLAYER_X_TILES+3 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	enemy->setTileMap(map);*/
-	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+	if (!playing) loadMenu();
+	else {
+		map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
+		player = new Player();
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
+		player->setTileMap(map);
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		currentTime = 0.0f;
+		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
+		/*enemy = new Soldier();
+		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		enemy->setPosition(glm::vec2(INIT_PLAYER_X_TILES+3 * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		enemy->setTileMap(map);*/
+		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+	}
 }
 
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	player->update(deltaTime);
-	//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
-	EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
-	CameraUpdate();
+	if (!playing) {
+		menuUpdate(deltaTime);
+	}
+	else {
+		player->update(deltaTime);
+		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
+		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
+		CameraUpdate();
+	}
 }
 
 void Scene::CameraUpdate()
@@ -77,10 +124,16 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
-	player->render();
-	//enemy->render();
-	EnemyManager::instance().render();
+	if (!playing) {
+		sprite->render();
+		spriteSelector->render();
+	}
+	else {
+		map->render();
+		player->render();
+		//enemy->render();
+		EnemyManager::instance().render();
+	}
 }
 
 void Scene::initShaders()
