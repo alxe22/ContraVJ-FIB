@@ -4,7 +4,7 @@
 class Bullet
 {
 public:
-	void init(const glm::ivec2 &tileMapPos, const glm::ivec2 &pos, const glm::ivec2 &dir, int speed, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, const glm::vec2 &pos, const glm::vec2 &dir, int speed, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
 
@@ -15,6 +15,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
-	glm::ivec2 tileMapDispl, pos, dir;
+	glm::ivec2 tileMapDispl;
+	glm::vec2 pos, dir;
 	int speed;
 };

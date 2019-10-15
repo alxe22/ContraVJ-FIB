@@ -4,7 +4,7 @@ enum PlayerAnims
 {
 	MOVE
 };
-void Bullet::init(const glm::ivec2 &tileMapPos, const glm::ivec2 &pos, const glm::ivec2 &dir, int speed, ShaderProgram &shaderProgram)
+void Bullet::init(const glm::ivec2 &tileMapPos, const glm::vec2 &pos, const glm::vec2 &dir, int speed, ShaderProgram &shaderProgram)
 {
 	spritesheet.loadFromFile("images/bullet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f / 4.f, 1.f / 4.f), &spritesheet, &shaderProgram);

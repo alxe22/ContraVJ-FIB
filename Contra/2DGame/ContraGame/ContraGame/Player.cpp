@@ -52,9 +52,9 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 	if (Game::instance().getKey('z')) {
 		int speed = 2;
-		vector<glm::ivec2> dir;
+		vector<glm::vec2> dir;
 		dir.push_back(glm::ivec2(1, 1));
-		vector<glm::ivec2> pos;
+		vector<glm::vec2> pos;
 		pos.push_back(glm::ivec2(100, 15));
 		BulletManager::instance().fire(dir, pos, speed);
 	}

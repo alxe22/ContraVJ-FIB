@@ -9,7 +9,7 @@ void BulletManager::initBulletManager(ShaderProgram &shaderProgram, TileMap *til
 	this->tileMap = tileMap;
 }
 
-void BulletManager::fire(vector<glm::ivec2> dir, vector<glm::ivec2> pos, int speed)
+void BulletManager::fire(vector<glm::vec2> dir, vector<glm::vec2> pos, int speed)
 {
 	for (int i = 0; i < dir.size() && i < pos.size(); ++i)
 	{
