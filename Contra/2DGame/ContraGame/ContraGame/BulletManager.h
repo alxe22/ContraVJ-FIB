@@ -22,7 +22,7 @@ public:
 	}
 	// TODO: call this every time map changes
 	void initBulletManager(ShaderProgram &shaderProgram, TileMap *tileMap);
-	void fire(vector<glm::ivec2> dir, vector<glm::ivec2> pos);
+	void fire(vector<glm::ivec2> dir, vector<glm::ivec2> pos, int speed);
 	void update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime);
 	void render();
 

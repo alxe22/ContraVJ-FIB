@@ -4,7 +4,7 @@ enum PlayerAnims
 {
 	MOVE
 };
-void Bullet::init(const glm::ivec2 &tileMapPos, const glm::ivec2 &pos, const glm::ivec2 &dir, ShaderProgram &shaderProgram)
+void Bullet::init(const glm::ivec2 &tileMapPos, const glm::ivec2 &pos, const glm::ivec2 &dir, int speed, ShaderProgram &shaderProgram)
 {
 	spritesheet.loadFromFile("images/bullet.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f / 4.f, 1.f / 4.f), &spritesheet, &shaderProgram);
@@ -15,7 +15,7 @@ void Bullet::init(const glm::ivec2 &tileMapPos, const glm::ivec2 &pos, const glm
 	sprite->addKeyframe(MOVE, glm::vec2(2.f / 4.f, 0.f));
 
 	sprite->changeAnimation(0);
-
+	this->speed = speed;
 	this->pos = pos;
 	this->dir = dir;
 	tileMapDispl = tileMapPos;
@@ -24,8 +24,8 @@ void Bullet::init(const glm::ivec2 &tileMapPos, const glm::ivec2 &pos, const glm
 
 void Bullet::update(int deltaTime)
 {
-	pos.x += dir.x;
-	pos.y += dir.y;
+	pos.x += dir.x * this->speed;
+	pos.y += dir.y * this->speed;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + this->pos.x), float(tileMapDispl.y + this->pos.y)));
 }
 

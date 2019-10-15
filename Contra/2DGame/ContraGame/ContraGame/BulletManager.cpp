@@ -9,12 +9,12 @@ void BulletManager::initBulletManager(ShaderProgram &shaderProgram, TileMap *til
 	this->tileMap = tileMap;
 }
 
-void BulletManager::fire(vector<glm::ivec2> dir, vector<glm::ivec2> pos)
+void BulletManager::fire(vector<glm::ivec2> dir, vector<glm::ivec2> pos, int speed)
 {
 	for (int i = 0; i < dir.size() && i < pos.size(); ++i)
 	{
 		Bullet* bullet = new Bullet();
-		bullet->init(glm::ivec2(SCREEN_X, SCREEN_Y), pos[i], dir[i], shaderProgram);
+		bullet->init(glm::ivec2(SCREEN_X, SCREEN_Y), pos[i], dir[i], speed, shaderProgram);
 		bullet->setTileMap(tileMap);
 		bullets.push_back(bullet);
 	}
