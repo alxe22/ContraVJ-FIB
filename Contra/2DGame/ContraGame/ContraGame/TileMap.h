@@ -30,8 +30,9 @@ public:
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
-	
+	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;	
+	bool isTerrainAhead(const glm::ivec2 &pos, const glm::ivec2 &size, string dir) const;
+
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);

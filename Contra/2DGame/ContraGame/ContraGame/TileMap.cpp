@@ -174,6 +174,28 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	return false;
 }
 
+bool TileMap::isTerrainAhead(const glm::ivec2 &pos, const glm::ivec2 &size, string dir) const
+{
+	int x, y0, y1;
+
+	x = (pos.x / tileSize) + 1;
+	y0 = (pos.y + size.y - 1) / tileSize;
+	y1 = (pos.y + size.y + 1) / tileSize;
+	if (dir == "LEFT") {
+		for (int y = y0; y <= y1; ++y)
+		{
+			if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
+				return true;
+			}
+		}
+		return false;
+	}
+	else {
+
+	}
+
+}
+
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x, y0, y1;
@@ -204,13 +226,13 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
 {
 	int x0, x1, y;
-	
+
 	x0 = pos.x / tileSize;
 	x1 = (pos.x + size.x - 1) / tileSize;
 	y = (pos.y + size.y - 1) / tileSize;
-	for(int x=x0; x<=x1; x++)
+	for (int x = x0; x <= x1; x++)
 	{
-		if(map[y*mapSize.x+x] != 0)
+		if (map[y*mapSize.x + x] != 0)
 		{
 			/*if(*posY - tileSize * y + size.y <= -112)
 			{
@@ -230,11 +252,9 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 			}
 		}
 	}
-	
+
 	return false;
 }
-
-
 
 
 
