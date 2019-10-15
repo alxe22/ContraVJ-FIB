@@ -6,6 +6,7 @@
 #include "SoundSystem.h"
 #include "Soldier.h"
 #include "EnemyManager.h"
+#include "BulletManager.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -102,6 +103,7 @@ void Scene::init()
 		currentTime = 0.0f;
 		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+		BulletManager::instance().initBulletManager(texProgram, map);
 	}
 }
 
@@ -118,6 +120,7 @@ void Scene::update(int deltaTime)
 		player->update(deltaTime);
 		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		CameraUpdate();
 	}
 }
@@ -151,8 +154,8 @@ void Scene::render()
 	else {
 		map->render();
 		player->render();
-		//enemy->render();
 		EnemyManager::instance().render();
+		BulletManager::instance().render();
 	}
 }
 

@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include "Player.h"
 #include "Game.h"
+#include "BulletManager.h"
 
 
 #define JUMP_ANGLE_STEP 4
@@ -49,6 +50,13 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+	if (Game::instance().getKey('z')) {
+		vector<glm::ivec2> dir;
+		dir.push_back(glm::ivec2(1, 1));
+		vector<glm::ivec2> pos;
+		pos.push_back(glm::ivec2(100, 15));
+		BulletManager::instance().fire(dir, pos);
+	}
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		if(sprite->animation() != MOVE_LEFT)
