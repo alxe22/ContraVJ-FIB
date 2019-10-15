@@ -184,7 +184,8 @@ bool TileMap::isTerrainAhead(const glm::ivec2 &pos, const glm::ivec2 &size, stri
 	if (dir == "LEFT") {
 		for (int y = y0; y <= y1; ++y)
 		{
-			if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
+			if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113
+				|| map[y*mapSize.x + x] == 7 || map[y*mapSize.x + x] == 8) {
 				return true;
 			}
 		}
