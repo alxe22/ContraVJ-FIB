@@ -95,59 +95,93 @@ void EnemyManager::loadSuperTurrets(string level, ShaderProgram &shaderProgram, 
 	enemies.push_back(enemy);
 }
 
+void EnemyManager::loadSoldiers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) {
+	Enemy *enemy;
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(25 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(26 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(27 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(30 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(45 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(48 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(95 * tileMap->getTileSize(), 3 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(100 * tileMap->getTileSize(), 3 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(107 * tileMap->getTileSize(), 3 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+
+	enemy = new Soldier();
+	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
+	enemy->setPosition(glm::vec2(108 * tileMap->getTileSize(), 3 * tileMap->getTileSize()));
+	enemy->setTileMap(tileMap);
+	enemies.push_back(enemy);
+}
+
 void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
 	int nSoldiers = 0;
 	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
 	int xTileInterval = xTileInc, yTileInterval = 1;
 	
-	//snipers
 	loadSnipers("", shaderProgram, tileMap);
 	loadTurrets("", shaderProgram, tileMap);
 	loadSuperTurrets("", shaderProgram, tileMap);
-	
-	Enemy *enemy;
-	enemy = new Soldier();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(7 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
-	enemy->setTileMap(tileMap);
-	enemies.push_back(enemy);
-	
-
-	/*while (nSoldiers < nSoldier) {
-		Enemy *enemy;
-		enemy = new Soldier();
-		enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-		enemy->setPosition(glm::vec2(xTileInterval * tileMap->getTileSize(), yTileInterval * tileMap->getTileSize()));
-		//enemy->setPosition(glm::vec2(xTileInterval * tileMap->getTileSize(), yTileInterval * tileMap->getTileSize()));
-		enemy->setTileMap(tileMap);
-		xTileInterval += xTileInc;
-		++nSoldiers;
-		enemies.push_back(enemy);
-	}*/
-	/*Enemy *enemy;
-	enemy = new Soldier();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
-	enemy->setTileMap(tileMap);
-	enemies.push_back(enemy);*/
-	/*Enemy *enemy;
-	enemy = new Sniper();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
-	enemy->setTileMap(tileMap);
-	enemies.push_back(enemy);*/
-	/*Enemy *enemy;
-	enemy = new Turret();
-	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(4 * tileMap->getTileSize(), 0 * tileMap->getTileSize()));
-	enemy->setTileMap(tileMap);
-	enemies.push_back(enemy);*/
+	loadSoldiers("", shaderProgram, tileMap);
 }
 
 void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime) {
-	for (Enemy *enemy : enemies) enemy->update(posPlayer1, posPlayer2, deltaTime);
+	for (int i = 0; i < enemies.size(); ++i) {
+		Enemy *enemy = enemies[i];
+		if (enemy != NULL) {
+			enemy->update(posPlayer1, posPlayer2, deltaTime);
+			glm::vec2 pos = enemy->getPosition();
+			if (pos.x - posPlayer1.x <= -360) enemies[i] = NULL;
+		}
+
+	}
 }
 
 void EnemyManager::render() {
-	for (Enemy *enemy : enemies) enemy->render();
+	for (Enemy *enemy : enemies)
+		if(enemy != NULL) enemy->render();
 }

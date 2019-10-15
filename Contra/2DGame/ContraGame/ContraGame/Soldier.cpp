@@ -38,8 +38,8 @@ void Soldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Soldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
-	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) ||
-		(posPlayer1.x - posPlayer.x >= 0 && posPlayer1.x - posPlayer.x < 310)) {
+	if ((posPlayer1.x - posPlayer.x >= -360 && posPlayer1.x - posPlayer.x < 0) ||
+		(posPlayer1.x - posPlayer.x >= 0 && posPlayer1.x - posPlayer.x < 360)) {
 		if (map->isTerrainAhead(posPlayer, glm::ivec2(42, 64), "LEFT"))
 		{
 			posPlayer.x -= 2;
@@ -49,25 +49,6 @@ void Soldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTi
 			if (sprite->animation() != STAND_LEFT) sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	/*if (posPlayer.x - posPlayer1.x <= 15*32) {
-		if (posPlayer.x - posPlayer1.x <= 4*32 && posPlayer.x - posPlayer1.x > 0) {
-			if (sprite->animation() != STAND_LEFT) {
-				sprite->changeAnimation(STAND_LEFT);
-				// and here will go the code to fire the gun of the soldier (we are not considering the cases
-				// where the player is under or over the soldier
-			}
-		}
-		else {
-			if (sprite->animation() != MOVE_LEFT)
-				sprite->changeAnimation(MOVE_LEFT);
-			posPlayer.x -= 2;
-			if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
-			{
-				posPlayer.x += 2;
-				sprite->changeAnimation(STAND_LEFT);
-			}
-		}
-	}*/
 	posPlayer.y += FALL_STEP;
 	if (map->collisionMoveDown(posPlayer, glm::ivec2(42, 64), &posPlayer.y))
 	{
