@@ -1,4 +1,17 @@
 #include "SuperTurret.h"
+#include "Time.h"
+#include "BulletManager.h"
+
+#define FIRE_FRAME_INTERVAL 1000
+
+#define FIRE_OFFSET_X_ANIM_DEGREE_120 30
+#define FIRE_OFFSET_Y_ANIM_DEGREE_120 15
+
+#define FIRE_OFFSET_X_ANIM_DEGREE_140 0
+#define FIRE_OFFSET_Y_ANIM_DEGREE_140 15
+
+#define FIRE_OFFSET_X_ANIM_DEGREE_180 0
+#define FIRE_OFFSET_Y_ANIM_DEGREE_180 45
 
 enum PlayerAnims
 {
@@ -32,16 +45,49 @@ void SuperTurret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgra
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+void SuperTurret::decideFire(int playerAnim)
+{
+	long long diff = Time::instance().NowToMili() - lastSecondFired;
+	if (diff > FIRE_FRAME_INTERVAL) {
+		lastSecondFired = Time::instance().NowToMili();
+		vector<glm::vec2> dir;
+		vector<glm::vec2> pos;
+		int speed = 2;
+		switch (playerAnim) {
+		case PlayerAnims::DEGREE_120:
+			dir.push_back(glm::vec2(-0.75f, -0.75f));
+			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_DEGREE_120, posPlayer.y + FIRE_OFFSET_Y_ANIM_DEGREE_120));
+			break;
+		case PlayerAnims::DEGREE_140:
+			speed = 5;
+			dir.push_back(glm::vec2(-0.3f, -0.3f));
+			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_DEGREE_140, posPlayer.y + FIRE_OFFSET_Y_ANIM_DEGREE_140));
+			break;
+		case PlayerAnims::DEGREE_180:
+			dir.push_back(glm::vec2(-1.f, 0.f));
+			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_DEGREE_180, posPlayer.y + FIRE_OFFSET_Y_ANIM_DEGREE_180));
+			break;
+		}
+		BulletManager::instance().fire(dir, pos, speed);
+	}
+}
+
 void SuperTurret::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
-	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) ||
-		(posPlayer1.x - posPlayer.x >= 0 && posPlayer1.x - posPlayer.x < 310)) {
-		// turn left
-		if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
-			if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y >= -64) sprite->changeAnimation(DEGREE_120);
-			else if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.y - posPlayer.y > -128) sprite->changeAnimation(DEGREE_140);
-			else if (posPlayer1.y - posPlayer.y > 0 && posPlayer1.y - posPlayer.y < 64) sprite->changeAnimation(DEGREE_180);
+	// turn left
+	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
+		if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.x - posPlayer.x >= -64) {
+			sprite->changeAnimation(DEGREE_120);
+			decideFire(sprite->animation());
+		}
+		else if (posPlayer1.y - posPlayer.y < 0 && posPlayer1.x - posPlayer.x >= -128) {
+			sprite->changeAnimation(DEGREE_140);
+			decideFire(sprite->animation());
+		}
+		else if (posPlayer1.y - posPlayer.y > 0) {
+			sprite->changeAnimation(DEGREE_180);
+			if (posPlayer1.y - posPlayer.y < 100) decideFire(sprite->animation());
 		}
 	}
 }
