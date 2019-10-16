@@ -28,6 +28,7 @@
     <ClInclude Include="SuperTurret.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Turret.h" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +49,7 @@
     <ClCompile Include="SuperTurret.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="Turret.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

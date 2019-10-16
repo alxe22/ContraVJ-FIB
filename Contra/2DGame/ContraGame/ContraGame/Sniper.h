@@ -22,7 +22,10 @@ public:
 	void setAnimation(int animNum) override;
 	glm::ivec2 getPosition() override;
 
+	void decideFire(int playerAnim);
+
 private:
+	long long lastSecondFired = 0;
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;

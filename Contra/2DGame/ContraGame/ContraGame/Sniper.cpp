@@ -1,10 +1,32 @@
 #include "Sniper.h"
+#include "BulletManager.h"
+#include "Time.h"
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
 #define FALL_STEP 4
 #define IN_RANGE 20
+#define FIRE_FRAME_INTERVAL 1000
 
+#define FIRE_OFFSET_X_ANIM_UP_LEFT 14
+#define FIRE_OFFSET_Y_ANIM_UP_LEFT 24
+
+#define FIRE_OFFSET_X_ANIM_UP_RIGHT 45
+#define FIRE_OFFSET_Y_ANIM_UP_RIGHT 24
+
+#define FIRE_OFFSET_X_ANIM_FRONT_LEFT 14
+#define FIRE_OFFSET_Y_ANIM_FRONT_LEFT 55
+
+#define FIRE_OFFSET_X_ANIM_FRONT_RIGHT 50
+#define FIRE_OFFSET_Y_ANIM_FRONT_RIGHT 55
+
+#define FIRE_OFFSET_X_ANIM_FIRE_WATER_LEFT 30
+#define FIRE_OFFSET_Y_ANIM_FIRE_WATER_LEFT 93
+
+#define FIRE_OFFSET_X_ANIM_FIRE_WATER_RIGHT 60
+#define FIRE_OFFSET_Y_ANIM_FIRE_WATER_RIGHT 93
+
+using namespace std;
 
 enum PlayerAnims
 {
@@ -75,6 +97,44 @@ void Sniper::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+void Sniper::decideFire(int playerAnim)
+{
+	long long diff = Time::instance().NowToMili() - lastSecondFired;
+	if (diff > FIRE_FRAME_INTERVAL) {
+		lastSecondFired = Time::instance().NowToMili();
+		vector<glm::vec2> dir;
+		vector<glm::vec2> pos;
+		int speed = 2;
+		switch (playerAnim) {
+		case PlayerAnims::UP_LEFT:
+			dir.push_back(glm::vec2(-1.f, -0.75f));
+			pos.push_back(glm::vec2(posPlayer.x - FIRE_OFFSET_X_ANIM_UP_LEFT, posPlayer.y + FIRE_OFFSET_Y_ANIM_UP_LEFT));
+			break;
+		case PlayerAnims::UP_RIGHT:
+			dir.push_back(glm::vec2(1.f, -0.75f));
+			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_UP_RIGHT, posPlayer.y + FIRE_OFFSET_Y_ANIM_UP_RIGHT));
+			break;
+		case PlayerAnims::FRONT_LEFT:
+			dir.push_back(glm::vec2(-1.f, 0.f));
+			pos.push_back(glm::vec2(posPlayer.x - FIRE_OFFSET_X_ANIM_FRONT_LEFT, posPlayer.y + FIRE_OFFSET_Y_ANIM_FRONT_LEFT));
+			break;
+		case PlayerAnims::FRONT_RIGHT:
+			dir.push_back(glm::vec2(1.f, 0.f));
+			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_FRONT_RIGHT, posPlayer.y + FIRE_OFFSET_Y_ANIM_FRONT_RIGHT));
+			break;
+		case PlayerAnims::FIRE_WATER_LEFT:
+			dir.push_back(glm::vec2(-1.f, 0.f));
+			pos.push_back(glm::vec2(posPlayer.x - FIRE_OFFSET_X_ANIM_FIRE_WATER_LEFT, posPlayer.y + FIRE_OFFSET_Y_ANIM_FIRE_WATER_LEFT));
+			break;
+		case PlayerAnims::FIRE_WATER_RIGHT:
+			dir.push_back(glm::vec2(1.f, 0.f));
+			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_FIRE_WATER_RIGHT, posPlayer.y + FIRE_OFFSET_Y_ANIM_FIRE_WATER_RIGHT));
+			break;
+		}
+		BulletManager::instance().fire(dir, pos, speed);
+	}
+}
+
 void Sniper::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
@@ -98,91 +158,37 @@ void Sniper::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTim
 		(posPlayer1.x - posPlayer.x > 0 && posPlayer1.x - posPlayer.x < 310)) {
 		// turn left
 		if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0)) {
-			if (sprite->animation() == WATER_LEFT || sprite->animation() == FIRE_WATER_LEFT || sprite->animation() == WATER_RIGHT ||
-					sprite->animation() == FIRE_WATER_RIGHT) sprite->changeAnimation(WATER_LEFT);
-			else if (posPlayer1.y < posPlayer.y) {
-				if (sprite->animation() != UP_LEFT) sprite->changeAnimation(UP_LEFT);
+			if (sprite->animation() == WATER_RIGHT || sprite->animation() == FIRE_WATER_RIGHT) 
+				sprite->changeAnimation(WATER_LEFT);
+			else if (sprite->animation() == WATER_LEFT || sprite->animation() == FIRE_WATER_LEFT) {
+				if (sprite->animation() != FIRE_WATER_LEFT) sprite->changeAnimation(FIRE_WATER_LEFT);
+				decideFire(FIRE_WATER_LEFT);
 			}
-			else if (sprite->animation() != FRONT_LEFT && sprite->animation()) sprite->changeAnimation(FRONT_LEFT);
-			// decide wether you need to turn up or down if needed
+			else if (posPlayer1.y < posPlayer.y) {
+				if (sprite->animation() != UP_LEFT)
+					sprite->changeAnimation(UP_LEFT);
+				else if (posPlayer1.x - posPlayer.x > -220 && posPlayer1.x - posPlayer.x < -120) decideFire(UP_LEFT);
+			}
+			else if (sprite->animation() != FRONT_LEFT) sprite->changeAnimation(FRONT_LEFT);
+			else decideFire(FRONT_LEFT);
 		}
 		//turn right
 		else {
-			if (sprite->animation() == WATER_LEFT || sprite->animation() == FIRE_WATER_LEFT || sprite->animation() == WATER_RIGHT ||
-				sprite->animation() == FIRE_WATER_RIGHT) sprite->changeAnimation(WATER_RIGHT);
+			if (sprite->animation() == WATER_LEFT || sprite->animation() == FIRE_WATER_LEFT &&
+				(sprite->animation() != WATER_RIGHT || sprite->animation() != FIRE_WATER_RIGHT)) sprite->changeAnimation(WATER_RIGHT);
+			else if (sprite->animation() == WATER_RIGHT || sprite->animation() == FIRE_WATER_RIGHT) {
+				if (sprite->animation() != FIRE_WATER_RIGHT) sprite->changeAnimation(FIRE_WATER_RIGHT);
+				decideFire(FIRE_WATER_RIGHT);
+			}
 			else if (posPlayer1.y < posPlayer.y) {
 				if (sprite->animation() != UP_RIGHT) sprite->changeAnimation(UP_RIGHT);
+				else if (posPlayer1.x - posPlayer.x > 120 && posPlayer1.x - posPlayer.x < 220) decideFire(UP_RIGHT);
 			}
-			else if (sprite->animation() != FRONT_RIGHT) {
-				sprite->changeAnimation(FRONT_RIGHT);
-				// decide wether you need to turn up or down if needed
-			}
+			else if (sprite->animation() != FRONT_RIGHT) sprite->changeAnimation(FRONT_RIGHT);
+			else decideFire(FRONT_RIGHT);
 		}
 		
 	}
-
-
-	/*sprite->update(deltaTime);
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-	if (sprite->animation() != MOVE_LEFT)
-	sprite->changeAnimation(MOVE_LEFT);
-	posPlayer.x -= 2;
-	if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32)))
-	{
-	posPlayer.x += 2;
-	sprite->changeAnimation(STAND_LEFT);
-	}
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
-	{
-	if (sprite->animation() != MOVE_RIGHT)
-	sprite->changeAnimation(MOVE_RIGHT);
-	posPlayer.x += 2;
-	if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32)))
-	{
-	posPlayer.x -= 2;
-	sprite->changeAnimation(STAND_RIGHT);
-	}
-	}
-	else
-	{
-	if (sprite->animation() == MOVE_LEFT)
-	sprite->changeAnimation(STAND_LEFT);
-	else if (sprite->animation() == MOVE_RIGHT)
-	sprite->changeAnimation(STAND_RIGHT);
-	}
-
-	if (bJumping)
-	{
-	jumpAngle += JUMP_ANGLE_STEP;
-	if (jumpAngle == 180)
-	{
-	bJumping = false;
-	posPlayer.y = startY;
-	}
-	else
-	{
-	posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-	if (jumpAngle > 90)
-	bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
-	}
-	}
-	else
-	{
-	posPlayer.y += FALL_STEP;
-	if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
-	{
-	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
-	{
-	bJumping = true;
-	jumpAngle = 0;
-	startY = posPlayer.y;
-	}
-	}
-	}
-
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));*/
 }
 
 void Sniper::render()
