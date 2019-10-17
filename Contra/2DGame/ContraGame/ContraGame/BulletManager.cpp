@@ -20,17 +20,16 @@ void BulletManager::fire(vector<glm::vec2> dir, vector<glm::vec2> pos, int speed
 	}
 }
 
-bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int height)
+bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int height)
 {
 	for (int i = 0; i < bullets.size(); ++i) {
 		Bullet * b = bullets[i];
 		if (b != NULL) {
 			glm::vec2 bPos = b->getPosition();
 			// bottom right point = (topLeft.x + width, topLeft.y + height)
-			glm::vec2 bottomRight(topLeft.x + width, topLeft.y + height);
+			glm::vec2 bottomRight(bottomLeft.x + width, bottomLeft.y);
 			// bottom left point = (topLeft.x, topLeft.y + hegiht)
-			glm::vec2 bottomLeft(topLeft.x, topLeft.y + height);
-			if (bPos.x < bottomRight.x && bPos.x > topLeft.x && bPos.y < bottomRight.y && bPos.y > topLeft.y) {
+			if (bPos.x < bottomRight.x && bPos.x > bottomLeft.x && bPos.y < bottomRight.y && bPos.y > bottomLeft.y - height) {
 				bullets[i] = NULL;
 				return true;
 			}
