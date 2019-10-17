@@ -29,3 +29,8 @@ glm::ivec2 Enemy::getPosition()
 {
 	return glm::ivec2(-1, -1);
 }
+
+glm::ivec2 Enemy::getSize()
+{
+	return glm::ivec2(-1, -1);
+}

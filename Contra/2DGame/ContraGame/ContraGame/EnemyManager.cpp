@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include "BulletManager.h"
 #include "Soldier.h"
 #include "Sniper.h"
 #include "Turret.h"
@@ -163,9 +164,9 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
 	int xTileInterval = xTileInc, yTileInterval = 1;
 	
-	loadSnipers("", shaderProgram, tileMap);
-	loadTurrets("", shaderProgram, tileMap);
-	loadSuperTurrets("", shaderProgram, tileMap);
+	//loadSnipers("", shaderProgram, tileMap);
+	//loadTurrets("", shaderProgram, tileMap);
+	//loadSuperTurrets("", shaderProgram, tileMap);
 	loadSoldiers("", shaderProgram, tileMap);
 }
 
@@ -176,6 +177,20 @@ void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2,
 			enemy->update(posPlayer1, posPlayer2, deltaTime);
 			glm::vec2 pos = enemy->getPosition();
 			if (pos.x - posPlayer1.x <= -360) enemies[i] = NULL;
+		}
+
+	}
+}
+
+void EnemyManager::detectBulletCollisions() {
+	for (int i = 0; i < enemies.size(); ++i) {
+		Enemy *enemy = enemies[i];
+		if (enemy != NULL) {
+			// start by checking collisions against soldiers only
+			if (dynamic_cast<Soldier *>(enemy) != nullptr) {
+				if (BulletManager::instance().existsBulletColision(enemy->getPosition(), (enemy->getSize()).x, (enemy->getSize()).y))
+					enemies[i] = NULL;
+			}
 		}
 
 	}

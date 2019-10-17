@@ -16,6 +16,7 @@ public:
 	virtual void setPosition(const glm::vec2 &pos);
 	virtual void setAnimation(int animNum);
 	virtual glm::ivec2 getPosition();
+	virtual glm::ivec2 getSize();
 };
 
 #endif

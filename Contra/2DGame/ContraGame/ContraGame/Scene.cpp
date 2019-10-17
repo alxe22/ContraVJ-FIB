@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 200
+#define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 1
 
 
@@ -121,6 +121,7 @@ void Scene::update(int deltaTime)
 		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();
 	}
 }

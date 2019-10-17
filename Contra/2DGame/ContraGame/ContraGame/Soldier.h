@@ -20,6 +20,7 @@ public:
 	void setTileMap(TileMap *tileMap) override;
 	void setPosition(const glm::vec2 &pos) override;
 	glm::ivec2 getPosition() override;
+	glm::ivec2 getSize() override;
 
 private:
 	bool bJumping;

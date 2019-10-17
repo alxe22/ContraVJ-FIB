@@ -84,4 +84,7 @@ glm::ivec2 Soldier::getPosition()
 	return posPlayer;
 }
 
-
+glm::ivec2 Soldier::getSize()
+{
+	return glm::ivec2(42, 64);
+}
