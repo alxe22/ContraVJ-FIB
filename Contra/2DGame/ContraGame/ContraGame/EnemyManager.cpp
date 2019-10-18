@@ -96,7 +96,8 @@ void EnemyManager::loadSuperTurrets(string level, ShaderProgram &shaderProgram, 
 	enemies.push_back(enemy);
 }
 
-void EnemyManager::loadSoldiers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) {
+void EnemyManager::loadSoldiers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) 
+{
 	Enemy *enemy;
 	enemy = new Soldier();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
@@ -166,8 +167,8 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	
 	/*loadSnipers("", shaderProgram, tileMap);
 	loadTurrets("", shaderProgram, tileMap);
-	loadSuperTurrets("", shaderProgram, tileMap);*/
-	loadSoldiers("", shaderProgram, tileMap);
+	loadSuperTurrets("", shaderProgram, tileMap);
+	loadSoldiers("", shaderProgram, tileMap);*/
 }
 
 void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime) {
@@ -186,8 +187,7 @@ void EnemyManager::detectBulletCollisions() {
 	for (int i = 0; i < enemies.size(); ++i) {
 		Enemy *enemy = enemies[i];
 		if (enemy != NULL) {
-			// start by checking collisions against soldiers only
-			if (BulletManager::instance().existsBulletColision(enemy->getPosition(), (enemy->getSize()).x, (enemy->getSize()).y))
+			if (BulletManager::instance().existsBulletColision(enemy->getPosition(), (enemy->getSize()).x, (enemy->getSize()).y, enemy->type()))
 				enemies[i] = NULL;
 		}
 

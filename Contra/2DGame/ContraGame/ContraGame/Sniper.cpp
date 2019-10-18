@@ -217,4 +217,14 @@ glm::ivec2 Sniper::getPosition()
 	return posPlayer;
 }
 
+glm::ivec2 Sniper::getSize()
+{
+	return glm::ivec2(64, 128);
+}
+
+string Sniper::type()
+{
+	return "SNIPER";
+}
+
 

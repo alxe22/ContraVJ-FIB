@@ -88,3 +88,8 @@ glm::ivec2 Soldier::getSize()
 {
 	return glm::ivec2(42, 64);
 }
+
+string Soldier::type()
+{
+	return "SOLDIER";
+}

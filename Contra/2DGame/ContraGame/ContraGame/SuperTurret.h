@@ -19,6 +19,8 @@ public:
 	void setTileMap(TileMap *tileMap) override;
 	void setPosition(const glm::vec2 &pos) override;
 	glm::ivec2 getPosition() override;
+	string type() override;
+	glm::ivec2 getSize();
 
 	void decideFire(int playerAnim);
 

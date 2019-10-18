@@ -266,4 +266,14 @@ glm::ivec2 Turret::getPosition()
 	return posPlayer;
 }
 
+glm::ivec2 Turret::getSize()
+{
+	return glm::ivec2(64, 60);
+}
+
+string Turret::type()
+{
+	return "TURRET";
+}
+
 
