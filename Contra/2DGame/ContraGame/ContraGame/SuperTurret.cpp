@@ -68,7 +68,7 @@ void SuperTurret::decideFire(int playerAnim)
 			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_DEGREE_180, posPlayer.y + FIRE_OFFSET_Y_ANIM_DEGREE_180));
 			break;
 		}
-		BulletManager::instance().fire(dir, pos, speed);
+		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
 	}
 }
 

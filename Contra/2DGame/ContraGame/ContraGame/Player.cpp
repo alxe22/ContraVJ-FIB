@@ -117,7 +117,7 @@ void Player::update(int deltaTime)
 		dir.push_back(glm::ivec2(-1, 0));
 		vector<glm::vec2> pos;
 		pos.push_back(glm::ivec2(posPlayer.x + 32, posPlayer.y + 30));
-		BulletManager::instance().fire(dir, pos, speed);
+		BulletManager::instance().fire(dir, pos, speed, "CHARACTER");
 	}
 	if (PlayerState == standing || PlayerState == running_down || PlayerState == running_up || PlayerState == running || PlayerState == up || PlayerState == laying) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP))

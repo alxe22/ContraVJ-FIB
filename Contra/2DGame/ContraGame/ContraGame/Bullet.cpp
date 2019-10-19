@@ -43,3 +43,13 @@ glm::ivec2 Bullet::getPosition() const
 {
 	return pos;
 }
+
+void Bullet::setFiredBy(const string firedBy)
+{
+	this->firedBy = firedBy;
+}
+
+string Bullet::getFiredBy() const
+{
+	return this->firedBy;
+}

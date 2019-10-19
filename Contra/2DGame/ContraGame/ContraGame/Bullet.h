@@ -10,6 +10,8 @@ public:
 
 	void setTileMap(TileMap *tileMap);
 	glm::ivec2 getPosition() const;
+	void setFiredBy(const string firedBy);
+	string getFiredBy() const;
 
 private:
 	Texture spritesheet;
@@ -17,5 +19,6 @@ private:
 	TileMap *map;
 	glm::ivec2 tileMapDispl;
 	glm::vec2 pos, dir;
+	string firedBy;
 	int speed;
 };

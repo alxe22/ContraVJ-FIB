@@ -9,13 +9,14 @@ void BulletManager::initBulletManager(ShaderProgram &shaderProgram, TileMap *til
 	this->tileMap = tileMap;
 }
 
-void BulletManager::fire(vector<glm::vec2> dir, vector<glm::vec2> pos, int speed)
+void BulletManager::fire(vector<glm::vec2> dir, vector<glm::vec2> pos, int speed, string firedBy)
 {
 for (int i = 0; i < dir.size() && i < pos.size(); ++i)
 	{
 		Bullet* bullet = new Bullet();
 		bullet->init(glm::ivec2(SCREEN_X, SCREEN_Y), pos[i], dir[i], speed, shaderProgram);
 		bullet->setTileMap(tileMap);
+		bullet->setFiredBy(firedBy);
 		bullets.push_back(bullet);
 	}
 }
@@ -48,8 +49,11 @@ bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int he
 			// bPos.x < bottomRight.x && bPos.x > bottomLeft.x && bPos.y < bottomRight.y && bPos.y > bottomLeft.y - height
 			if (bPos.x > bottomLeft.x && bPos.x < bottomLeft.x + width) {
 				if (bPos.y< bottomLeft.y && bPos.y > bottomLeft.y - height) {
-					bullets[i] = NULL;
-					return true;
+					if (b->getFiredBy() == "CHARACTER") {
+						bullets[i] = NULL;
+						return true;
+					}
+					else return false;
 				}
 			}
 			return false;

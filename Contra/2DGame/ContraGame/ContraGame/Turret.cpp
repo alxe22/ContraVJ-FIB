@@ -151,7 +151,7 @@ void Turret::decideFire(int playerAnim)
 			pos.push_back(glm::vec2(posPlayer.x + 37, posPlayer.y + 33));
 			break;
 		}
-		BulletManager::instance().fire(dir, pos, speed);
+		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
 	}
 }
 

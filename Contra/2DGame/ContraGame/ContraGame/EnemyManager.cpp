@@ -165,10 +165,10 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
 	int xTileInterval = xTileInc, yTileInterval = 1;
 	
-	/*loadSnipers("", shaderProgram, tileMap);
+	loadSnipers("", shaderProgram, tileMap);
 	loadTurrets("", shaderProgram, tileMap);
 	loadSuperTurrets("", shaderProgram, tileMap);
-	loadSoldiers("", shaderProgram, tileMap);*/
+	loadSoldiers("", shaderProgram, tileMap);
 }
 
 void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime) {
