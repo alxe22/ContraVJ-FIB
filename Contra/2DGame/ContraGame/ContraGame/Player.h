@@ -34,7 +34,8 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	int RestLifes;
-	long long lastSecondFired = 0;
+	bool F;
+	bool shooting;
 
 };
 

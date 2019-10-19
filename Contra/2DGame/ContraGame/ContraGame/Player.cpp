@@ -20,7 +20,7 @@ enum PlayerAnims
 
 enum PlayerStates
 {
-	standing, running, laying, up, running_up, running_down, jumping, water_stand, water_up, water_run, water_runup
+	standing, running, laying, up, running_up, running_down, jumping, water_stand, water_up, water_run, water_runup, rip
 };
 
 
@@ -29,6 +29,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	PlayerState = standing;
 	PlayerDir = "R";
 	RestLifes = 3;
+	F = false;
+	shooting = false;
 	spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(1/11.f, 1/11.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(18);
@@ -109,6 +111,20 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2(6 / 11.f, 1 / 11.f));
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2(5 / 11.f, 1 / 11.f));
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2(4 / 11.f, 1 / 11.f));
+
+		sprite->setAnimationSpeed(DIE_RIGHT, 8);
+		sprite->addKeyframe(DIE_RIGHT, glm::vec2(3 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_RIGHT, glm::vec2(2 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_RIGHT, glm::vec2(1 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_RIGHT, glm::vec2(0 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_RIGHT, glm::vec2(4 / 11.f, 2 / 11.f));
+
+		sprite->setAnimationSpeed(DIE_LEFT, 8);
+		sprite->addKeyframe(DIE_LEFT, glm::vec2(6 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_LEFT, glm::vec2(7 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_LEFT, glm::vec2(8 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_LEFT, glm::vec2(9 / 11.f, 2 / 11.f));
+		sprite->addKeyframe(DIE_LEFT, glm::vec2(5 / 11.f, 2 / 11.f));
 		
 
 	sprite->changeAnimation(1);
@@ -120,10 +136,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	long long diff = Time::instance().NowToMili() - lastSecondFired;
-	if (diff > 200) {
-		lastSecondFired = Time::instance().NowToMili();
-		if (Game::instance().getKey('z')) {
+	
+	if (Game::instance().getKey('z')) {
+		if (!shooting) {
+			if(PlayerState != running) shooting = true;
 			int speed = 4;
 			vector<glm::vec2> dir;
 			vector<glm::vec2> pos;
@@ -165,6 +181,7 @@ void Player::update(int deltaTime)
 			BulletManager::instance().fire(dir, pos, speed);
 		}
 	}
+	else shooting = false;
 	if (PlayerState == standing || PlayerState == running_down || PlayerState == running_up || PlayerState == running || PlayerState == up || PlayerState == laying) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP))
 		{
@@ -201,8 +218,8 @@ void Player::update(int deltaTime)
 			{
 				posPlayer.x -= 2;
 			}
-			if (diff > 200) {
-				lastSecondFired = Time::instance().NowToMili();
+			if (!shooting) {
+				shooting = true;
 				vector<glm::vec2> dir;
 				vector<glm::vec2> pos;
 				pos.push_back(glm::ivec2(posPlayer.x + 60, posPlayer.y + 22));
@@ -217,6 +234,7 @@ void Player::update(int deltaTime)
 			PlayerState = running;
 			PlayerDir = "R";
 			posPlayer.x += 2;
+			shooting = false;
 			if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
 			{
 				posPlayer.x -= 2;
@@ -257,8 +275,8 @@ void Player::update(int deltaTime)
 			{
 				posPlayer.x += 2;
 			}
-			if (diff > 200) {
-				lastSecondFired = Time::instance().NowToMili();
+			if (!shooting) {
+				shooting = true;
 				vector<glm::vec2> dir;
 				vector<glm::vec2> pos;
 				pos.push_back(glm::ivec2(posPlayer.x + 4, posPlayer.y + 22));
@@ -273,6 +291,7 @@ void Player::update(int deltaTime)
 			PlayerState = running;
 			PlayerDir = "L";
 			posPlayer.x -= 2;
+			shooting = false;
 			if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
 			{
 				posPlayer.x += 2;
@@ -323,7 +342,8 @@ void Player::update(int deltaTime)
 		}
 		else 
 		{
-			posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+			if(!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 96), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+			else PlayerState = standing;
 		}
 		if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) posPlayer.x += 2;
 		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) posPlayer.x -= 2;

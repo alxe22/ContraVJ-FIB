@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 60
+#define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 1
 
 
@@ -106,9 +106,9 @@ void Scene::init()
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
 		spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		spriteLifes = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
+		spriteLifes = Sprite::createSprite(glm::ivec2(100, 100), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
 		spriteLifes->setNumberAnimations(0);
-		spriteLifes->setPosition(glm::vec2(float(50), float(50)));
+		spriteLifes->setPosition(glm::vec2(float(10), float(4)));
 	}
 }
 
@@ -128,7 +128,7 @@ void Scene::update(int deltaTime)
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();
-
+		spriteLifes->setPosition(glm::vec2(float(10), float(4)));
 	}
 }
 
