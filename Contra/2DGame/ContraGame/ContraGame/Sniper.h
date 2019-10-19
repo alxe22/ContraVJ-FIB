@@ -21,6 +21,8 @@ public:
 	void setPosition(const glm::vec2 &pos) override;
 	void setAnimation(int animNum) override;
 	glm::ivec2 getPosition() override;
+	glm::ivec2 getSize() override;
+	string type() override;
 
 	void decideFire(int playerAnim);
 

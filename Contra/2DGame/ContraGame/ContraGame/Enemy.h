@@ -3,6 +3,9 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include <string>
+
+using namespace std;
 
 class Enemy
 {
@@ -17,6 +20,7 @@ public:
 	virtual void setAnimation(int animNum);
 	virtual glm::ivec2 getPosition();
 	virtual glm::ivec2 getSize();
+	virtual string type();
 };
 
 #endif

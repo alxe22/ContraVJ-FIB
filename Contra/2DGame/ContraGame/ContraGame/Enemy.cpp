@@ -34,3 +34,8 @@ glm::ivec2 Enemy::getSize()
 {
 	return glm::ivec2(-1, -1);
 }
+
+string Enemy::type()
+{
+	return "";
+}

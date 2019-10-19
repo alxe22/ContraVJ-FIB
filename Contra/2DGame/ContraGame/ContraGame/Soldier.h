@@ -21,6 +21,7 @@ public:
 	void setPosition(const glm::vec2 &pos) override;
 	glm::ivec2 getPosition() override;
 	glm::ivec2 getSize() override;
+	string type() override;
 
 private:
 	bool bJumping;

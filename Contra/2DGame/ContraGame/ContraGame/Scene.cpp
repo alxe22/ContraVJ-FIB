@@ -3,10 +3,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
-#include "SoundSystem.h"
 #include "Soldier.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
+#include "Time.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -14,6 +14,8 @@
 #define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 1
 
+// testing only
+# define FIRE_FRAME_INTERVAL 500
 
 Scene::Scene()
 {
@@ -31,13 +33,13 @@ Scene::~Scene()
 
 void Scene::loadMenu() {
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-	
+
 	// background
 	spritesheet.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f, 1.f), &spritesheet, &texProgram);
 	sprite->setNumberAnimations(0);
 	sprite->setPosition(glm::vec2(float(0), float(0)));
-	
+
 	// selector
 	spritesheetSelector.loadFromFile("images/selector.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spriteSelector = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetSelector, &texProgram);
@@ -63,7 +65,7 @@ void Scene::menuUpdate(int deltaTime) {
 	}
 	// return key == 13
 	else if (Game::instance().getKey(13)) {
-		if ((spriteSelector->getPosition()).y == 263 || 
+		if ((spriteSelector->getPosition()).y == 263 ||
 			(spriteSelector->getPosition()).y == 278) state = "PLAYING";
 		else state = "CONTROLS";
 		init();
@@ -91,10 +93,13 @@ void Scene::init()
 	initShaders();
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
-	if (state == "MENU") loadMenu();
+	if (state == "MENU") {
+		loadMenu();
+		SoundSystem::instance().playMusic("", "MENU");
+	}
 	else if (state == "CONTROLS") loadControls();
 	else {
-		map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
+		/*map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
@@ -102,7 +107,7 @@ void Scene::init()
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		limitCamera = 0.0f;
 		currentTime = 0.0f;
-		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
+		SoundSystem::instance().playMusic("level01", state);
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
 		spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -122,13 +127,16 @@ void Scene::update(int deltaTime)
 		controlsUpdate(deltaTime);
 	}
 	else {
-		player->update(deltaTime);
-		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
-		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
-		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
-		EnemyManager::instance().detectBulletCollisions();
-		CameraUpdate();
-		spriteLifes->setPosition(glm::vec2(float(10), float(4)));
+		//player->update(deltaTime);
+		//EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
+		//BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		//EnemyManager::instance().detectBulletCollisions();
+		//CameraUpdate();
+		long long diff = Time::instance().NowToMili() - lastSecondFired;
+		if (diff > FIRE_FRAME_INTERVAL) {
+			lastSecondFired = Time::instance().NowToMili();
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+		}
 	}
 }
 
@@ -157,11 +165,12 @@ void Scene::render()
 		spriteControls->render();
 	}
 	else {
-		map->render();
+		/*map->render();
 		player->render();
 		spriteLifes->render();
 		EnemyManager::instance().render();
-		BulletManager::instance().render();
+		BulletManager::instance().render();*/
+		sprite->render();
 	}
 }
 
@@ -194,6 +203,3 @@ void Scene::initShaders()
 	vShader.free();
 	fShader.free();
 }
-
-
-

@@ -1,6 +1,7 @@
 #include "Sniper.h"
 #include "BulletManager.h"
 #include "Time.h"
+#include "SoundSystem.h"
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
@@ -103,7 +104,7 @@ void Sniper::decideFire(int playerAnim)
 		lastSecondFired = Time::instance().NowToMili();
 		vector<glm::vec2> dir;
 		vector<glm::vec2> pos;
-		int speed = 2;
+		int speed = 4;
 		switch (playerAnim) {
 		case PlayerAnims::UP_LEFT:
 			dir.push_back(glm::vec2(-1.f, -0.75f));
@@ -130,7 +131,8 @@ void Sniper::decideFire(int playerAnim)
 			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_FIRE_WATER_RIGHT, posPlayer.y + FIRE_OFFSET_Y_ANIM_FIRE_WATER_RIGHT));
 			break;
 		}
-		BulletManager::instance().fire(dir, pos, speed);
+		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");
 	}
 }
 
@@ -214,6 +216,16 @@ void Sniper::setAnimation(int animNum)
 glm::ivec2 Sniper::getPosition()
 {
 	return posPlayer;
+}
+
+glm::ivec2 Sniper::getSize()
+{
+	return glm::ivec2(64, 128);
+}
+
+string Sniper::type()
+{
+	return "SNIPER";
 }
 
 

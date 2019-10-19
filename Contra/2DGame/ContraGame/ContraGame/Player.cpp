@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "BulletManager.h"
 #include "Time.h"
+#include "SoundSystem.h"
 
 
 #define JUMP_ANGLE_STEP 4
@@ -34,13 +35,13 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(1/11.f, 1/11.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(18);
-	
+
 		sprite->setAnimationSpeed(STAND_LEFT, 8);
 		sprite->addKeyframe(STAND_LEFT, glm::vec2(1/11.f,0.f));
-		
+
 		sprite->setAnimationSpeed(STAND_RIGHT, 8);
 		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
-		
+
 		sprite->setAnimationSpeed(MOVE_RIGHT, 8);
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(6/11.f, 3/11.f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(7/11.f, 3/11.f));
@@ -48,7 +49,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(9/11.f, 3/11.f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(10/11.f, 2/11.f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(10/11.f, 3/11.f));
-		
+
 		sprite->setAnimationSpeed(MOVE_LEFT, 8);
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(6/11.f, 4/11.f));
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(6/11.f, 5/11.f));
@@ -92,7 +93,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 		sprite->setAnimationSpeed(UP_RIGHT, 8);
 		sprite->addKeyframe(UP_RIGHT, glm::vec2(2/11.f, 0.f));
-		
+
 		sprite->setAnimationSpeed(LAY_LEFT, 8);
 		sprite->addKeyframe(LAY_LEFT, glm::vec2(5 / 11.f, 0.f));
 
@@ -125,18 +126,18 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(DIE_LEFT, glm::vec2(8 / 11.f, 2 / 11.f));
 		sprite->addKeyframe(DIE_LEFT, glm::vec2(9 / 11.f, 2 / 11.f));
 		sprite->addKeyframe(DIE_LEFT, glm::vec2(5 / 11.f, 2 / 11.f));
-		
+
 
 	sprite->changeAnimation(1);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-	
+
 }
 
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	
+
 	if (Game::instance().getKey('z')) {
 		if (!shooting) {
 			if(PlayerState != running) shooting = true;
@@ -297,7 +298,7 @@ void Player::update(int deltaTime)
 				posPlayer.x += 2;
 			}
 		}
-		
+
 		else if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 		{
 			if (PlayerDir == "L") {
@@ -340,14 +341,14 @@ void Player::update(int deltaTime)
 			PlayerState = standing;
 			posPlayer.y = startY;
 		}
-		else 
+		else
 		{
 			if(!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 96), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
 			else PlayerState = standing;
 		}
 		if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) posPlayer.x += 2;
 		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) posPlayer.x -= 2;
-		
+
 	}
 	else
 	{
@@ -394,6 +395,3 @@ int Player::getLifes()
 {
 	return RestLifes;
 }
-
-
-

@@ -68,7 +68,8 @@ void SuperTurret::decideFire(int playerAnim)
 			pos.push_back(glm::vec2(posPlayer.x + FIRE_OFFSET_X_ANIM_DEGREE_180, posPlayer.y + FIRE_OFFSET_Y_ANIM_DEGREE_180));
 			break;
 		}
-		BulletManager::instance().fire(dir, pos, speed);
+		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SUPER_TURRET");
 	}
 }
 
@@ -113,4 +114,13 @@ glm::ivec2 SuperTurret::getPosition()
 	return posPlayer;
 }
 
+string SuperTurret::type()
+{
+	return "SUPER_TURRET";
+}
+
+glm::ivec2 SuperTurret::getSize()
+{
+	return glm::ivec2(128, 128);
+}
 

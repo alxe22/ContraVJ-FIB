@@ -151,7 +151,8 @@ void Turret::decideFire(int playerAnim)
 			pos.push_back(glm::vec2(posPlayer.x + 37, posPlayer.y + 33));
 			break;
 		}
-		BulletManager::instance().fire(dir, pos, speed);
+		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "TURRET");
 	}
 }
 
@@ -264,6 +265,16 @@ void Turret::setPosition(const glm::vec2 &pos)
 glm::ivec2 Turret::getPosition()
 {
 	return posPlayer;
+}
+
+glm::ivec2 Turret::getSize()
+{
+	return glm::ivec2(64, 60);
+}
+
+string Turret::type()
+{
+	return "TURRET";
 }
 
 
