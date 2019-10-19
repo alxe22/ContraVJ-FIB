@@ -12,6 +12,8 @@ public:
 	glm::ivec2 getPosition() const;
 	void setFiredBy(const string firedBy);
 	string getFiredBy() const;
+	void changeBulletAnimation(const int animNum) const;
+	int getAnimation() const;
 
 private:
 	Texture spritesheet;

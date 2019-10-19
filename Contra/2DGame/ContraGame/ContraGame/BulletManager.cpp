@@ -50,7 +50,9 @@ bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int he
 			if (bPos.x > bottomLeft.x && bPos.x < bottomLeft.x + width) {
 				if (bPos.y< bottomLeft.y && bPos.y > bottomLeft.y - height) {
 					if (b->getFiredBy() == "CHARACTER") {
-						bullets[i] = NULL;
+						if (b->getAnimation() != 1) b->changeBulletAnimation(1);
+						else if (b->getAnimation() == 1)
+							bullets[i] = NULL;
 						return true;
 					}
 					else return false;

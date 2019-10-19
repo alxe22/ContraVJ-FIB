@@ -8,10 +8,6 @@
 #include "Time.h"
 #include "SoundSystem.h"
 
-#include <Windows.h>
-#include <stdio.h>
-#include <cstdlib>
-
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
@@ -116,7 +112,7 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	if (Game::instance().getKey('z')) {
-		int speed = 2;
+		int speed = 4;
 		vector<glm::vec2> dir;
 		//dir.push_back(glm::ivec2(1.5f,- 1.f));
 		dir.push_back(glm::ivec2(-1, 0));
