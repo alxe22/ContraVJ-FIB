@@ -26,7 +26,6 @@ public:
 
 private:
 	long long lastSecondFired = 0;
-	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;

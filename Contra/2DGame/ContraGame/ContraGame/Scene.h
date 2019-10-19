@@ -34,14 +34,15 @@ private:
 private:
 	string state = "MENU"; // MENU, CONTROLS, PLAYING
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls;
-	Sprite *sprite, *spriteSelector, *spriteControls;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;
 	float currentTime;
 	glm::mat4 projection;
 	bool playing = false;
+	float limitCamera;
 
 };
 

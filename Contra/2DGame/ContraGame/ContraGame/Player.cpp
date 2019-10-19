@@ -20,7 +20,7 @@ enum PlayerAnims
 
 enum PlayerStates
 {
-	standing, running, laying, up, running_up, running_down, jumping
+	standing, running, laying, up, running_up, running_down, jumping, water_stand, water_up, water_run, water_runup
 };
 
 
@@ -54,6 +54,16 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(8/11.f, 4/11.f));
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(9/11.f, 4/11.f));
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(10/11.f, 4/11.f));
+
+		sprite->setAnimationSpeed(MOVESH_LEFT, 8);
+		sprite->addKeyframe(MOVESH_LEFT, glm::vec2(5 / 11.f, 3 / 11.f));
+		sprite->addKeyframe(MOVESH_LEFT, glm::vec2(4 / 11.f, 3 / 11.f));
+		sprite->addKeyframe(MOVESH_LEFT, glm::vec2(3 / 11.f, 3 / 11.f));
+
+		sprite->setAnimationSpeed(MOVESH_RIGHT, 8);
+		sprite->addKeyframe(MOVESH_RIGHT, glm::vec2(0 / 11.f, 3 / 11.f));
+		sprite->addKeyframe(MOVESH_RIGHT, glm::vec2(1 / 11.f, 3 / 11.f));
+		sprite->addKeyframe(MOVESH_RIGHT, glm::vec2(2 / 11.f, 3 / 11.f));
 
 		sprite->setAnimationSpeed(MOVEU45_RIGHT, 8);
 		sprite->addKeyframe(MOVEU45_RIGHT, glm::vec2(0 / 11.f, 4 / 11.f));
@@ -110,13 +120,50 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if (Game::instance().getKey('z')) {
-		int speed = 2;
-		vector<glm::vec2> dir;
-		dir.push_back(glm::ivec2(1, 0));
-		vector<glm::vec2> pos;
-		pos.push_back(glm::ivec2(posPlayer.x + 32, posPlayer.y + 30));
-		BulletManager::instance().fire(dir, pos, speed);
+	long long diff = Time::instance().NowToMili() - lastSecondFired;
+	if (diff > 200) {
+		lastSecondFired = Time::instance().NowToMili();
+		if (Game::instance().getKey('z')) {
+			int speed = 4;
+			vector<glm::vec2> dir;
+			vector<glm::vec2> pos;
+			glm::ivec2 d = glm::ivec2(1, 0);
+			if (PlayerDir == "L") d = glm::ivec2(-1, 0);
+			switch (PlayerState)
+			{
+			case standing:
+				dir.push_back(d);
+				if (PlayerDir == "R") pos.push_back(glm::ivec2(posPlayer.x + 64, posPlayer.y + 28));
+				else pos.push_back(glm::ivec2(posPlayer.x + 6, posPlayer.y + 28));
+				break;
+			case laying:
+				dir.push_back(d);
+				if (PlayerDir == "R") pos.push_back(glm::ivec2(posPlayer.x + 68, posPlayer.y + 58));	//fix
+				else pos.push_back(glm::ivec2(posPlayer.x - 4, posPlayer.y + 58));
+				break;
+			case up:
+				dir.push_back(glm::ivec2(0, -1));
+				if (PlayerDir == "R") pos.push_back(glm::ivec2(posPlayer.x + 38, posPlayer.y - 6));
+				else pos.push_back(glm::ivec2(posPlayer.x + 28, posPlayer.y - 6));
+				break;
+			case running_up:
+				dir.push_back(glm::vec2(0.75*d.x, -0.25));
+				if (PlayerDir == "R") pos.push_back(glm::ivec2(posPlayer.x + 55, posPlayer.y + 5));
+				else pos.push_back(glm::ivec2(posPlayer.x + 15, posPlayer.y + 5));
+				break;
+			case running_down:
+				dir.push_back(glm::vec2(0.75*d.x, 0.25));
+				if (PlayerDir == "R") pos.push_back(glm::ivec2(posPlayer.x + 55, posPlayer.y + 40));	//fix
+				else pos.push_back(glm::ivec2(posPlayer.x + 15, posPlayer.y + 40));
+				break;
+			case jumping:
+				dir.push_back(d);
+				pos.push_back(glm::ivec2(posPlayer.x + 32, posPlayer.y + 32));
+				break;
+			}
+
+			BulletManager::instance().fire(dir, pos, speed);
+		}
 	}
 	if (PlayerState == standing || PlayerState == running_down || PlayerState == running_up || PlayerState == running || PlayerState == up || PlayerState == laying) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP))
@@ -141,6 +188,26 @@ void Player::update(int deltaTime)
 			if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
 			{
 				posPlayer.x -= 2;
+			}
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getKey('z'))
+		{
+			if (sprite->animation() != MOVESH_RIGHT)
+				sprite->changeAnimation(MOVESH_RIGHT);
+			PlayerState = running;
+			PlayerDir = "R";
+			posPlayer.x += 2;
+			if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
+			{
+				posPlayer.x -= 2;
+			}
+			if (diff > 200) {
+				lastSecondFired = Time::instance().NowToMili();
+				vector<glm::vec2> dir;
+				vector<glm::vec2> pos;
+				pos.push_back(glm::ivec2(posPlayer.x + 60, posPlayer.y + 22));
+				dir.push_back(glm::ivec2(1, 0));
+				BulletManager::instance().fire(dir, pos, 4);
 			}
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
@@ -177,6 +244,26 @@ void Player::update(int deltaTime)
 			if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
 			{
 				posPlayer.x += 2;
+			}
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getKey('z'))
+		{
+			if (sprite->animation() != MOVESH_LEFT)
+				sprite->changeAnimation(MOVESH_LEFT);
+			PlayerState = running;
+			PlayerDir = "L";
+			posPlayer.x -= 2;
+			if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
+			{
+				posPlayer.x += 2;
+			}
+			if (diff > 200) {
+				lastSecondFired = Time::instance().NowToMili();
+				vector<glm::vec2> dir;
+				vector<glm::vec2> pos;
+				pos.push_back(glm::ivec2(posPlayer.x + 4, posPlayer.y + 22));
+				dir.push_back(glm::ivec2(-1, 0));
+				BulletManager::instance().fire(dir, pos, 4);
 			}
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
@@ -224,7 +311,7 @@ void Player::update(int deltaTime)
 				if (PlayerDir == "R") sprite->changeAnimation(STAND_RIGHT);
 				else sprite->changeAnimation(STAND_LEFT);
 			}
-				PlayerState = standing;
+			PlayerState = standing;
 		}
 	}
 	if (PlayerState == jumping)
@@ -245,7 +332,7 @@ void Player::update(int deltaTime)
 	else
 	{
 		posPlayer.y += FALL_STEP;
-		if (map->collisionMoveDown(posPlayer, glm::ivec2(64, 96), &posPlayer.y)) {
+		if (map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32,96), &posPlayer.y)) {
 			if (Game::instance().getKey(VK_SPACE) && PlayerState != laying) {
 				startY = posPlayer.y;
 				jumpAngle = 0;

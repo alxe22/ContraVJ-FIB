@@ -156,7 +156,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 // already intersecting a tile below.
 
 bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
-{
+{/*
 	int x, y0, y1;
 	
 	x = pos.x / tileSize;
@@ -164,13 +164,11 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		/*if(map[y*mapSize.x+x] == 0)
-			return true;*/
 		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 			return true;
 		}
 	}
-	
+	*/
 	return false;
 }
 
@@ -198,7 +196,7 @@ bool TileMap::isTerrainAhead(const glm::ivec2 &pos, const glm::ivec2 &size, stri
 }
 
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
-{
+{/*
 	int x, y0, y1;
 	
 	x = (pos.x + size.x - 1) / tileSize;
@@ -206,8 +204,6 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		/*if(map[y*mapSize.x+x] == 0)
-			return true;*/
 		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 			return true;
 		}
@@ -220,7 +216,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 			return true;
 		}
 	}
-	
+	*/
 	return false;
 }
 

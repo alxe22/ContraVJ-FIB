@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_X_TILES 60
 #define INIT_PLAYER_Y_TILES 1
 
 
@@ -100,10 +100,15 @@ void Scene::init()
 		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
 		player->setTileMap(map);
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		limitCamera = 0.0f;
 		currentTime = 0.0f;
 		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
+		spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		spriteLifes = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
+		spriteLifes->setNumberAnimations(0);
+		spriteLifes->setPosition(glm::vec2(float(50), float(50)));
 	}
 }
 
@@ -123,16 +128,15 @@ void Scene::update(int deltaTime)
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();
+
 	}
 }
 
 void Scene::CameraUpdate()
 {
 	glm::ivec2 pos = player->getPosition();
-	float posCameraX = 0.0f;
-	if (pos.x >= 240) posCameraX = pos.x-240;
-
-	projection = glm::ortho(posCameraX, float(SCREEN_WIDTH - 1)+posCameraX, float(SCREEN_HEIGHT - 1), 0.f);
+	if (pos.x - 240 > limitCamera) limitCamera = pos.x - 240;
+	projection = glm::ortho(limitCamera, float(SCREEN_WIDTH - 1)+limitCamera, float(SCREEN_HEIGHT - 1), 0.f);
 }
 
 void Scene::render()
@@ -155,6 +159,7 @@ void Scene::render()
 	else {
 		map->render();
 		player->render();
+		spriteLifes->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();
 	}
