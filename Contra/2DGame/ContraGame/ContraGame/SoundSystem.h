@@ -11,13 +11,17 @@ using namespace irrklang;
 class SoundSystem
 {
 public:
-	static SoundSystem *createSoundSystem(const string &levelFile);
-	SoundSystem(const string &level);
-	~SoundSystem();
+	static SoundSystem &instance()
+	{
+		static SoundSystem SS;
 
-	void playMusic(const string &level);
+		return SS;
+	}
+
+	void playMusic(const string &level, const string &gameState);
+	void playSoundEffect(const string &level, const string &effect, const string &triggerer);
+
 
 private:
-	string STATE = "NOT_PLAYING";
 };
 

@@ -3,7 +3,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
-#include "SoundSystem.h"
 #include "Soldier.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
@@ -101,7 +100,7 @@ void Scene::init()
 		player->setTileMap(map);
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		currentTime = 0.0f;
-		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
+		SoundSystem::instance().playMusic("level01", state);
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
 	}

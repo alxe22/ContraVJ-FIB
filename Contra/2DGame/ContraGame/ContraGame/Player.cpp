@@ -6,6 +6,11 @@
 #include "Game.h"
 #include "BulletManager.h"
 #include "Time.h"
+#include "SoundSystem.h"
+
+#include <Windows.h>
+#include <stdio.h>
+#include <cstdlib>
 
 
 #define JUMP_ANGLE_STEP 4
@@ -118,6 +123,10 @@ void Player::update(int deltaTime)
 		vector<glm::vec2> pos;
 		pos.push_back(glm::ivec2(posPlayer.x + 32, posPlayer.y + 30));
 		BulletManager::instance().fire(dir, pos, speed, "CHARACTER");
+		char *msgbuf = (char *)malloc(sizeof(char) * (300 + 1));
+		sprintf(msgbuf, "Called soundSystemEffect \n");
+		OutputDebugStringA(msgbuf);
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
 	}
 	if (PlayerState == standing || PlayerState == running_down || PlayerState == running_up || PlayerState == running || PlayerState == up || PlayerState == laying) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_UP))

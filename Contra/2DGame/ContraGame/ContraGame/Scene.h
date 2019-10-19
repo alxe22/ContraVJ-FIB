@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <String.h>
 #include "ShaderProgram.h"
+#include "SoundSystem.h"
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
