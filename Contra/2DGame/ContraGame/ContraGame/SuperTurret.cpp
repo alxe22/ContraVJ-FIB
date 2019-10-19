@@ -69,6 +69,7 @@ void SuperTurret::decideFire(int playerAnim)
 			break;
 		}
 		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SUPER_TURRET");
 	}
 }
 

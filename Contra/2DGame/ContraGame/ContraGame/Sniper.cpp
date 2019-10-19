@@ -1,6 +1,7 @@
 #include "Sniper.h"
 #include "BulletManager.h"
 #include "Time.h"
+#include "SoundSystem.h"
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 96
@@ -132,6 +133,7 @@ void Sniper::decideFire(int playerAnim)
 			break;
 		}
 		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");
 	}
 }
 

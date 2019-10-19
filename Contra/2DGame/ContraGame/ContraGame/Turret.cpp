@@ -152,6 +152,7 @@ void Turret::decideFire(int playerAnim)
 			break;
 		}
 		BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "TURRET");
 	}
 }
 
