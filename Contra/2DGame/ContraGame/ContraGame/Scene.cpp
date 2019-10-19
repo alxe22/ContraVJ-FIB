@@ -6,6 +6,7 @@
 #include "Soldier.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
+#include "Time.h"
 
 #define SCREEN_X 32
 #define SCREEN_Y 16
@@ -13,6 +14,8 @@
 #define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 1
 
+// testing only
+# define FIRE_FRAME_INTERVAL 500
 
 Scene::Scene()
 {
@@ -96,7 +99,7 @@ void Scene::init()
 	}
 	else if (state == "CONTROLS") loadControls();
 	else {
-		map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
+		/*map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
 		player = new Player();
 		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
@@ -105,7 +108,29 @@ void Scene::init()
 		currentTime = 0.0f;
 		SoundSystem::instance().playMusic("level01", state);
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
-		BulletManager::instance().initBulletManager(texProgram, map);
+		BulletManager::instance().initBulletManager(texProgram, map);*/
+		spritesheet.loadFromFile("images/stage2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f / 5.f, 1.f), &spritesheet, &texProgram);
+		sprite->setNumberAnimations(5);
+		
+		sprite->setAnimationSpeed(0, 8);
+		sprite->addKeyframe(0, glm::vec2(0 / 5.f, 0.f));
+
+		sprite->setAnimationSpeed(1, 8);
+		sprite->addKeyframe(1, glm::vec2(1 / 5.f, 0.f));
+
+		sprite->setAnimationSpeed(2, 8);
+		sprite->addKeyframe(2, glm::vec2(2 / 5.f, 0.f));
+
+		sprite->setAnimationSpeed(3, 8);
+		sprite->addKeyframe(3, glm::vec2(3 / 5.f, 0.f));
+
+		sprite->setAnimationSpeed(4, 8);
+		sprite->addKeyframe(4, glm::vec2(4 / 5.f, 0.f));
+
+		sprite->changeAnimation(0);
+
+		sprite->setPosition(glm::vec2(float(0), float(0)));
 	}
 }
 
@@ -119,12 +144,16 @@ void Scene::update(int deltaTime)
 		controlsUpdate(deltaTime);
 	}
 	else {
-		player->update(deltaTime);
-		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
-		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
-		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
-		EnemyManager::instance().detectBulletCollisions();
-		CameraUpdate();
+		//player->update(deltaTime);
+		//EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
+		//BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		//EnemyManager::instance().detectBulletCollisions();
+		//CameraUpdate();
+		long long diff = Time::instance().NowToMili() - lastSecondFired;
+		if (diff > FIRE_FRAME_INTERVAL) {
+			lastSecondFired = Time::instance().NowToMili();
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+		}
 	}
 }
 
@@ -155,10 +184,11 @@ void Scene::render()
 		spriteControls->render();
 	}
 	else {
-		map->render();
+		/*map->render();
 		player->render();
 		EnemyManager::instance().render();
-		BulletManager::instance().render();
+		BulletManager::instance().render();*/
+		sprite->render();
 	}
 }
 
