@@ -19,6 +19,7 @@ void SoundSystem::playSoundEffect(const string &level, const string &effect, con
 	if (level == "level01") {
 		if (effect == "SHOOT") {
 			if (triggerer == "CHARACTER") SoundEngine->play2D("audio/level01-shoot.mp3", GL_FALSE);
+			else if (triggerer == "ENEMY") SoundEngine->play2D("audio/level01-enemy-shoot.mp3", GL_FALSE);
 		}
 	}
 }

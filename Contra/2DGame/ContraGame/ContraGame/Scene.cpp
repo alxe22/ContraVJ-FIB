@@ -90,7 +90,10 @@ void Scene::init()
 	initShaders();
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
-	if (state == "MENU") loadMenu();
+	if (state == "MENU") {
+		loadMenu();
+		SoundSystem::instance().playMusic("", "MENU");
+	}
 	else if (state == "CONTROLS") loadControls();
 	else {
 		map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
