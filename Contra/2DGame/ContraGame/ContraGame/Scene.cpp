@@ -109,18 +109,12 @@ void Scene::init()
 
 		spread = new SpreadGun();
 		spread->initSpread(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		//spread->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
-		//spread->setTileMap(map);
 
 	/*	spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		spriteLifes = Sprite::createSprite(glm::ivec2(100, 100), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
 		spriteLifes->setNumberAnimations(0);
-		spriteLifes->setPosition(glm::vec2(float(10), float(4)));
+		spriteLifes->setPosition(glm::vec2(float(10), float(4)));*/
 
-		spritesheetPower.loadFromFile("images/Spread.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		spritePower = Sprite::createSprite(glm::ivec2(24, 15), glm::vec2(1.f, 1.f), &spritesheetPower, &texProgram);
-		spritePower->setNumberAnimations(0);
-		spritePower->setPosition(glm::vec2(float(10), float(4)));*/
 	}
 }
 
@@ -175,7 +169,7 @@ void Scene::render()
 		//spriteLifes->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();
-		spread->render();
+		if(!player->getPower()) spread->render();
 	}
 }
 
