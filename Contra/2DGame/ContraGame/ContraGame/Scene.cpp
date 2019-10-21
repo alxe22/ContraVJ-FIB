@@ -51,14 +51,14 @@ void Scene::menuUpdate(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		glm::vec2 posSelector = spriteSelector->getPosition();
-		if(posSelector.y < 293) posSelector.y += 15.f;
+		if(posSelector.y < 293) posSelector.y += 30.f;
 		//posSelector.y += 5.f;
 		spriteSelector->setPosition(posSelector);
 		spriteSelector->render();
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		glm::vec2 posSelector = spriteSelector->getPosition();
-		if (posSelector.y > 263) posSelector.y -= 15.f;
+		if (posSelector.y > 263) posSelector.y -= 30.f;
 		//posSelector.y -= 5.f;
 		spriteSelector->setPosition(posSelector);
 		spriteSelector->render();
