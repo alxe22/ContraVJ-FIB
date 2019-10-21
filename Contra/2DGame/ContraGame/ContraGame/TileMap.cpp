@@ -238,12 +238,36 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 			}*/
 			// special case. We need to ensure that the main character collides 
 			// with the last water tile, not the first one as it would cause unrealistic efect
-			if (map[y*mapSize.x + x] == 1 && y == 14) {
+			if (map[y*mapSize.x + x] == 7 || map[y*mapSize.x + x] == 8 ||
+				map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 				*posY = tileSize * y - size.y;
 				return true;
 			}
-			else if (map[y*mapSize.x + x] == 7 || map[y*mapSize.x + x] == 8 ||
-				map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::collisionWater(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+{
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = (pos.y + size.y - 1) / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[y*mapSize.x + x] != 0)
+		{
+			/*if(*posY - tileSize * y + size.y <= -112)
+			{
+			*posY = tileSize * y - size.y;
+			return true;
+			}*/
+			// special case. We need to ensure that the main character collides 
+			// with the last water tile, not the first one as it would cause unrealistic efect
+			if (map[y*mapSize.x + x] == 1 && y == 14) {
 				*posY = tileSize * y - size.y;
 				return true;
 			}

@@ -102,13 +102,25 @@ void Scene::init()
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		limitCamera = 0.0f;
 		currentTime = 0.0f;
+
 		//SoundSystem *sy = SoundSystem::createSoundSystem("level01");
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
-		spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
+
+		spread = new SpreadGun();
+		spread->initSpread(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		spread->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
+		spread->setTileMap(map);
+
+	/*	spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		spriteLifes = Sprite::createSprite(glm::ivec2(100, 100), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
 		spriteLifes->setNumberAnimations(0);
 		spriteLifes->setPosition(glm::vec2(float(10), float(4)));
+
+		spritesheetPower.loadFromFile("images/Spread.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		spritePower = Sprite::createSprite(glm::ivec2(24, 15), glm::vec2(1.f, 1.f), &spritesheetPower, &texProgram);
+		spritePower->setNumberAnimations(0);
+		spritePower->setPosition(glm::vec2(float(10), float(4)));*/
 	}
 }
 
@@ -123,12 +135,13 @@ void Scene::update(int deltaTime)
 	}
 	else {
 		player->update(deltaTime);
+		spread->update(deltaTime);
 		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();
-		spriteLifes->setPosition(glm::vec2(float(10), float(4)));
+		//spriteLifes->setPosition(glm::vec2(float(10), float(4)));
 	}
 }
 
@@ -159,7 +172,8 @@ void Scene::render()
 	else {
 		map->render();
 		player->render();
-		spriteLifes->render();
+		spread->render();
+		//spriteLifes->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();
 	}

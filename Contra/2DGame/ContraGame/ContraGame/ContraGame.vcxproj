@@ -24,6 +24,7 @@
     <ClInclude Include="Sniper.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="SpreadGun.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SuperTurret.h" />
     <ClInclude Include="Texture.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Sniper.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="SpreadGun.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SuperTurret.cpp" />
     <ClCompile Include="Texture.cpp" />

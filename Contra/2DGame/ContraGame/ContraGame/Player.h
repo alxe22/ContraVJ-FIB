@@ -35,6 +35,7 @@ private:
 	TileMap *map;
 	int RestLifes;
 	bool F;
+	bool swimming;
 	bool shooting;
 
 };

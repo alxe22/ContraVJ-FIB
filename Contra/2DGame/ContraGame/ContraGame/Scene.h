@@ -8,6 +8,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "SpreadGun.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -34,11 +35,12 @@ private:
 private:
 	string state = "MENU"; // MENU, CONTROLS, PLAYING
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes;
-	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;
+	SpreadGun *spread;
 	float currentTime;
 	glm::mat4 projection;
 	bool playing = false;
