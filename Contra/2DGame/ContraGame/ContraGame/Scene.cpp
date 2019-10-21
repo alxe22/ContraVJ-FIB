@@ -109,8 +109,8 @@ void Scene::init()
 
 		spread = new SpreadGun();
 		spread->initSpread(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		spread->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
-		spread->setTileMap(map);
+		//spread->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		//spread->setTileMap(map);
 
 	/*	spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		spriteLifes = Sprite::createSprite(glm::ivec2(100, 100), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
@@ -172,10 +172,10 @@ void Scene::render()
 	else {
 		map->render();
 		player->render();
-		spread->render();
 		//spriteLifes->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();
+		spread->render();
 	}
 }
 

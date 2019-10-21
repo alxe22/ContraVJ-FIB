@@ -14,11 +14,17 @@ SpreadGun::SpreadGun()
 
 void SpreadGun::initSpread(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
-	spritesheet.loadFromFile("images/Spread.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	/*spritesheet.loadFromFile("images/Spread.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(50, 50), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(0);
+	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 50), float(tileMapDispl.y + 30)));
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 100), float(tileMapDispl.y + 100)));*/
+
+	spritesheet.loadFromFile("images/spreadv2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(50, 50), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(0);
+	sprite->setPosition(glm::vec2(float(100), float(200)));
 }
 
 bool SpreadGun::PlayerColision(glm::vec2 topLeft, int width, int height)
@@ -29,7 +35,7 @@ bool SpreadGun::PlayerColision(glm::vec2 topLeft, int width, int height)
 void SpreadGun::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + 50), float(tileMapDispl.y + 30)));
+	//sprite->setPosition(glm::vec2(float(tileMapDispl.x + 100), float(tileMapDispl.y + 200)));
 }
 
 void SpreadGun::render()
