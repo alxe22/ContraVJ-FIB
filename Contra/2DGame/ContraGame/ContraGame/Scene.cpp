@@ -109,24 +109,77 @@ void Scene::init()
 		SoundSystem::instance().playMusic("level01", state);
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);*/
-		spritesheet.loadFromFile("images/stage2.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f / 5.f, 1.f), &spritesheet, &texProgram);
-		sprite->setNumberAnimations(5);
+		spritesheet.loadFromFile("images/stage2v4.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f / 4.f, 1.f / 5.f), &spritesheet, &texProgram);
+		sprite->setNumberAnimations(20);
 		
 		sprite->setAnimationSpeed(0, 8);
-		sprite->addKeyframe(0, glm::vec2(0 / 5.f, 0.f));
+		sprite->addKeyframe(0, glm::vec2(0 / 4.f, 0.f / 5.f));
 
 		sprite->setAnimationSpeed(1, 8);
-		sprite->addKeyframe(1, glm::vec2(1 / 5.f, 0.f));
+		sprite->addKeyframe(1, glm::vec2(1 / 4.f, 0.f / 5.f));
 
 		sprite->setAnimationSpeed(2, 8);
-		sprite->addKeyframe(2, glm::vec2(2 / 5.f, 0.f));
+		sprite->addKeyframe(2, glm::vec2(2 / 4.f, 0.f / 5.f));
 
 		sprite->setAnimationSpeed(3, 8);
-		sprite->addKeyframe(3, glm::vec2(3 / 5.f, 0.f));
+		sprite->addKeyframe(3, glm::vec2(3 / 4.f, 0.f / 5.f));
+
+		//
 
 		sprite->setAnimationSpeed(4, 8);
-		sprite->addKeyframe(4, glm::vec2(4 / 5.f, 0.f));
+		sprite->addKeyframe(4, glm::vec2(0 / 4.f, 1.f / 5.f));
+
+		sprite->setAnimationSpeed(5, 8);
+		sprite->addKeyframe(5, glm::vec2(1 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(6, 8);
+		sprite->addKeyframe(6, glm::vec2(2 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(7, 8);
+		sprite->addKeyframe(7, glm::vec2(3 / 4.f, 0.f / 5.f));
+
+		//
+
+		sprite->setAnimationSpeed(8, 8);
+		sprite->addKeyframe(8, glm::vec2(0 / 4.f, 2.f / 5.f));
+
+		sprite->setAnimationSpeed(9, 8);
+		sprite->addKeyframe(9, glm::vec2(1 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(10, 8);
+		sprite->addKeyframe(10, glm::vec2(2 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(11, 8);
+		sprite->addKeyframe(11, glm::vec2(3 / 4.f, 0.f / 5.f));
+
+		//
+
+		sprite->setAnimationSpeed(12, 8);
+		sprite->addKeyframe(12, glm::vec2(0 / 4.f, 3.f / 5.f));
+
+		sprite->setAnimationSpeed(13, 8);
+		sprite->addKeyframe(13, glm::vec2(1 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(14, 8);
+		sprite->addKeyframe(14, glm::vec2(2 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(15, 8);
+		sprite->addKeyframe(15, glm::vec2(3 / 4.f, 0.f / 5.f));
+
+		//
+
+		sprite->setAnimationSpeed(16, 8);
+		sprite->addKeyframe(16, glm::vec2(0 / 4.f, 4.f / 5.f));
+
+		sprite->setAnimationSpeed(17, 8);
+		sprite->addKeyframe(17, glm::vec2(1 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(18, 8);
+		sprite->addKeyframe(18, glm::vec2(2 / 4.f, 0.f / 5.f));
+
+		sprite->setAnimationSpeed(19, 8);
+		sprite->addKeyframe(19, glm::vec2(3 / 4.f, 0.f / 5.f));
 
 		sprite->changeAnimation(0);
 
@@ -144,15 +197,16 @@ void Scene::update(int deltaTime)
 		controlsUpdate(deltaTime);
 	}
 	else {
-		//player->update(deltaTime);
-		//EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
-		//BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
-		//EnemyManager::instance().detectBulletCollisions();
-		//CameraUpdate();
+		/*player->update(deltaTime);
+		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		EnemyManager::instance().detectBulletCollisions();
+		CameraUpdate();*/
 		long long diff = Time::instance().NowToMili() - lastSecondFired;
 		if (diff > FIRE_FRAME_INTERVAL) {
 			lastSecondFired = Time::instance().NowToMili();
 			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) sprite->changeAnimation(sprite->animation() - 1);
 		}
 	}
 }
@@ -188,7 +242,7 @@ void Scene::render()
 		player->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();*/
-		sprite->render();
+		sprite->render(); //coment this line when testing level01
 	}
 }
 
