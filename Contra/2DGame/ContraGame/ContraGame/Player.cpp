@@ -268,6 +268,125 @@ void Player::update(int deltaTime)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+enum PlayerAnimslv2
+{
+	STAND_LV2, LAY_LV2, MOVE_LEFT_LV2, MOVE_RIGHT_LV2, MOVE_UP_LV2, JUMP_RIGHT_LV2, JUMP_LEFT_LV2
+};
+void Player::initlevel2(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+{
+	PlayerState = standing;
+	PlayerDir = "R";
+	spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(1 / 11.f, 1 / 11.f), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(7);
+
+	sprite->setAnimationSpeed(STAND_LV2, 8);
+	sprite->addKeyframe(STAND_LV2, glm::vec2(0 / 11.f, 7 / 11.f));
+
+	sprite->setAnimationSpeed(LAY_LV2, 8);
+	sprite->addKeyframe(LAY_LV2, glm::vec2(2 / 11.f, 7 / 11.f));
+	sprite->addKeyframe(LAY_LV2, glm::vec2(3 / 11.f, 7 / 11.f));
+
+	sprite->setAnimationSpeed(MOVE_LEFT_LV2, 8);
+	sprite->addKeyframe(MOVE_LEFT_LV2, glm::vec2(3 / 11.f, 8 / 11.f));
+	sprite->addKeyframe(MOVE_LEFT_LV2, glm::vec2(4 / 11.f, 8 / 11.f));
+	sprite->addKeyframe(MOVE_LEFT_LV2, glm::vec2(5 / 11.f, 8 / 11.f));
+
+	sprite->setAnimationSpeed(MOVE_RIGHT_LV2, 8);
+	sprite->addKeyframe(MOVE_RIGHT_LV2, glm::vec2(0 / 11.f, 8 / 11.f));
+	sprite->addKeyframe(MOVE_RIGHT_LV2, glm::vec2(1 / 11.f, 8 / 11.f));
+	sprite->addKeyframe(MOVE_RIGHT_LV2, glm::vec2(2 / 11.f, 8 / 11.f));
+
+	sprite->setAnimationSpeed(MOVE_UP_LV2, 8);
+	sprite->addKeyframe(MOVE_UP_LV2, glm::vec2(4 / 11.f, 7 / 11.f));
+	sprite->addKeyframe(MOVE_UP_LV2, glm::vec2(5 / 11.f, 7 / 11.f));
+
+	sprite->setAnimationSpeed(JUMP_RIGHT_LV2, 8);
+	sprite->addKeyframe(JUMP_RIGHT_LV2, glm::vec2(0 / 16.f, 1 / 11.f));
+	sprite->addKeyframe(JUMP_RIGHT_LV2, glm::vec2(1 / 11.f, 1 / 11.f));
+	sprite->addKeyframe(JUMP_RIGHT_LV2, glm::vec2(2 / 11.f, 1 / 11.f));
+	sprite->addKeyframe(JUMP_RIGHT_LV2, glm::vec2(3 / 11.f, 1 / 11.f));
+
+	sprite->setAnimationSpeed(JUMP_LEFT_LV2, 8);
+	sprite->addKeyframe(JUMP_LEFT_LV2, glm::vec2(7 / 11.f, 1 / 11.f));
+	sprite->addKeyframe(JUMP_LEFT_LV2, glm::vec2(6 / 11.f, 1 / 11.f));
+	sprite->addKeyframe(JUMP_LEFT_LV2, glm::vec2(5 / 11.f, 1 / 11.f));
+	sprite->addKeyframe(JUMP_LEFT_LV2, glm::vec2(4 / 11.f, 1 / 11.f));
+
+	sprite->changeAnimation(0);
+	//tileMapDispl = tileMapPos;
+	//sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::updateLv2(int deltaTime, bool canMoveForward) 
+{
+	sprite->update(deltaTime);
+	// first we need to check if its moving an jumping, it shoud go before checking if its moving left or right
+	if (PlayerState == standing || PlayerState == running || PlayerState == laying) {
+		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
+			if (sprite->animation() != MOVE_RIGHT_LV2) {
+				sprite->changeAnimation(MOVE_RIGHT_LV2);
+			}
+			PlayerState = running;
+			PlayerDir = "R";
+			if (posPlayer.x < 494) posPlayer.x += 2;
+			setPositionLv2(glm::vec2(posPlayer.x, 9 * 32));
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
+			if (sprite->animation() != MOVE_LEFT_LV2) {
+				sprite->changeAnimation(MOVE_LEFT_LV2);
+			}
+			PlayerState = running;
+			PlayerDir = "L";
+			if (posPlayer.x > 64) posPlayer.x -= 2;
+			setPositionLv2(glm::vec2(posPlayer.x, 9 * 32));
+		}
+		else {
+			if (sprite->animation() != STAND_LV2) {
+				sprite->changeAnimation(STAND_LV2);
+				PlayerState = STAND_LV2;
+				setPositionLv2(glm::vec2(posPlayer.x, 9 * 32));
+			}
+		}
+	}
+	if (PlayerState == jumping) {
+		jumpAngle += JUMP_ANGLE_STEP;
+		if (jumpAngle == 180) {
+			PlayerState = standing;
+			posPlayer.y = startY;
+		}
+		else {
+			posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+		}
+		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
+			if (posPlayer.x < 494) posPlayer.x += 2;
+			else PlayerState = standing;
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
+			if (posPlayer.x > 64) posPlayer.x -= 2;
+			else PlayerState = standing;
+		}
+		sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
+	}
+	else
+	{
+		posPlayer.y += FALL_STEP;
+		if (map->collisionMoveDownLv2(posPlayer, canMoveForward, &posPlayer.y)) {
+			if (Game::instance().getKey(VK_SPACE) && PlayerState != laying) {
+				startY = posPlayer.y;
+				jumpAngle = 0;
+				PlayerState = jumping;
+				if (PlayerDir == "L") {
+					if (sprite->animation() != JUMP_LEFT_LV2) sprite->changeAnimation(JUMP_LEFT_LV2);
+				}
+				else {
+					if (sprite->animation() != JUMP_RIGHT_LV2) sprite->changeAnimation(JUMP_RIGHT_LV2);
+				}
+			}
+		}
+	}
+}
+
 void Player::render()
 {
 	sprite->render();
@@ -282,6 +401,12 @@ void Player::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::setPositionLv2(const glm::vec2 &pos)
+{
+	posPlayer = pos;
+	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
 }
 
 glm::ivec2 Player::getPosition()

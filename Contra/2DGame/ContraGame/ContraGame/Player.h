@@ -16,11 +16,14 @@ class Player
 
 public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void initlevel2(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
+	void updateLv2(int deltaTime, bool canMoveForward);
 	void render();
 	
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	void setPositionLv2(const glm::vec2 &pos);
 	glm::ivec2 getPosition();
 	int getLifes();
 	

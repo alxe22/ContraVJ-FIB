@@ -184,6 +184,12 @@ void Scene::init()
 		sprite->changeAnimation(0);
 
 		sprite->setPosition(glm::vec2(float(0), float(0)));
+
+		player = new Player();
+		player->initlevel2(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		player->setPosition(glm::vec2((2 * 32), 9 * 32));
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		currentTime = 0.0f;
 	}
 }
 
@@ -202,6 +208,7 @@ void Scene::update(int deltaTime)
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();*/
+		player->updateLv2(deltaTime, false);
 		long long diff = Time::instance().NowToMili() - lastSecondFired;
 		if (diff > FIRE_FRAME_INTERVAL) {
 			lastSecondFired = Time::instance().NowToMili();
@@ -243,6 +250,7 @@ void Scene::render()
 		EnemyManager::instance().render();
 		BulletManager::instance().render();*/
 		sprite->render(); //coment this line when testing level01
+		player->render();//coment this line when testing level01
 	}
 }
 
