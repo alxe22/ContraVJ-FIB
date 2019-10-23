@@ -230,6 +230,10 @@ void Scene::CameraUpdate()
 	projection = glm::ortho(posCameraX, float(SCREEN_WIDTH - 1)+posCameraX, float(SCREEN_HEIGHT - 1), 0.f);
 }
 
+void Scene::level2Update(int deltaTime)
+{
+}
+
 void Scene::render()
 {
 	glm::mat4 modelview;

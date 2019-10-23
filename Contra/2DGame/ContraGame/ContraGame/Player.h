@@ -28,6 +28,8 @@ public:
 	int getLifes();
 	
 private:
+	bool hasShoot = false;
+	int count = 0;
 	bool bJumping;
 	int PlayerState;
 	string PlayerDir;

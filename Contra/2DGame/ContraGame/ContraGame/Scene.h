@@ -25,6 +25,7 @@ public:
 	void loadControls();
 	void menuUpdate(int deltaTime);
 	void controlsUpdate(int deltaTime);
+	void level2Update(int deltaTime);
 	void init();
 	void update(int deltaTime);
 	void CameraUpdate();

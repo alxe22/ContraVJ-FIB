@@ -84,6 +84,17 @@ void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int d
 			if (bullet != NULL) {
 				bullet->update(deltaTime);
 				glm::vec2 pos = bullet->getPosition();
+				if (bullet->getFiredBy() == "CHARACTER") {
+					if (pos.x >= 186 && pos.x <= 346 && pos.y < 170) bullets[i] = NULL;
+					
+					else if (pos.x >= 150 && pos.x <= 185 && pos.y < 185) bullets[i] = NULL;
+					else if (pos.x >= 139 && pos.x <= 184 && pos.y < 200) bullets[i] = NULL;
+					else if (pos.x >= 64 && pos.x <= 139 && pos.y < 215) bullets[i] = NULL;
+
+					else if (pos.x >= 346 && pos.x <= 384 && pos.y < 185) bullets[i] = NULL;
+					else if (pos.x >= 385 && pos.x <= 430 && pos.y < 200) bullets[i] = NULL;
+					else if (pos.x >= 430 && pos.x <= 476 && pos.y < 215) bullets[i] = NULL;
+				}
 				if (bullet->getFiredBy() == "ENEMY" && pos.y >= 350) bullets[i] = NULL;
 			}
 		}

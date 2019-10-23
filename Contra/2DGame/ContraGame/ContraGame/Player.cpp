@@ -7,6 +7,9 @@
 #include "BulletManager.h"
 #include "Time.h"
 #include "SoundSystem.h"
+#include <Windows.h>
+#include <stdio.h>
+#include <cstdlib>
 
 
 #define JUMP_ANGLE_STEP 4
@@ -115,7 +118,7 @@ void Player::update(int deltaTime)
 		int speed = 4;
 		vector<glm::vec2> dir;
 		//dir.push_back(glm::ivec2(1.5f,- 1.f));
-		dir.push_back(glm::ivec2(-1, 0));
+		dir.push_back(glm::ivec2(0, -1.f));
 		vector<glm::vec2> pos;
 		pos.push_back(glm::ivec2(posPlayer.x + 32, posPlayer.y + 30));
 		BulletManager::instance().fire(dir, pos, speed, "CHARACTER");
@@ -318,6 +321,25 @@ void Player::initlevel2(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 void Player::updateLv2(int deltaTime, bool canMoveForward) 
 {
 	sprite->update(deltaTime);
+	char *msgbuf = (char *)malloc(sizeof(char) * (300 + 1));
+	sprintf(msgbuf, "pos.x: %d, pos.y: %d \n", posPlayer.x, posPlayer.y);
+	OutputDebugStringA(msgbuf);
+	if (Game::instance().getKey('z') && !hasShoot) {
+		hasShoot = true;
+		int speed = 4;
+		vector<glm::vec2> dir;
+		//dir.push_back(glm::ivec2(1.5f,- 1.f));
+		dir.push_back(glm::ivec2(0, -1.f));
+		vector<glm::vec2> pos;
+		pos.push_back(glm::ivec2(posPlayer.x, posPlayer.y - 30));
+		BulletManager::instance().fire(dir, pos, speed, "CHARACTER");
+		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
+	}
+	if (hasShoot) ++count;
+	if (count > 50) {
+		count = 0;
+		hasShoot = false;
+	}
 	// first we need to check if its moving an jumping, it shoud go before checking if its moving left or right
 	if (PlayerState == standing || PlayerState == running || PlayerState == laying) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
@@ -326,7 +348,8 @@ void Player::updateLv2(int deltaTime, bool canMoveForward)
 			}
 			PlayerState = running;
 			PlayerDir = "R";
-			if (posPlayer.x < 494) posPlayer.x += 2;
+			if (posPlayer.x < 476) posPlayer.x += 2;
+			else posPlayer.x = 476;
 			setPositionLv2(glm::vec2(posPlayer.x, 9 * 32));
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
@@ -336,6 +359,7 @@ void Player::updateLv2(int deltaTime, bool canMoveForward)
 			PlayerState = running;
 			PlayerDir = "L";
 			if (posPlayer.x > 64) posPlayer.x -= 2;
+			else posPlayer.x = 64;
 			setPositionLv2(glm::vec2(posPlayer.x, 9 * 32));
 		}
 		else {
