@@ -109,12 +109,17 @@ void Scene::init()
 
 		spread = new SpreadGun();
 		spread->initSpread(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		
+		Icon1 = new IconLife();
+		Icon2 = new IconLife();
+		Icon3 = new IconLife();
 
-	/*	spritesheetLifes.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
-		spriteLifes = Sprite::createSprite(glm::ivec2(100, 100), glm::vec2(1.f, 1.f), &spritesheetLifes, &texProgram);
-		spriteLifes->setNumberAnimations(0);
-		spriteLifes->setPosition(glm::vec2(float(10), float(4)));*/
-
+		Icon1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		Icon1->setPosition(glm::vec2(float(30), float(60)));
+		Icon2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		Icon2->setPosition(glm::vec2(float(60), float(60)));
+		Icon3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		Icon3->setPosition(glm::vec2(float(90), float(60)));
 	}
 }
 
@@ -135,15 +140,22 @@ void Scene::update(int deltaTime)
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();
-		//spriteLifes->setPosition(glm::vec2(float(10), float(4)));
+		Icon1->update(deltaTime);
+		Icon2->update(deltaTime);
+		Icon3->update(deltaTime);
 	}
 }
 
 void Scene::CameraUpdate()
 {
 	glm::ivec2 pos = player->getPosition();
-	if (pos.x - 240 > limitCamera) limitCamera = pos.x - 240;
-	projection = glm::ortho(limitCamera, float(SCREEN_WIDTH - 1)+limitCamera, float(SCREEN_HEIGHT - 1), 0.f);
+	if (pos.x - 240 > limitCamera && pos.x + 240 < 200*32) {
+		limitCamera = pos.x - 240;
+		Icon1->setPosition(glm::vec2(float(limitCamera + 30), float(60)));
+		Icon2->setPosition(glm::vec2(float(limitCamera + 60), float(60)));
+		Icon3->setPosition(glm::vec2(float(limitCamera + 90), float(60)));
+	}
+	projection = glm::ortho(limitCamera, float(SCREEN_WIDTH - 1)+limitCamera, float(SCREEN_HEIGHT - 1), 30.f);
 }
 
 void Scene::render()
@@ -165,6 +177,9 @@ void Scene::render()
 	}
 	else {
 		map->render();
+		if (player->getLifes() > 0) Icon1->render();
+		if (player->getLifes() > 1) Icon2->render();
+		if (player->getLifes() > 2) Icon3->render();
 		player->render();
 		//spriteLifes->render();
 		EnemyManager::instance().render();

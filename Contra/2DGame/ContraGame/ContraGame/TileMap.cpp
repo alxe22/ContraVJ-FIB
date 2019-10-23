@@ -220,6 +220,36 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	return false;
 }
 
+bool TileMap::collisionOutWaterRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
+{
+	int x, y0, y1;
+
+	x = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for(int y=y0; y<=y1; y++)
+	{
+		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) return true;
+	}
+	return false;
+}
+
+bool TileMap::collisionOutWaterLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
+{
+	int x, y0, y1;
+
+	x = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for (int y = y0; y <= y1; y++)
+	{
+		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) return true;
+	}
+	return false;
+}
+
+
+
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
 {
 	int x0, x1, y;

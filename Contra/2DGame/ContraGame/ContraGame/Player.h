@@ -38,6 +38,7 @@ private:
 	bool swimming;
 	bool shooting;
 	bool powerup;
+	long long DieSec;
 
 };
 
