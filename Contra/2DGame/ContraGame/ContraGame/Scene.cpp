@@ -109,6 +109,7 @@ void Scene::init()
 		SoundSystem::instance().playMusic("level01", state);
 		BulletManager::instance().initBulletManager(texProgram, map);*/
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+		BulletManager::instance().initBulletManager(texProgram, map);
 		spritesheet.loadFromFile("images/stage2v4.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f / 4.f, 1.f / 5.f), &spritesheet, &texProgram);
 		sprite->setNumberAnimations(20);
@@ -210,6 +211,7 @@ void Scene::update(int deltaTime)
 		CameraUpdate();*/
 		player->updateLv2(deltaTime, false);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
 		long long diff = Time::instance().NowToMili() - lastSecondFired;
 		if (diff > FIRE_FRAME_INTERVAL) {
 			lastSecondFired = Time::instance().NowToMili();
@@ -253,6 +255,7 @@ void Scene::render()
 		sprite->render(); //coment this line when testing level01
 		player->render(); //coment this line when testing level01
 		EnemyManager::instance().render(); //coment this line when testing level01
+		BulletManager::instance().render(); //coment this line when testing level01
 	}
 }
 

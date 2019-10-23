@@ -1,4 +1,7 @@
 #include "GreenSoldier.h"
+#include "BulletManager.h"
+#include "EnemyManager.h"
+#include "SoundSystem.h"
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_Y_MAX_HEIGHT 190
@@ -42,6 +45,21 @@ void GreenSoldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 	//sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
+void GreenSoldier::decideFire(int playerAnim) 
+{
+	vector<glm::vec2> dir;
+	vector<glm::vec2> pos;
+	int speed = 4;
+	switch (playerAnim) {
+	case PlayerAnims::JUMP:
+		dir.push_back(glm::vec2(0.f, 1.f));
+		pos.push_back(glm::vec2(posPlayer.x-32, posPlayer.y-5));
+		break;
+	}
+	BulletManager::instance().fire(dir, pos, speed, "ENEMY");
+	SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");
+}
+
 void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
 {
 	sprite->update(deltaTime);
@@ -62,6 +80,7 @@ void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int de
 			else {
 				state = "JUMPING_DOWN";
 				posPlayer.y = JUMP_Y_MAX_HEIGHT;
+				decideFire(JUMP);
 			}
 		}
 		else if (state == "JUMPING_DOWN") {

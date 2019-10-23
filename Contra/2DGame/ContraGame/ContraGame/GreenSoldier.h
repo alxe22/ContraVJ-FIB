@@ -15,6 +15,8 @@ public:
 	void setAnimation(int animation) override;
 	int getAnimation() override;
 
+	void decideFire(int playerAnim);
+
 private:
 	bool jumping;
 	string state = "RUNNING"; // could be RUNNING, JUMPING_UP, JUMPING_DOWN
