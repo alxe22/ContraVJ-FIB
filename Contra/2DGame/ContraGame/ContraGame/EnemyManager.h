@@ -1,6 +1,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Enemy.h"
-#include <String.h>
+#include <string>
+
+using namespace std;
 
 class EnemyManager
 {
@@ -16,7 +18,7 @@ public:
 	}
 
 	void initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap);
-	void updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime);
+	void updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime, string level);
 	void detectBulletCollisions();
 	void render();
 
@@ -25,7 +27,12 @@ public:
 	void loadSuperTurrets(string level, ShaderProgram &shaderProgram, TileMap *tileMap);
 	void loadSoldiers(string level, ShaderProgram &shaderProgram, TileMap *tileMap);
 
+	// there is no tilemap in lv2 so we omit this parameter
+	void loadGreenSoldiers(string level, ShaderProgram &shaderProgram);
+
 private:
 	vector<Enemy *> enemies;
+	ShaderProgram shaderProgram;
+	long long miliLastGreenSoldierCreated = 0;
 };
 
