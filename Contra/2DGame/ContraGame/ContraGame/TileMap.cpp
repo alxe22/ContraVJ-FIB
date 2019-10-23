@@ -261,12 +261,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 
 bool TileMap::collisionMoveDownLv2(const glm::ivec2 &pos, const bool canMove, int *posY) const
 {
-	char *msgbuf = (char *)malloc(sizeof(char) * (300 + 1));
-	sprintf(msgbuf, "Player pos.x: %d pos.y: %d \n", pos.x, pos.y);
-	OutputDebugStringA(msgbuf);
 	if (!canMove && pos.y >= 9 * 32) {
-		sprintf(msgbuf, "Inside if \n");
-		OutputDebugStringA(msgbuf);
 		*posY -= 4;
 		return true;
 	}
