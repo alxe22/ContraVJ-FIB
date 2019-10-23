@@ -216,7 +216,7 @@ void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2,
 				// if enemy pos.x < 230 and enemy animation moveleft or enemy pos.x > 380 and enemy animation is move right
 				if (((enemy->getPosition()).x < 230 && enemy->getAnimation() == 0) ||
 					((enemy->getPosition()).x > 370 && enemy->getAnimation() == 1)) enemies[i] = NULL;
-				enemy->update(posPlayer1, posPlayer2, deltaTime);
+				else enemy->update(posPlayer1, posPlayer2, deltaTime);
 			}
 		}
 	}
