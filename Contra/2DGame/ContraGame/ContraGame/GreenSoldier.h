@@ -16,7 +16,10 @@ public:
 	int getAnimation() override;
 
 private:
-	bool bJumping;
+	bool jumping;
+	string state = "RUNNING"; // could be RUNNING, JUMPING_UP, JUMPING_DOWN
+	string direction = "L"; // could be Left or Right
+	bool jumpingDecisionMade = false;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;
