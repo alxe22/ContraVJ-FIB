@@ -206,12 +206,12 @@ void Scene::update(int deltaTime)
 	else {
 		/*player->update(deltaTime);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
-		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();*/
 		player->updateLv2(deltaTime, false);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
-		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
 		long long diff = Time::instance().NowToMili() - lastSecondFired;
 		if (diff > FIRE_FRAME_INTERVAL) {
 			lastSecondFired = Time::instance().NowToMili();

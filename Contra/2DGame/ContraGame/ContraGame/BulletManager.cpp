@@ -65,15 +65,27 @@ bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int he
 }
 
 
-void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
+void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime, string level)
 {
-	for (int i = 0; i < bullets.size(); ++i) {
-		Bullet * bullet = bullets[i];
-		if (bullet != NULL) {
-			bullet->update(deltaTime);
-			glm::vec2 pos = bullet->getPosition();
-			if (pos.x - posPlayer1.x <= -550 || pos.x - posPlayer1.x > 550 || 
-				pos.y - posPlayer1.y <= -550 || pos.y - posPlayer1.y > 550) bullets[i] = NULL;
+	if (level == "level01") {
+		for (int i = 0; i < bullets.size(); ++i) {
+			Bullet * bullet = bullets[i];
+			if (bullet != NULL) {
+				bullet->update(deltaTime);
+				glm::vec2 pos = bullet->getPosition();
+				if (pos.x - posPlayer1.x <= -550 || pos.x - posPlayer1.x > 550 ||
+					pos.y - posPlayer1.y <= -550 || pos.y - posPlayer1.y > 550) bullets[i] = NULL;
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < bullets.size(); ++i) {
+			Bullet * bullet = bullets[i];
+			if (bullet != NULL) {
+				bullet->update(deltaTime);
+				glm::vec2 pos = bullet->getPosition();
+				if (bullet->getFiredBy() == "ENEMY" && pos.y >= 350) bullets[i] = NULL;
+			}
 		}
 	}
 }
