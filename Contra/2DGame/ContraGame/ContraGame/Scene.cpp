@@ -108,7 +108,22 @@ void Scene::init()
 		currentTime = 0.0f;
 		SoundSystem::instance().playMusic("level01", state);
 		BulletManager::instance().initBulletManager(texProgram, map);*/
-		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+		map = TileMap::createTileMap("levels/boss.txt", glm::vec2(0, SCREEN_Y), texProgram);
+		/*
+		spritesheet.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f, 1.f), &spritesheet, &texProgram);
+	sprite->setNumberAnimations(0);
+	sprite->setPosition(glm::vec2(float(0), float(0)));
+	*/
+		bossSpritesheet.loadFromFile("images/boss.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		bossSprite = Sprite::createSprite(glm::ivec2(640, 400), glm::vec2(1.f, 1.f), &bossSpritesheet, &texProgram);
+		bossSprite->setNumberAnimations(0);
+		bossSprite->setPosition(glm::vec2(float(0), float(0)));
+		bossTerrainSpritesheet.loadFromFile("images/bossTerrain.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		bossTerrainSprite = Sprite::createSprite(glm::ivec2(640, 64), glm::vec2(1.f, 1.f), &bossTerrainSpritesheet, &texProgram);
+		bossTerrainSprite->setNumberAnimations(0);
+		bossTerrainSprite->setPosition(glm::vec2(float(0), float(432)));
+		/*EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
 		spritesheet.loadFromFile("images/stage2v4.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f / 4.f, 1.f / 5.f), &spritesheet, &texProgram);
@@ -190,7 +205,7 @@ void Scene::init()
 		player->initlevel2(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		player->setPosition(glm::vec2((2 * 32), 9 * 32));
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-		currentTime = 0.0f;
+		currentTime = 0.0f;*/
 	}
 }
 
@@ -209,7 +224,7 @@ void Scene::update(int deltaTime)
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
 		EnemyManager::instance().detectBulletCollisions();
 		CameraUpdate();*/
-		player->updateLv2(deltaTime, false);
+		/*player->updateLv2(deltaTime, false);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
 		long long diff = Time::instance().NowToMili() - lastSecondFired;
@@ -217,7 +232,7 @@ void Scene::update(int deltaTime)
 			lastSecondFired = Time::instance().NowToMili();
 			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
 			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) sprite->changeAnimation(sprite->animation() - 1);
-		}
+		}*/
 	}
 }
 
@@ -256,10 +271,13 @@ void Scene::render()
 		player->render();
 		EnemyManager::instance().render();
 		BulletManager::instance().render();*/
-		sprite->render(); //coment this line when testing level01
+		/*sprite->render(); //coment this line when testing level01
 		player->render(); //coment this line when testing level01
 		EnemyManager::instance().render(); //coment this line when testing level01
-		BulletManager::instance().render(); //coment this line when testing level01
+		BulletManager::instance().render(); //coment this line when testing level01*/
+		map->render();
+		bossSprite->render();
+		bossTerrainSprite->render();
 	}
 }
 

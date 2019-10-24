@@ -39,6 +39,8 @@ private:
 	TileMap *map;
 	Texture spritesheet, spritesheetSelector, spritesheetControls;
 	Sprite *sprite, *spriteSelector, *spriteControls;
+	Sprite *bossSprite, *bossTerrainSprite;
+	Texture bossSpritesheet, bossTerrainSpritesheet;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;
