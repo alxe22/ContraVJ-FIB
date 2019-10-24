@@ -336,7 +336,7 @@ void Player::updateLv2(int deltaTime, bool canMoveForward)
 		SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
 	}
 	if (hasShoot) ++count;
-	if (count > 50) {
+	if (count > 25) {
 		count = 0;
 		hasShoot = false;
 	}

@@ -42,7 +42,11 @@ void GreenSoldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
+	Texture spritesheetBox;
 	//sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	spritesheetBox.loadFromFile("images/rocks.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteBoxCollider = Sprite::createSprite(glm::ivec2(15, 24), glm::vec2(1, 1), &spritesheetBox, &shaderProgram);
+	spriteBoxCollider->setNumberAnimations(0);
 }
 
 void GreenSoldier::decideFire(int playerAnim) 
@@ -102,11 +106,13 @@ void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int de
 		}
 	}
 	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
+	spriteBoxCollider->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
 }
 
 void GreenSoldier::render()
 {
 	sprite->render();
+	spriteBoxCollider->render();
 }
 
 void GreenSoldier::setTileMap(TileMap *tileMap)
@@ -118,6 +124,7 @@ void GreenSoldier::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
+	spriteBoxCollider->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
 }
 
 glm::ivec2 GreenSoldier::getPosition()
@@ -127,7 +134,8 @@ glm::ivec2 GreenSoldier::getPosition()
 
 glm::ivec2 GreenSoldier::getSize()
 {
-	return glm::ivec2(32, 32);
+	if (sprite->animation() == JUMP) return glm::ivec2(15, 24);
+	else if (sprite->animation() == MOVE_LEFT || sprite->animation() == MOVE_RIGHT) return glm::ivec2(17, 25);
 }
 
 string GreenSoldier::type()
@@ -143,4 +151,12 @@ void GreenSoldier::setAnimation(int animation)
 int GreenSoldier::getAnimation() 
 {
 	return sprite->animation();
+}
+
+glm::ivec2 GreenSoldier::getTopLeftPos()
+{
+	if (sprite->animation() == JUMP) return glm::ivec2(posPlayer.x + 9, posPlayer.y + 8);
+	else if (sprite->animation() == MOVE_LEFT) return glm::ivec2(posPlayer.x + 7, posPlayer.y + 7);
+	else if (sprite->animation() == MOVE_RIGHT) return glm::ivec2(posPlayer.x + 7, posPlayer.y + 7);
+
 }

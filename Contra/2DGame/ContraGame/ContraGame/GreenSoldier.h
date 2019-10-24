@@ -14,6 +14,7 @@ public:
 	string type() override;
 	void setAnimation(int animation) override;
 	int getAnimation() override;
+	glm::ivec2 getTopLeftPos() override;
 
 	void decideFire(int playerAnim);
 
@@ -25,7 +26,7 @@ private:
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;
-	Sprite *sprite;
+	Sprite *sprite, *spriteBoxCollider;
 	TileMap *map;
 };
 

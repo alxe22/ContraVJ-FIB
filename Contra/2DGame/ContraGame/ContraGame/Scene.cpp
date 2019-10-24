@@ -212,6 +212,7 @@ void Scene::update(int deltaTime)
 		player->updateLv2(deltaTime, false);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
+		EnemyManager::instance().detectBulletCollisions();
 		long long diff = Time::instance().NowToMili() - lastSecondFired;
 		if (diff > FIRE_FRAME_INTERVAL) {
 			lastSecondFired = Time::instance().NowToMili();

@@ -226,7 +226,7 @@ void EnemyManager::detectBulletCollisions() {
 	for (int i = 0; i < enemies.size(); ++i) {
 		Enemy *enemy = enemies[i];
 		if (enemy != NULL) {
-			if (BulletManager::instance().existsBulletColision(enemy->getPosition(), (enemy->getSize()).x, (enemy->getSize()).y, enemy->type()))
+			if (BulletManager::instance().existsBulletColision(enemy->getTopLeftPos(), (enemy->getSize()).x, (enemy->getSize()).y, enemy->type()))
 				enemies[i] = NULL;
 		}
 

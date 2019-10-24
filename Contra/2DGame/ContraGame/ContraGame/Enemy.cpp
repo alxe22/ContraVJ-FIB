@@ -44,3 +44,8 @@ string Enemy::type()
 {
 	return "";
 }
+
+glm::ivec2 Enemy::getTopLeftPos()
+{
+	return glm::ivec2(-1, -1);
+}

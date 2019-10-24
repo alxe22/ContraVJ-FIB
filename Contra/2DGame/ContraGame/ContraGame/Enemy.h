@@ -22,6 +22,7 @@ public:
 	virtual glm::ivec2 getPosition();
 	virtual glm::ivec2 getSize();
 	virtual string type();
+	virtual glm::ivec2 getTopLeftPos();
 };
 
 #endif
