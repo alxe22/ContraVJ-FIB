@@ -17,7 +17,7 @@ IconLife::~IconLife()
 
 void IconLife::init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 {
-	spritesheet.loadFromFile("images/spreadv2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/lifes.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(0);
 }

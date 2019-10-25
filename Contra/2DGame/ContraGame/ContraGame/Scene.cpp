@@ -219,7 +219,7 @@ void Scene::init()
 	}
 	else if (state == "CONTROLS") loadControls();
 	else {
-		if (currentLevel == "LEVEL01") initLv01();
+		/*if (currentLevel == "LEVEL01")*/ initLv01();
 		if (currentLevel == "LEVEL02") initLv02();
 		if (currentLevel == "LEVEL03") initLv03();
 	}

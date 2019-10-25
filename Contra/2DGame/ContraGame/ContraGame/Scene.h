@@ -65,7 +65,7 @@ private:
 	// testing only
 	long long lastSecondFired = 0;
 	float limitCamera;
-	string currentLevel = "LEVEL02";
+	string currentLevel = "LEVEL01";
 
 };
 
