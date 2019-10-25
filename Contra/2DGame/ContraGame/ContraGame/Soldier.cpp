@@ -84,12 +84,24 @@ glm::ivec2 Soldier::getPosition()
 	return posPlayer;
 }
 
-glm::ivec2 Soldier::getSize()
+/*glm::ivec2 Soldier::getSize()
 {
 	return glm::ivec2(42, 64);
-}
+}*/
 
 string Soldier::type()
 {
 	return "SOLDIER";
+}
+
+glm::ivec2 Soldier::getSize()
+{
+	if (sprite->animation() == STAND_LEFT) return glm::ivec2(42, 64);
+	else if (sprite->animation() == MOVE_LEFT) return glm::ivec2(20, 64);
+}
+
+glm::ivec2 Soldier::getTopLeftPos()
+{
+	if (sprite->animation() == STAND_LEFT) return glm::ivec2(posPlayer.x, posPlayer.y);
+	else if (sprite->animation() == MOVE_LEFT) return glm::ivec2(posPlayer.x+9, posPlayer.y);
 }

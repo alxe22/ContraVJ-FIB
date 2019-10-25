@@ -29,13 +29,9 @@ bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int heigh
 		if (b != NULL) {
 			glm::vec2 bPos = b->getPosition();
 			//offset
-			if (type == "SOLDIER") {
-				bPos.x = bPos.x - 10;
-				bPos.y = bPos.y - 16;
-			}
-			else if (type == "SNIPER") {
-				bPos.x = bPos.x - 10;
-				bPos.y = bPos.y - 120;
+			if (type == "SNIPER") {
+				/*bPos.x = bPos.x - 10;
+				bPos.y = bPos.y - 120;*/
 			}
 			else if (type == "TURRET") {
 				bPos.x = bPos.x + 16;
@@ -47,16 +43,14 @@ bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int heigh
 				topLeft.x += 16.f;
 				topLeft.y -= 16.f;
 			}
-			/*bPos.x = bPos.x + 32;
-			bPos.y = bPos.y + 32;*/
+			bPos.x = bPos.x + 16;
+			bPos.y = bPos.y + 16;
 
 			// bPos.x < bottomRight.x && bPos.x > bottomLeft.x && bPos.y < bottomRight.y && bPos.y > bottomLeft.y - height
-			if (bPos.x > topLeft.x && bPos.x < topLeft.x + width) {
-				if (bPos.y< topLeft.y && bPos.y > topLeft.y - height) {
+			if ((bPos.x > topLeft.x) && (bPos.x < topLeft.x + width)) {
+				if ((bPos.y > topLeft.y) && (bPos.y < topLeft.y + height)) {
 					if (b->getFiredBy() == "CHARACTER") {
 						if (b->getAnimation() != 1) b->changeBulletAnimation(1);
-						else if (b->getAnimation() == 1)
-							bullets[i] = NULL;
 						return true;
 					}
 					else return false;
@@ -79,6 +73,7 @@ void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int d
 				glm::vec2 pos = bullet->getPosition();
 				if (pos.x - posPlayer1.x <= -550 || pos.x - posPlayer1.x > 550 ||
 					pos.y - posPlayer1.y <= -550 || pos.y - posPlayer1.y > 550) bullets[i] = NULL;
+				if (bullet->getFiredBy() == "CHARACTER" && bullet->getAnimation() == 1) bullets[i] = NULL;
 			}
 		}
 	}
@@ -89,6 +84,8 @@ void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int d
 				bullet->update(deltaTime);
 				glm::vec2 pos = bullet->getPosition();
 				if (bullet->getFiredBy() == "CHARACTER") {
+					if (bullet->getAnimation() == 1) bullets[i] = NULL;
+
 					if (pos.x >= 186 && pos.x <= 346 && pos.y < 170) bullets[i] = NULL;
 					
 					else if (pos.x >= 150 && pos.x <= 185 && pos.y < 185) bullets[i] = NULL;

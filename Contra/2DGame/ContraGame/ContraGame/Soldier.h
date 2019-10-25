@@ -23,6 +23,8 @@ public:
 	glm::ivec2 getSize() override;
 	string type() override;
 
+	glm::ivec2 getTopLeftPos() override;
+
 private:
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
