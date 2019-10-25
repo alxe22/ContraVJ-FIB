@@ -207,18 +207,33 @@ void Scene::update(int deltaTime)
 		/*player->update(deltaTime);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
-		EnemyManager::instance().detectBulletCollisions();
+		EnemyManager::instance().detectBulletCollisions("level01");
 		CameraUpdate();*/
-		player->updateLv2(deltaTime, false);
-		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
+		player->updateLv2(deltaTime, EnemyManager::instance().canAdvance());
+		/*EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
-		EnemyManager::instance().detectBulletCollisions();
-		long long diff = Time::instance().NowToMili() - lastSecondFired;
-		if (diff > FIRE_FRAME_INTERVAL) {
-			lastSecondFired = Time::instance().NowToMili();
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
-			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) sprite->changeAnimation(sprite->animation() - 1);
+		EnemyManager::instance().detectBulletCollisions("level02");*/
+		if (EnemyManager::instance().canAdvance()) {
+			int animNum = sprite->animation();
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP) && (animNum == 4 || animNum == 8 || animNum == 12 || animNum == 16)) {
+				EnemyManager::instance().setCanAdvance(0);
+			}
+			if ((animNum == 0 || animNum == 4 || animNum == 8 || animNum == 12) && EnemyManager::instance().canAdvance()) {
+				sprite->changeAnimation(sprite->animation() + 1);
+				EnemyManager::instance().deleteAll();
+			}
+			//else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+			long long diff = Time::instance().NowToMili() - lastSecondFired;
+			if (diff > FIRE_FRAME_INTERVAL) {
+				lastSecondFired = Time::instance().NowToMili();
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+			}
 		}
+		else {
+			EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
+			EnemyManager::instance().detectBulletCollisions("level02");
+		}
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
 	}
 }
 

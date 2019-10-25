@@ -15,6 +15,8 @@
 
 #define GREEN_SOLDIER_CREATION_FRAME_INTERVAL 1000
 
+#define GREEN_SOLDIERS_KILLED_TO_ADVANCE 5
+
 void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) 
 {
 	Enemy *enemy;
@@ -180,6 +182,16 @@ void EnemyManager::loadGreenSoldiers(string level, ShaderProgram &shaderProgram)
 	enemies.push_back(enemy);
 }
 
+bool EnemyManager::canAdvance()
+{
+	return greenSoldiersKilled > GREEN_SOLDIERS_KILLED_TO_ADVANCE;
+}
+
+void EnemyManager::setCanAdvance(int i)
+{
+	greenSoldiersKilled = i;
+}
+
 void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
 	enemies = vector<Enemy *>();
 	int nSoldiers = 0;
@@ -222,12 +234,14 @@ void EnemyManager::updateEnemies(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2,
 	}
 }
 
-void EnemyManager::detectBulletCollisions() {
+void EnemyManager::detectBulletCollisions(string level) {
 	for (int i = 0; i < enemies.size(); ++i) {
 		Enemy *enemy = enemies[i];
 		if (enemy != NULL) {
-			if (BulletManager::instance().existsBulletColision(enemy->getTopLeftPos(), (enemy->getSize()).x, (enemy->getSize()).y, enemy->type()))
+			if (BulletManager::instance().existsBulletColision(enemy->getTopLeftPos(), (enemy->getSize()).x, (enemy->getSize()).y, enemy->type())) {
 				enemies[i] = NULL;
+				if (level == "level02") ++greenSoldiersKilled;
+			}
 		}
 
 	}
@@ -236,4 +250,8 @@ void EnemyManager::detectBulletCollisions() {
 void EnemyManager::render() {
 	for (Enemy *enemy : enemies)
 		if(enemy != NULL) enemy->render();
+}
+
+void EnemyManager::deleteAll() {
+	enemies = vector<Enemy *>();
 }
