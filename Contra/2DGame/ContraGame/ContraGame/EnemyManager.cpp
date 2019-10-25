@@ -192,16 +192,18 @@ void EnemyManager::setCanAdvance(int i)
 	greenSoldiersKilled = i;
 }
 
-void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap) {
-	enemies = vector<Enemy *>();
-	int nSoldiers = 0;
-	int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
-	int xTileInterval = xTileInc, yTileInterval = 1;
-	
-	loadSnipers("", shaderProgram, tileMap);
-	loadTurrets("", shaderProgram, tileMap);
-	loadSuperTurrets("", shaderProgram, tileMap);
-	loadSoldiers("", shaderProgram, tileMap);
+void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets, ShaderProgram &shaderProgram, TileMap *tileMap, string level) {
+	if (level == "level01") {
+		enemies = vector<Enemy *>();
+		int nSoldiers = 0;
+		int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
+		int xTileInterval = xTileInc, yTileInterval = 1;
+
+		loadSnipers("", shaderProgram, tileMap);
+		loadTurrets("", shaderProgram, tileMap);
+		loadSuperTurrets("", shaderProgram, tileMap);
+		loadSoldiers("", shaderProgram, tileMap);
+	}
 	this->shaderProgram = shaderProgram;
 }
 

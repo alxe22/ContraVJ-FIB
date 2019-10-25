@@ -112,13 +112,13 @@ void Scene::initLv01()
 	Icon3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	Icon3->setPosition(glm::vec2(float(90), float(60)));
 	SoundSystem::instance().playMusic("level01", state);
-	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map, "level01");
 	BulletManager::instance().initBulletManager(texProgram, map);
 }
 
 void Scene::initLv02()
 {
-	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
+	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map, "level02");
 	BulletManager::instance().initBulletManager(texProgram, map);
 	spritesheet.loadFromFile("images/stage2v4.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f / 4.f, 1.f / 5.f), &spritesheet, &texProgram);
@@ -220,7 +220,8 @@ void Scene::init()
 	else if (state == "CONTROLS") loadControls();
 	else {
 		if (currentLevel == "LEVEL01") initLv01();
-		else if (currentLevel == "LEVEL02") initLv02();
+		if (currentLevel == "LEVEL02") initLv02();
+		if (currentLevel == "LEVEL03") initLv03();
 	}
 }
 
@@ -279,8 +280,8 @@ void Scene::update(int deltaTime)
 	}
 	else {
 		if (currentLevel == "LEVEL01") updateLv01(deltaTime);
-		if (currentLevel == "LEVEL02") updateLv02(deltaTime);
-		if (currentLevel == "LEVEL03") updateLv03(deltaTime);
+		else if (currentLevel == "LEVEL02") updateLv02(deltaTime);
+		else if (currentLevel == "LEVEL03") updateLv03(deltaTime);
 	}
 }
 
