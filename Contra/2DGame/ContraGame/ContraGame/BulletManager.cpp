@@ -22,7 +22,7 @@ for (int i = 0; i < dir.size() && i < pos.size(); ++i)
 }
 
 //its top left, not bottom left (refactor this please!!)
-bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int height, string type)
+bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int height, string type)
 {
 	for (int i = 0; i < bullets.size(); ++i) {
 		Bullet * b = bullets[i];
@@ -44,15 +44,15 @@ bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int he
 			else if (type == "SUPER_TURRET") {
 				bPos.x = bPos.x + 16;
 				bPos.y = bPos.y - height - 32;
-				bottomLeft.x += 16.f;
-				bottomLeft.y -= 16.f;
+				topLeft.x += 16.f;
+				topLeft.y -= 16.f;
 			}
 			/*bPos.x = bPos.x + 32;
 			bPos.y = bPos.y + 32;*/
 
 			// bPos.x < bottomRight.x && bPos.x > bottomLeft.x && bPos.y < bottomRight.y && bPos.y > bottomLeft.y - height
-			if (bPos.x > bottomLeft.x && bPos.x < bottomLeft.x + width) {
-				if (bPos.y< bottomLeft.y && bPos.y > bottomLeft.y - height) {
+			if (bPos.x > topLeft.x && bPos.x < topLeft.x + width) {
+				if (bPos.y< topLeft.y && bPos.y > topLeft.y - height) {
 					if (b->getFiredBy() == "CHARACTER") {
 						if (b->getAnimation() != 1) b->changeBulletAnimation(1);
 						else if (b->getAnimation() == 1)
