@@ -21,14 +21,17 @@ class Scene
 {
 
 public:
+	enum level {
+		LEVEL01, LEVEL02, LEVEL03
+	};
+
 	Scene();
 	~Scene();
 	void loadMenu();
 	void loadControls();
 	void menuUpdate(int deltaTime);
 	void controlsUpdate(int deltaTime);
-	void level2Update(int deltaTime);
-	
+
 	void init();
 	void initLv01();
 	void initLv02();
@@ -51,6 +54,8 @@ private:
 
 private:
 	string state = "MENU"; // MENU, CONTROLS, PLAYING
+	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
+	int currentLevel;
 	TileMap *map;
 	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower;
 	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower;
@@ -65,8 +70,6 @@ private:
 	// testing only
 	long long lastSecondFired = 0;
 	float limitCamera;
-	string currentLevel = "LEVEL01";
-
 };
 
 

@@ -211,6 +211,7 @@ void Scene::initLv03()
 void Scene::init()
 {
 	initShaders();
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -219,9 +220,9 @@ void Scene::init()
 	}
 	else if (state == "CONTROLS") loadControls();
 	else {
-		/*if (currentLevel == "LEVEL01")*/ initLv01();
-		if (currentLevel == "LEVEL02") initLv02();
-		if (currentLevel == "LEVEL03") initLv03();
+		if (currentLevel == LEVEL01) initLv01();
+		else if (currentLevel == LEVEL02) initLv02();
+		else if (currentLevel == LEVEL03) initLv03();
 	}
 }
 
@@ -279,9 +280,9 @@ void Scene::update(int deltaTime)
 		controlsUpdate(deltaTime);
 	}
 	else {
-		if (currentLevel == "LEVEL01") updateLv01(deltaTime);
-		else if (currentLevel == "LEVEL02") updateLv02(deltaTime);
-		else if (currentLevel == "LEVEL03") updateLv03(deltaTime);
+		if (currentLevel == LEVEL01) updateLv01(deltaTime);
+		else if (currentLevel == LEVEL02) updateLv02(deltaTime);
+		else if (currentLevel == LEVEL03) updateLv03(deltaTime);
 	}
 }
 
@@ -295,10 +296,6 @@ void Scene::CameraUpdate()
 		Icon3->setPosition(glm::vec2(float(limitCamera + 90), float(60)));
 	}
 	projection = glm::ortho(limitCamera, float(SCREEN_WIDTH - 1)+limitCamera, float(SCREEN_HEIGHT - 1), 30.f);
-}
-
-void Scene::level2Update(int deltaTime)
-{
 }
 
 void Scene::render()
@@ -319,9 +316,9 @@ void Scene::render()
 		spriteControls->render();
 	}
 	else {
-		if (currentLevel == "LEVEL01") renderLv01();
-		if (currentLevel == "LEVEL02") renderLv02();
-		if (currentLevel == "LEVEL03") renderLv03();
+		if (currentLevel == LEVEL01) renderLv01();
+		if (currentLevel == LEVEL02) renderLv02();
+		if (currentLevel == LEVEL03) renderLv03();
 	}
 }
 
