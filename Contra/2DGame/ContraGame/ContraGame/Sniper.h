@@ -24,6 +24,8 @@ public:
 	glm::ivec2 getSize() override;
 	string type() override;
 
+	glm::ivec2 Sniper::getTopLeftPos() override;
+
 	void decideFire(int playerAnim);
 
 private:
