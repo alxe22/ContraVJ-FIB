@@ -28,35 +28,16 @@ bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int heigh
 		Bullet * b = bullets[i];
 		if (b != NULL) {
 			glm::vec2 bPos = b->getPosition();
-			//offset
-			if (type == "SNIPER") {
-				/*bPos.x = bPos.x - 10;
-				bPos.y = bPos.y - 120;*/
-			}
-			else if (type == "TURRET") {
-				bPos.x = bPos.x + 16;
-				bPos.y = bPos.y - height - 16;
-			}
-			else if (type == "SUPER_TURRET") {
-				bPos.x = bPos.x + 16;
-				bPos.y = bPos.y - height - 32;
-				topLeft.x += 16.f;
-				topLeft.y -= 16.f;
-			}
 			bPos.x = bPos.x + 16;
 			bPos.y = bPos.y + 16;
-
-			// bPos.x < bottomRight.x && bPos.x > bottomLeft.x && bPos.y < bottomRight.y && bPos.y > bottomLeft.y - height
 			if ((bPos.x > topLeft.x) && (bPos.x < topLeft.x + width)) {
 				if ((bPos.y > topLeft.y) && (bPos.y < topLeft.y + height)) {
 					if (b->getFiredBy() == "CHARACTER") {
 						if (b->getAnimation() != 1) b->changeBulletAnimation(1);
 						return true;
 					}
-					else return false;
 				}
 			}
-			return false;
 		}
 	}
 	return false;
@@ -71,9 +52,10 @@ void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int d
 			if (bullet != NULL) {
 				bullet->update(deltaTime);
 				glm::vec2 pos = bullet->getPosition();
-				if (pos.x - posPlayer1.x <= -550 || pos.x - posPlayer1.x > 550 ||
-					pos.y - posPlayer1.y <= -550 || pos.y - posPlayer1.y > 550) bullets[i] = NULL;
-				if (bullet->getFiredBy() == "CHARACTER" && bullet->getAnimation() == 1) bullets[i] = NULL;
+				int posXdiff = pos.x - posPlayer1.x;
+				int posYdiff = pos.y - posPlayer1.y;
+				if (posXdiff <= -550 || posXdiff > 550 ||
+					posYdiff <= -550 || posYdiff > 550 | bullet->getAnimation() == 1) bullets[i] = NULL;
 			}
 		}
 	}
