@@ -26,11 +26,11 @@ public:
 	void setPositionLv2(const glm::vec2 &pos);
 	glm::ivec2 getPosition();
 	int getLifes();
+	bool getPower();
 	
 private:
 	bool hasShoot = false;
 	int count = 0;
-	bool bJumping;
 	int PlayerState;
 	string PlayerDir;
 	glm::ivec2 tileMapDispl, posPlayer;
@@ -39,6 +39,11 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	int RestLifes;
+	bool F;
+	bool swimming;
+	bool shooting;
+	bool powerup;
+	long long DieSec;
 
 };
 

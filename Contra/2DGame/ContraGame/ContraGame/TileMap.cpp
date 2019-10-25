@@ -157,7 +157,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 // already intersecting a tile below.
 
 bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
-{
+{/*
 	int x, y0, y1;
 	
 	x = pos.x / tileSize;
@@ -165,13 +165,11 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		/*if(map[y*mapSize.x+x] == 0)
-			return true;*/
 		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 			return true;
 		}
 	}
-	
+	*/
 	return false;
 }
 
@@ -199,7 +197,7 @@ bool TileMap::isTerrainAhead(const glm::ivec2 &pos, const glm::ivec2 &size, stri
 }
 
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
-{
+{/*
 	int x, y0, y1;
 	
 	x = (pos.x + size.x - 1) / tileSize;
@@ -207,8 +205,6 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		/*if(map[y*mapSize.x+x] == 0)
-			return true;*/
 		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 			return true;
 		}
@@ -221,9 +217,39 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 			return true;
 		}
 	}
-	
+	*/
 	return false;
 }
+
+bool TileMap::collisionOutWaterRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
+{
+	int x, y0, y1;
+
+	x = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for(int y=y0; y<=y1; y++)
+	{
+		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) return true;
+	}
+	return false;
+}
+
+bool TileMap::collisionOutWaterLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
+{
+	int x, y0, y1;
+
+	x = (pos.x + size.x - 1) / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for (int y = y0; y <= y1; y++)
+	{
+		if (map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) return true;
+	}
+	return false;
+}
+
+
 
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
 {
@@ -243,12 +269,36 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 			}*/
 			// special case. We need to ensure that the main character collides 
 			// with the last water tile, not the first one as it would cause unrealistic efect
-			if (map[y*mapSize.x + x] == 1 && y == 14) {
+			if (map[y*mapSize.x + x] == 7 || map[y*mapSize.x + x] == 8 ||
+				map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
 				*posY = tileSize * y - size.y;
 				return true;
 			}
-			else if (map[y*mapSize.x + x] == 7 || map[y*mapSize.x + x] == 8 ||
-				map[y*mapSize.x + x] == 112 || map[y*mapSize.x + x] == 113) {
+		}
+	}
+
+	return false;
+}
+
+bool TileMap::collisionWater(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+{
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = (pos.y + size.y - 1) / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[y*mapSize.x + x] != 0)
+		{
+			/*if(*posY - tileSize * y + size.y <= -112)
+			{
+			*posY = tileSize * y - size.y;
+			return true;
+			}*/
+			// special case. We need to ensure that the main character collides 
+			// with the last water tile, not the first one as it would cause unrealistic efect
+			if (map[y*mapSize.x + x] == 1 && y == 14) {
 				*posY = tileSize * y - size.y;
 				return true;
 			}

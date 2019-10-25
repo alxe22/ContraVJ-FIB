@@ -18,6 +18,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GreenSoldier.h" />
+    <ClInclude Include="IconLife.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="Sniper.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="SpreadGun.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SuperTurret.h" />
     <ClInclude Include="Texture.h" />
@@ -39,6 +41,7 @@
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GreenSoldier.cpp" />
+    <ClCompile Include="IconLife.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -47,6 +50,7 @@
     <ClCompile Include="Sniper.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="SpreadGun.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SuperTurret.cpp" />
     <ClCompile Include="Texture.cpp" />

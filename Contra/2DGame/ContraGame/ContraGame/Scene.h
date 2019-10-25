@@ -9,6 +9,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "SpreadGun.h"
+#include "IconLife.h"
 
 
 // Scene contains all the entities of our game.
@@ -37,16 +39,19 @@ private:
 private:
 	string state = "MENU"; // MENU, CONTROLS, PLAYING
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls;
-	Sprite *sprite, *spriteSelector, *spriteControls;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;
+	SpreadGun *spread;
+	IconLife *Icon1,*Icon2, *Icon3;
 	float currentTime;
 	glm::mat4 projection;
 	bool playing = false;
 	// testing only
 	long long lastSecondFired = 0;
+	float limitCamera;
 
 };
 

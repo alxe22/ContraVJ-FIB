@@ -105,8 +105,23 @@ void Scene::init()
 		player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
 		player->setTileMap(map);
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		limitCamera = 0.0f;
 		currentTime = 0.0f;
+		spread = new SpreadGun();
+		spread->initSpread(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+
+		Icon1 = new IconLife();
+		Icon2 = new IconLife();
+		Icon3 = new IconLife();
+
+		Icon1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		Icon1->setPosition(glm::vec2(float(30), float(60)));
+		Icon2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		Icon2->setPosition(glm::vec2(float(60), float(60)));
+		Icon3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		Icon3->setPosition(glm::vec2(float(90), float(60)));
 		SoundSystem::instance().playMusic("level01", state);
+		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);*/
 		EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
@@ -212,6 +227,15 @@ void Scene::update(int deltaTime)
 		player->updateLv2(deltaTime, EnemyManager::instance().canAdvance());
 		/*EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
+		player->update(deltaTime);
+		spread->update(deltaTime);
+		//enemy->update(glm::ivec2(-1, -1), glm::ivec2(-1, -1), deltaTime);
+		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime);
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime);
+		CameraUpdate();
+		Icon1->update(deltaTime);
+		Icon2->update(deltaTime);
+		Icon3->update(deltaTime);
 		EnemyManager::instance().detectBulletCollisions("level02");*/
 		if (EnemyManager::instance().canAdvance()) {
 			int animNum = sprite->animation();
@@ -240,10 +264,13 @@ void Scene::update(int deltaTime)
 void Scene::CameraUpdate()
 {
 	glm::ivec2 pos = player->getPosition();
-	float posCameraX = 0.0f;
-	if (pos.x >= 240) posCameraX = pos.x-240;
-
-	projection = glm::ortho(posCameraX, float(SCREEN_WIDTH - 1)+posCameraX, float(SCREEN_HEIGHT - 1), 0.f);
+	if (pos.x - 240 > limitCamera && pos.x + 240 < 200*32) {
+		limitCamera = pos.x - 240;
+		Icon1->setPosition(glm::vec2(float(limitCamera + 30), float(60)));
+		Icon2->setPosition(glm::vec2(float(limitCamera + 60), float(60)));
+		Icon3->setPosition(glm::vec2(float(limitCamera + 90), float(60)));
+	}
+	projection = glm::ortho(limitCamera, float(SCREEN_WIDTH - 1)+limitCamera, float(SCREEN_HEIGHT - 1), 30.f);
 }
 
 void Scene::level2Update(int deltaTime)
@@ -269,13 +296,19 @@ void Scene::render()
 	}
 	else {
 		/*map->render();
+		if (player->getLifes() > 0) Icon1->render();
+		if (player->getLifes() > 1) Icon2->render();
+		if (player->getLifes() > 2) Icon3->render();
 		player->render();
+		//spriteLifes->render();
 		EnemyManager::instance().render();
-		BulletManager::instance().render();*/
+		BulletManager::instance().render();
+		if(!player->getPower()) spread->render();*/
 		sprite->render(); //coment this line when testing level01
 		player->render(); //coment this line when testing level01
 		EnemyManager::instance().render(); //coment this line when testing level01
 		BulletManager::instance().render(); //coment this line when testing level01
+		
 	}
 }
 
