@@ -21,6 +21,7 @@ for (int i = 0; i < dir.size() && i < pos.size(); ++i)
 	}
 }
 
+//its top left, not bottom left (refactor this please!!)
 bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int height, string type)
 {
 	for (int i = 0; i < bullets.size(); ++i) {
@@ -46,16 +47,6 @@ bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int he
 				bottomLeft.x += 16.f;
 				bottomLeft.y -= 16.f;
 			}
-			/*else if (type == "GREEN_SOLDIER") {
-				bPos.x = bPos.x + 32;
-				bPos.y = bPos.y + 32;
-				
-				bPos.x = bPos.x + 16;
-				bPos.y = bPos.y + 16;
-				bottomLeft.x = bottomLeft.x + 9;
-				bottomLeft.y = bottomLeft.y + 8;
-				
-			}*/
 			bPos.x = bPos.x + 32;
 			bPos.y = bPos.y + 32;
 

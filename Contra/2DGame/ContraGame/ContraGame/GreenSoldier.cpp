@@ -43,10 +43,6 @@ void GreenSoldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	Texture spritesheetBox;
-	//sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-	spritesheetBox.loadFromFile("images/rocks.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	spriteBoxCollider = Sprite::createSprite(glm::ivec2(15, 24), glm::vec2(1, 1), &spritesheetBox, &shaderProgram);
-	spriteBoxCollider->setNumberAnimations(0);
 }
 
 void GreenSoldier::decideFire(int playerAnim) 
@@ -106,13 +102,11 @@ void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int de
 		}
 	}
 	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
-	spriteBoxCollider->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
 }
 
 void GreenSoldier::render()
 {
 	sprite->render();
-	spriteBoxCollider->render();
 }
 
 void GreenSoldier::setTileMap(TileMap *tileMap)
@@ -124,7 +118,6 @@ void GreenSoldier::setPosition(const glm::vec2 &pos)
 {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
-	spriteBoxCollider->setPosition(glm::vec2(float(posPlayer.x), float(posPlayer.y)));
 }
 
 glm::ivec2 GreenSoldier::getPosition()
