@@ -200,8 +200,8 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 		int xTileInterval = xTileInc, yTileInterval = 1;
 
 		//loadSnipers("", shaderProgram, tileMap);
-		loadTurrets("", shaderProgram, tileMap);
-		//loadSuperTurrets("", shaderProgram, tileMap);
+		//loadTurrets("", shaderProgram, tileMap);
+		loadSuperTurrets("", shaderProgram, tileMap);
 		//loadSoldiers("", shaderProgram, tileMap);
 	}
 	this->shaderProgram = shaderProgram;

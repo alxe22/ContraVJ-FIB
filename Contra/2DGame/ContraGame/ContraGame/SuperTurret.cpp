@@ -121,6 +121,11 @@ string SuperTurret::type()
 
 glm::ivec2 SuperTurret::getSize()
 {
-	return glm::ivec2(128, 128);
+	return glm::ivec2(64, 64);
+}
+
+glm::ivec2 SuperTurret::getTopLeftPos()
+{
+	return glm::ivec2(posPlayer.x + 32, posPlayer.y + 32);
 }
 
