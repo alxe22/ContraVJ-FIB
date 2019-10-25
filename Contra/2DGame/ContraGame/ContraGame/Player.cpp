@@ -342,7 +342,13 @@ void Player::updateLv2(int deltaTime, bool canMoveForward)
 	}
 	// first we need to check if its moving an jumping, it shoud go before checking if its moving left or right
 	if (PlayerState == standing || PlayerState == running || PlayerState == laying) {
-		if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
+		if (canMoveForward && Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+			if (sprite->animation() != MOVE_UP_LV2) sprite->changeAnimation(MOVE_UP_LV2);
+			char *msgbuf = (char *)malloc(sizeof(char) * (300 + 1));
+			sprintf(msgbuf, "inside \n");
+			OutputDebugStringA(msgbuf);
+		}
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 			if (sprite->animation() != MOVE_RIGHT_LV2) {
 				sprite->changeAnimation(MOVE_RIGHT_LV2);
 			}

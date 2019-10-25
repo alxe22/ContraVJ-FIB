@@ -265,6 +265,10 @@ bool TileMap::collisionMoveDownLv2(const glm::ivec2 &pos, const bool canMove, in
 		*posY -= 4;
 		return true;
 	}
+	else if (canMove) {
+		*posY -= 4;
+		return true;
+	}
 	else return false;
 }
 
