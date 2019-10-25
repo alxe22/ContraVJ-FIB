@@ -123,6 +123,10 @@ void Scene::init()
 		bossTerrainSprite = Sprite::createSprite(glm::ivec2(640, 64), glm::vec2(1.f, 1.f), &bossTerrainSpritesheet, &texProgram);
 		bossTerrainSprite->setNumberAnimations(0);
 		bossTerrainSprite->setPosition(glm::vec2(float(0), float(432)));
+
+		boss = new Boss();
+		boss->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+
 		/*EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map);
 		BulletManager::instance().initBulletManager(texProgram, map);
 		spritesheet.loadFromFile("images/stage2v4.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -219,6 +223,7 @@ void Scene::update(int deltaTime)
 		controlsUpdate(deltaTime);
 	}
 	else {
+		boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		/*player->update(deltaTime);
 		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
 		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
@@ -278,6 +283,7 @@ void Scene::render()
 		map->render();
 		bossSprite->render();
 		bossTerrainSprite->render();
+		boss->render();
 	}
 }
 

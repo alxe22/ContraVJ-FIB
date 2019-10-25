@@ -9,6 +9,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 
 // Scene contains all the entities of our game.
@@ -49,6 +50,7 @@ private:
 	bool playing = false;
 	// testing only
 	long long lastSecondFired = 0;
+	Boss *boss;
 
 };
 
