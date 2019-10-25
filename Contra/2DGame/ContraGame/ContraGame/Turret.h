@@ -24,6 +24,8 @@ public:
 	void decideFire(int playerAnim);
 	glm::ivec2 getSize() override;
 
+	glm::ivec2 getTopLeftPos() override;
+
 private:
 	long long lastSecondFired;
 	bool bJumping;

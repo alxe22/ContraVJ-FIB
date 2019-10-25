@@ -20,7 +20,7 @@ void Turret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
 	spritesheet.loadFromFile("images/turret2.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(64, 60), glm::vec2(0.111111111111111f, 0.25f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.111111111111111f, 0.25f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(12);
 
 	sprite->setAnimationSpeed(DEGREE_0, 8);
@@ -160,21 +160,6 @@ void Turret::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTim
 {
 	sprite->update(deltaTime);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-
-	if (Game::instance().getKey('q')) sprite->changeAnimation(1);
-	if (Game::instance().getKey('w')) sprite->changeAnimation(2);
-	if (Game::instance().getKey('e')) sprite->changeAnimation(3);
-	if (Game::instance().getKey('r')) sprite->changeAnimation(4);
-	if (Game::instance().getKey('t')) sprite->changeAnimation(5);
-	if (Game::instance().getKey('y')) sprite->changeAnimation(6);
-	if (Game::instance().getKey('u')) sprite->changeAnimation(7);
-	if (Game::instance().getKey('i')) sprite->changeAnimation(8);
-	if (Game::instance().getKey('o')) sprite->changeAnimation(9);
-	if (Game::instance().getKey('p')) sprite->changeAnimation(10);
-	if (Game::instance().getKey('a')) sprite->changeAnimation(11);
-	if (Game::instance().getKey('s')) sprite->changeAnimation(0);
-	sprite->update(deltaTime);
-
 	if ((posPlayer1.x - posPlayer.x >= -310 && posPlayer1.x - posPlayer.x < 0) ||
 		(posPlayer1.x - posPlayer.x >= 0 && posPlayer1.x - posPlayer.x < 310)) {
 		// turn left
@@ -269,7 +254,12 @@ glm::ivec2 Turret::getPosition()
 
 glm::ivec2 Turret::getSize()
 {
-	return glm::ivec2(64, 60);
+	return glm::ivec2(64, 64);
+}
+
+glm::ivec2 Turret::getTopLeftPos()
+{
+	return posPlayer;
 }
 
 string Turret::type()
