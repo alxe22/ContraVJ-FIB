@@ -47,8 +47,8 @@ bool BulletManager::existsBulletColision(glm::vec2 bottomLeft, int width, int he
 				bottomLeft.x += 16.f;
 				bottomLeft.y -= 16.f;
 			}
-			bPos.x = bPos.x + 32;
-			bPos.y = bPos.y + 32;
+			/*bPos.x = bPos.x + 32;
+			bPos.y = bPos.y + 32;*/
 
 			// bPos.x < bottomRight.x && bPos.x > bottomLeft.x && bPos.y < bottomRight.y && bPos.y > bottomLeft.y - height
 			if (bPos.x > bottomLeft.x && bPos.x < bottomLeft.x + width) {

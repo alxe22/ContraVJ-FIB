@@ -28,10 +28,23 @@ public:
 	void menuUpdate(int deltaTime);
 	void controlsUpdate(int deltaTime);
 	void level2Update(int deltaTime);
+	
 	void init();
+	void initLv01();
+	void initLv02();
+	void initLv03();
+
 	void update(int deltaTime);
+	void updateLv01(int deltaTime);
+	void updateLv02(int deltaTime);
+	void updateLv03(int deltaTime);
+
 	void CameraUpdate();
+
 	void render();
+	void renderLv01();
+	void renderLv02();
+	void renderLv03();
 
 private:
 	void initShaders();
@@ -52,6 +65,7 @@ private:
 	// testing only
 	long long lastSecondFired = 0;
 	float limitCamera;
+	string currentLevel = "LEVEL01";
 
 };
 
