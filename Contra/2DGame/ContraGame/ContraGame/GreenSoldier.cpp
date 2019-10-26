@@ -47,7 +47,7 @@ void GreenSoldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 
 void GreenSoldier::decideFire(int playerAnim) 
 {
-	/*vector<glm::vec2> dir;
+	vector<glm::vec2> dir;
 	vector<glm::vec2> pos;
 	int speed = 4;
 	switch (playerAnim) {
@@ -57,7 +57,7 @@ void GreenSoldier::decideFire(int playerAnim)
 		break;
 	}
 	BulletManager::instance().fire(dir, pos, speed, "ENEMY");
-	SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");*/
+	SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");
 }
 
 void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)

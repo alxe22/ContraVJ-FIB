@@ -115,6 +115,7 @@ void Scene::initLv01()
 	BulletManager::instance().initBulletManager(texProgram, map);
 }
 
+
 void Scene::initLv02()
 {
 	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map, "level02");
@@ -194,6 +195,101 @@ void Scene::initLv02()
 	sprite->changeAnimation(0);
 
 	sprite->setPosition(glm::vec2(float(0), float(0)));
+	
+	// count
+	spritesheetKilled.loadFromFile("images/killed.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteKilled = Sprite::createSprite(glm::ivec2(100, 22), glm::vec2(1, 1), &spritesheetKilled, &texProgram);
+	spriteKilled->setNumberAnimations(0);
+	spriteKilled->setPosition(glm::vec2(float(32), float(16)));
+
+	spritesheetCounter.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteCounter = Sprite::createSprite(glm::ivec2(22, 29), glm::vec2(1 / 5.f, 1 / 2.f), &spritesheetCounter, &texProgram);
+	spriteCounter->setNumberAnimations(10);
+	spriteCounter->setAnimationSpeed(0, 9);
+	spriteCounter->addKeyframe(0, glm::vec2(4 / 5.f, 1 / 2.f));
+
+	spriteCounter->setAnimationSpeed(1, 9);
+	spriteCounter->addKeyframe(1, glm::vec2(0 / 5.f, 0 / 2.f));
+
+	spriteCounter->setAnimationSpeed(2, 9);
+	spriteCounter->addKeyframe(2, glm::vec2(1 / 5.f, 0 / 2.f));
+
+	spriteCounter->setAnimationSpeed(3, 9);
+	spriteCounter->addKeyframe(3, glm::vec2(2 / 5.f, 0 / 2.f));
+
+	spriteCounter->setAnimationSpeed(4, 9);
+	spriteCounter->addKeyframe(4, glm::vec2(3 / 5.f, 0 / 2.f));
+
+
+	spriteCounter->setAnimationSpeed(5, 9);
+	spriteCounter->addKeyframe(5, glm::vec2(4 / 5.f, 0 / 2.f));
+
+
+	spriteCounter->setAnimationSpeed(6, 9);
+	spriteCounter->addKeyframe(6, glm::vec2(0 / 5.f, 1 / 2.f));
+
+	spriteCounter->setAnimationSpeed(7, 9);
+	spriteCounter->addKeyframe(7, glm::vec2(1 / 5.f, 1 / 2.f));
+
+	spriteCounter->setAnimationSpeed(8, 9);
+	spriteCounter->addKeyframe(8, glm::vec2(2 / 5.f, 1 / 2.f));
+
+	spriteCounter->setAnimationSpeed(9, 9);
+	spriteCounter->addKeyframe(9, glm::vec2(3 / 5.f, 1 / 2.f));
+
+	spriteCounter->setAnimationSpeed(10, 9);
+	spriteCounter->addKeyframe(10, glm::vec2(4 / 5.f, 1 / 2.f));
+
+	spriteCounter->changeAnimation(0);
+	spriteCounter->setPosition(glm::vec2(float(145), float(14)));
+
+	spritesheetSlash.loadFromFile("images/slash.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteSlash = Sprite::createSprite(glm::ivec2(22, 29), glm::vec2(1, 1), &spritesheetSlash, &texProgram);
+	spriteSlash->setNumberAnimations(1);
+	spriteSlash->setAnimationSpeed(0, 9);
+	spriteSlash->addKeyframe(0, glm::vec2(0, 0));
+	spriteSlash->changeAnimation(0);
+	spriteSlash->setPosition(glm::vec2(float(170), float(14)));
+
+	spritesheetCounterMissing.loadFromFile("images/numbers.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteCounterMissing = Sprite::createSprite(glm::ivec2(22, 29), glm::vec2(1 / 5.f, 1 / 2.f), &spritesheetCounterMissing, &texProgram);
+	spriteCounterMissing->setNumberAnimations(10);
+	spriteCounterMissing->setAnimationSpeed(0, 9);
+	spriteCounterMissing->addKeyframe(0, glm::vec2(4 / 5.f, 1 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(1, 9);
+	spriteCounterMissing->addKeyframe(1, glm::vec2(0 / 5.f, 0 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(2, 9);
+	spriteCounterMissing->addKeyframe(2, glm::vec2(1 / 5.f, 0 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(3, 9);
+	spriteCounterMissing->addKeyframe(3, glm::vec2(2 / 5.f, 0 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(4, 9);
+	spriteCounterMissing->addKeyframe(4, glm::vec2(3 / 5.f, 0 / 2.f));
+
+
+	spriteCounterMissing->setAnimationSpeed(5, 9);
+	spriteCounterMissing->addKeyframe(5, glm::vec2(4 / 5.f, 0 / 2.f));
+
+
+	spriteCounterMissing->setAnimationSpeed(6, 9);
+	spriteCounterMissing->addKeyframe(6, glm::vec2(0 / 5.f, 1 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(7, 9);
+	spriteCounterMissing->addKeyframe(7, glm::vec2(1 / 5.f, 1 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(8, 9);
+	spriteCounterMissing->addKeyframe(8, glm::vec2(2 / 5.f, 1 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(9, 9);
+	spriteCounterMissing->addKeyframe(9, glm::vec2(3 / 5.f, 1 / 2.f));
+
+	spriteCounterMissing->setAnimationSpeed(10, 9);
+	spriteCounterMissing->addKeyframe(10, glm::vec2(4 / 5.f, 1 / 2.f));
+	spriteCounterMissing->changeAnimation(EnemyManager::instance().getGreenSoldiersKilledToAdvance());
+	spriteCounterMissing->setPosition(glm::vec2(float(190), float(14)));
 
 	player = new Player();
 	player->initlevel2(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -241,6 +337,7 @@ void Scene::updateLv01(int deltaTime)
 void Scene::updateLv02(int deltaTime)
 {
 	player->updateLv2(deltaTime, EnemyManager::instance().canAdvance());
+	spriteCounter->changeAnimation(EnemyManager::instance().getGreenSoldiersKilled());
 	if (EnemyManager::instance().canAdvance()) {
 		int animNum = sprite->animation();
 		if (Game::instance().getSpecialKey(GLUT_KEY_UP) && (animNum == 4 || animNum == 8 || animNum == 12 || animNum == 16)) {
@@ -338,6 +435,10 @@ void Scene::renderLv02()
 {
 	sprite->render(); //coment this line when testing level01
 	player->render(); //coment this line when testing level01
+	spriteKilled->render();
+	spriteCounter->render();
+	spriteSlash->render();
+	spriteCounterMissing->render();
 	EnemyManager::instance().render(); //coment this line when testing level01
 	BulletManager::instance().render(); //coment this line when testing level01
 }

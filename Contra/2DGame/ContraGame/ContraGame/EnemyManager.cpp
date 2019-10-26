@@ -15,7 +15,7 @@
 
 #define GREEN_SOLDIER_CREATION_FRAME_INTERVAL 1000
 
-#define GREEN_SOLDIERS_KILLED_TO_ADVANCE 5
+#define GREEN_SOLDIERS_KILLED_TO_ADVANCE 9
 
 void EnemyManager::loadSnipers(string level, ShaderProgram &shaderProgram, TileMap *tileMap) 
 {
@@ -184,8 +184,17 @@ void EnemyManager::loadGreenSoldiers(string level, ShaderProgram &shaderProgram)
 
 bool EnemyManager::canAdvance()
 {
-	//return greenSoldiersKilled > GREEN_SOLDIERS_KILLED_TO_ADVANCE;
-	return false;
+	return greenSoldiersKilled > GREEN_SOLDIERS_KILLED_TO_ADVANCE;
+}
+
+int EnemyManager::getGreenSoldiersKilled()
+{
+	return greenSoldiersKilled;
+}
+
+int EnemyManager::getGreenSoldiersKilledToAdvance()
+{
+	return GREEN_SOLDIERS_KILLED_TO_ADVANCE;
 }
 
 void EnemyManager::setCanAdvance(int i)

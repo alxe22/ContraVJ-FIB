@@ -57,8 +57,8 @@ private:
 	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
 	int currentLevel;
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower;
-	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;

@@ -36,6 +36,9 @@ public:
 	// there is no tilemap in lv2 so we omit this parameter
 	void loadGreenSoldiers(string level, ShaderProgram &shaderProgram);
 	bool canAdvance();
+	int getGreenSoldiersKilled();
+	int getGreenSoldiersKilledToAdvance();
+
 	void setCanAdvance(int i);
 	void deleteAll();
 
