@@ -35,7 +35,7 @@ void Scene::loadMenu() {
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	
 	// background
-	spritesheet.loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/menu2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1.f, 1.f), &spritesheet, &texProgram);
 	sprite->setNumberAnimations(0);
 	sprite->setPosition(glm::vec2(float(0), float(0)));
@@ -44,29 +44,28 @@ void Scene::loadMenu() {
 	spritesheetSelector.loadFromFile("images/selector.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spriteSelector = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetSelector, &texProgram);
 	spriteSelector->setNumberAnimations(0);
-	spriteSelector->setPosition(glm::vec2(float(200), float(263)));
+	spriteSelector->setPosition(glm::vec2(float(135), float(267)));
 }
 
 void Scene::menuUpdate(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		glm::vec2 posSelector = spriteSelector->getPosition();
-		if(posSelector.y < 293) posSelector.y += 30.f;
+		if(posSelector.y < 268) posSelector.y += 50.f;
 		//posSelector.y += 5.f;
 		spriteSelector->setPosition(posSelector);
 		spriteSelector->render();
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		glm::vec2 posSelector = spriteSelector->getPosition();
-		if (posSelector.y > 263) posSelector.y -= 30.f;
+		if (posSelector.y > 316) posSelector.y -= 50.f;
 		//posSelector.y -= 5.f;
 		spriteSelector->setPosition(posSelector);
 		spriteSelector->render();
 	}
 	// return key == 13
 	else if (Game::instance().getKey(13)) {
-		if ((spriteSelector->getPosition()).y == 263 || 
-			(spriteSelector->getPosition()).y == 278) state = "PLAYING";
+		if ((spriteSelector->getPosition()).y == 267) state = "PLAYING";
 		else state = "CONTROLS";
 		init();
 	}
