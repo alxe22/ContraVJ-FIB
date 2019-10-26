@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_X_TILES 190
 #define INIT_PLAYER_Y_TILES 1
 
 // testing only
@@ -113,6 +113,11 @@ void Scene::initLv01()
 	SoundSystem::instance().playMusic("level01", state);
 	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map, "level01");
 	BulletManager::instance().initBulletManager(texProgram, map);
+
+	spritesheetBossDestroyed.loadFromFile("images/bossDestroyed.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteBossDestroyed = Sprite::createSprite(glm::ivec2(128, 480), glm::vec2(1, 1), &spritesheetBossDestroyed, &texProgram);
+	spriteBossDestroyed->setNumberAnimations(0);
+	spriteBossDestroyed->setPosition(glm::vec2(float(6432), float(0)));
 }
 
 
@@ -306,7 +311,7 @@ void Scene::initLv03()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL02;
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -324,6 +329,7 @@ void Scene::init()
 void Scene::updateLv01(int deltaTime) 
 {
 	player->update(deltaTime);
+	spriteBossDestroyed->update(deltaTime);
 	EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
 	BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
 	EnemyManager::instance().detectBulletCollisions("level01");
@@ -424,6 +430,7 @@ void Scene::renderLv01()
 	if (player->getLifes() > 0) Icon1->render();
 	if (player->getLifes() > 1) Icon2->render();
 	if (player->getLifes() > 2) Icon3->render();
+	spriteBossDestroyed->render();
 	player->render();
 	//spriteLifes->render();
 	EnemyManager::instance().render();
