@@ -19,69 +19,69 @@ enum PlayerAnims
 void Turret::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
-	spritesheet.loadFromFile("images/turret2.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.111111111111111f, 0.25f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(12);
+	spritesheet.loadFromFile("images/turret3.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(1 / 8.f, 1 / 8.f), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(18);
 
 	sprite->setAnimationSpeed(DEGREE_0, 8);
-	sprite->addKeyframe(DEGREE_0, glm::vec2(0.f, 0.f));
-	sprite->addKeyframe(DEGREE_0, glm::vec2(0.11f, 0.f));
-	sprite->addKeyframe(DEGREE_0, glm::vec2(0.22f, 0.f));
+	sprite->addKeyframe(DEGREE_0, glm::vec2(0 / 8.f, 0 / 8.f));
+	sprite->addKeyframe(DEGREE_0, glm::vec2(1 / 8.f, 0 / 8.f));
+	sprite->addKeyframe(DEGREE_0, glm::vec2(2 / 8.f, 0 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_30, 8);
-	sprite->addKeyframe(DEGREE_30, glm::vec2(0.66f, 0.75f));
-	sprite->addKeyframe(DEGREE_30, glm::vec2(0.77f, 0.75f));
-	sprite->addKeyframe(DEGREE_30, glm::vec2(0.88f, 0.75f));
+	sprite->addKeyframe(DEGREE_30, glm::vec2(1 / 8.f, 4 / 8.f));
+	sprite->addKeyframe(DEGREE_30, glm::vec2(2 / 8.f, 4 / 8.f));
+	sprite->addKeyframe(DEGREE_30, glm::vec2(3 / 8.f, 4 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_50, 8);
-	sprite->addKeyframe(DEGREE_50, glm::vec2(0.33f, 0.75f));
-	sprite->addKeyframe(DEGREE_50, glm::vec2(0.44f, 0.75f));
-	sprite->addKeyframe(DEGREE_50, glm::vec2(0.55f, 0.75f));
+	sprite->addKeyframe(DEGREE_50, glm::vec2(6 / 8.f, 3 / 8.f));
+	sprite->addKeyframe(DEGREE_50, glm::vec2(7 / 8.f, 3 / 8.f));
+	sprite->addKeyframe(DEGREE_50, glm::vec2(0 / 8.f, 4 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_90, 8);
-	sprite->addKeyframe(DEGREE_90, glm::vec2(0.f, 0.75f));
-	sprite->addKeyframe(DEGREE_90, glm::vec2(0.11f, 0.75f));
-	sprite->addKeyframe(DEGREE_90, glm::vec2(0.22f, 0.75f));
+	sprite->addKeyframe(DEGREE_90, glm::vec2(3 / 8.f, 3 / 8.f));
+	sprite->addKeyframe(DEGREE_90, glm::vec2(4 / 8.f, 3 / 8.f));
+	sprite->addKeyframe(DEGREE_90, glm::vec2(5 / 8.f, 3 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_120, 8);
-	sprite->addKeyframe(DEGREE_120, glm::vec2(0.66f, 0.5f));
-	sprite->addKeyframe(DEGREE_120, glm::vec2(0.77f, 0.5f));
-	sprite->addKeyframe(DEGREE_120, glm::vec2(0.88f, 0.5f));
+	sprite->addKeyframe(DEGREE_120, glm::vec2(0 / 8.f, 3 / 8.f));
+	sprite->addKeyframe(DEGREE_120, glm::vec2(1 / 8.f, 3 / 8.f));
+	sprite->addKeyframe(DEGREE_120, glm::vec2(2 / 8.f, 3 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_140, 8);
-	sprite->addKeyframe(DEGREE_140, glm::vec2(0.33f, 0.5f));
-	sprite->addKeyframe(DEGREE_140, glm::vec2(0.44f, 0.5f));
-	sprite->addKeyframe(DEGREE_140, glm::vec2(0.55f, 0.5f));
+	sprite->addKeyframe(DEGREE_140, glm::vec2(5 / 8.f, 2 / 8.f));
+	sprite->addKeyframe(DEGREE_140, glm::vec2(6 / 8.f, 2 / 8.f));
+	sprite->addKeyframe(DEGREE_140, glm::vec2(7 / 8.f, 2 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_180, 8);
-	sprite->addKeyframe(DEGREE_180, glm::vec2(0.f, 0.5f));
-	sprite->addKeyframe(DEGREE_180, glm::vec2(0.11f, 0.5f));
-	sprite->addKeyframe(DEGREE_180, glm::vec2(0.22f, 0.5f));
+	sprite->addKeyframe(DEGREE_180, glm::vec2(2 / 8.f, 2 / 8.f));
+	sprite->addKeyframe(DEGREE_180, glm::vec2(3 / 8.f, 2 / 8.f));
+	sprite->addKeyframe(DEGREE_180, glm::vec2(4 / 8.f, 2 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_210, 8);
-	sprite->addKeyframe(DEGREE_210, glm::vec2(0.66f, 0.25f));
-	sprite->addKeyframe(DEGREE_210, glm::vec2(0.77f, 0.25f));
-	sprite->addKeyframe(DEGREE_210, glm::vec2(0.88f, 0.25f));
+	sprite->addKeyframe(DEGREE_210, glm::vec2(7 / 8.f, 1 / 8.f));
+	sprite->addKeyframe(DEGREE_210, glm::vec2(0 / 8.f, 2 / 8.f));
+	sprite->addKeyframe(DEGREE_210, glm::vec2(1 / 8.f, 2 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_230, 8);
-	sprite->addKeyframe(DEGREE_230, glm::vec2(0.33f, 0.25f));
-	sprite->addKeyframe(DEGREE_230, glm::vec2(0.44f, 0.25f));
-	sprite->addKeyframe(DEGREE_230, glm::vec2(0.55f, 0.25f));
+	sprite->addKeyframe(DEGREE_230, glm::vec2(4 / 8.f, 1 / 8.f));
+	sprite->addKeyframe(DEGREE_230, glm::vec2(5 / 8.f, 1 / 8.f));
+	sprite->addKeyframe(DEGREE_230, glm::vec2(6 / 8.f, 1 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_270, 8);
-	sprite->addKeyframe(DEGREE_270, glm::vec2(0.f, 0.25f));
-	sprite->addKeyframe(DEGREE_270, glm::vec2(0.11f, 0.25f));
-	sprite->addKeyframe(DEGREE_270, glm::vec2(0.22f, 0.25f));
+	sprite->addKeyframe(DEGREE_270, glm::vec2(1 / 8.f, 1 / 8.f));
+	sprite->addKeyframe(DEGREE_270, glm::vec2(2 / 8.f, 1 / 8.f));
+	sprite->addKeyframe(DEGREE_270, glm::vec2(3 / 8.f, 1 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_300, 8);
-	sprite->addKeyframe(DEGREE_300, glm::vec2(0.66f, 0.f));
-	sprite->addKeyframe(DEGREE_300, glm::vec2(0.77f, 0.f));
-	sprite->addKeyframe(DEGREE_300, glm::vec2(0.88f, 0.f));
+	sprite->addKeyframe(DEGREE_300, glm::vec2(6 / 8.f, 0 / 8.f));
+	sprite->addKeyframe(DEGREE_300, glm::vec2(7 / 8.f, 0 / 8.f));
+	sprite->addKeyframe(DEGREE_300, glm::vec2(0 / 8.f, 1 / 8.f));
 
 	sprite->setAnimationSpeed(DEGREE_320, 8);
-	sprite->addKeyframe(DEGREE_320, glm::vec2(0.33f, 0.f));
-	sprite->addKeyframe(DEGREE_320, glm::vec2(0.44f, 0.f));
-	sprite->addKeyframe(DEGREE_320, glm::vec2(0.55f, 0.f));
+	sprite->addKeyframe(DEGREE_320, glm::vec2(3 / 8.f, 0 / 8.f));
+	sprite->addKeyframe(DEGREE_320, glm::vec2(4 / 8.f, 0 / 8.f));
+	sprite->addKeyframe(DEGREE_320, glm::vec2(5 / 8.f, 0 / 8.f));
 
 
 	sprite->changeAnimation(6);
