@@ -21,15 +21,20 @@ for (int i = 0; i < dir.size() && i < pos.size(); ++i)
 	}
 }
 
-//its top left, not bottom left (refactor this please!!)
 bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int height, string type)
 {
 	for (int i = 0; i < bullets.size(); ++i) {
 		Bullet * b = bullets[i];
 		if (b != NULL) {
 			glm::vec2 bPos = b->getPosition();
-			bPos.x = bPos.x + 16;
-			bPos.y = bPos.y + 16;
+			if (type == "GREEN_SOLDIER") {
+				bPos.x = bPos.x + 32;
+				bPos.y = bPos.y + 32;
+			}
+			else {
+				bPos.x = bPos.x + 16;
+				bPos.y = bPos.y + 16;
+			}
 			if ((bPos.x > topLeft.x) && (bPos.x < topLeft.x + width)) {
 				if ((bPos.y > topLeft.y) && (bPos.y < topLeft.y + height)) {
 					if (b->getFiredBy() == "CHARACTER") {
@@ -68,7 +73,8 @@ void BulletManager::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int d
 				if (bullet->getFiredBy() == "CHARACTER") {
 					if (bullet->getAnimation() == 1) bullets[i] = NULL;
 
-					if (pos.x >= 186 && pos.x <= 346 && pos.y < 170) bullets[i] = NULL;
+					// it was 170 before. changed to 195 for testing pruposes
+					if (pos.x >= 186 && pos.x <= 346 && pos.y < 190) bullets[i] = NULL;
 					
 					else if (pos.x >= 150 && pos.x <= 185 && pos.y < 185) bullets[i] = NULL;
 					else if (pos.x >= 139 && pos.x <= 184 && pos.y < 200) bullets[i] = NULL;

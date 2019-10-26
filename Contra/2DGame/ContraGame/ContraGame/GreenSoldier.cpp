@@ -47,7 +47,7 @@ void GreenSoldier::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgr
 
 void GreenSoldier::decideFire(int playerAnim) 
 {
-	vector<glm::vec2> dir;
+	/*vector<glm::vec2> dir;
 	vector<glm::vec2> pos;
 	int speed = 4;
 	switch (playerAnim) {
@@ -57,7 +57,7 @@ void GreenSoldier::decideFire(int playerAnim)
 		break;
 	}
 	BulletManager::instance().fire(dir, pos, speed, "ENEMY");
-	SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");
+	SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");*/
 }
 
 void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime)
@@ -67,8 +67,9 @@ void GreenSoldier::update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int de
 	else if (sprite->animation() == 1 && direction != "R") direction = "R";
 	if ((posPlayer.x >= float(MIDDLE_POINT - 1.5) && posPlayer.x <= float(MIDDLE_POINT + 1.5)) && !jumpingDecisionMade) {
 		jumpingDecisionMade = true;
-		int randAux = rand() % 2;
-		if (randAux % 2 == 0) {
+		//int randAux = rand() % 2;
+		/*if (randAux % 2 == 0) {*/
+		if (1) {
 			jumping = true;
 			state = "JUMPING_UP";
 			if (sprite->animation() != JUMP) sprite->changeAnimation(JUMP);
@@ -127,7 +128,7 @@ glm::ivec2 GreenSoldier::getPosition()
 
 glm::ivec2 GreenSoldier::getSize()
 {
-	if (sprite->animation() == JUMP) return glm::ivec2(15, 24);
+	if (sprite->animation() == JUMP) return glm::ivec2(28, 24);
 	else if (sprite->animation() == MOVE_LEFT || sprite->animation() == MOVE_RIGHT) return glm::ivec2(17, 25);
 }
 
@@ -148,7 +149,7 @@ int GreenSoldier::getAnimation()
 
 glm::ivec2 GreenSoldier::getTopLeftPos()
 {
-	if (sprite->animation() == JUMP) return glm::ivec2(posPlayer.x + 9, posPlayer.y + 8);
+	if (sprite->animation() == JUMP) return glm::ivec2(posPlayer.x+4, posPlayer.y + 8);
 	else if (sprite->animation() == MOVE_LEFT) return glm::ivec2(posPlayer.x + 7, posPlayer.y + 7);
 	else if (sprite->animation() == MOVE_RIGHT) return glm::ivec2(posPlayer.x + 7, posPlayer.y + 7);
 

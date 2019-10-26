@@ -184,7 +184,8 @@ void EnemyManager::loadGreenSoldiers(string level, ShaderProgram &shaderProgram)
 
 bool EnemyManager::canAdvance()
 {
-	return greenSoldiersKilled > GREEN_SOLDIERS_KILLED_TO_ADVANCE;
+	//return greenSoldiersKilled > GREEN_SOLDIERS_KILLED_TO_ADVANCE;
+	return false;
 }
 
 void EnemyManager::setCanAdvance(int i)
