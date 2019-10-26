@@ -199,10 +199,10 @@ void EnemyManager::initEnemies(GLuint nSoldier, GLuint nSniper, GLuint nTurrets,
 		int xTileInc = (LEVEL01_TILE_WIDTH - 10) / nSoldier;
 		int xTileInterval = xTileInc, yTileInterval = 1;
 
-		//loadSnipers("", shaderProgram, tileMap);
-		//loadTurrets("", shaderProgram, tileMap);
+		loadSnipers("", shaderProgram, tileMap);
+		loadTurrets("", shaderProgram, tileMap);
 		loadSuperTurrets("", shaderProgram, tileMap);
-		//loadSoldiers("", shaderProgram, tileMap);
+		loadSoldiers("", shaderProgram, tileMap);
 	}
 	this->shaderProgram = shaderProgram;
 }
@@ -256,4 +256,18 @@ void EnemyManager::render() {
 
 void EnemyManager::deleteAll() {
 	enemies = vector<Enemy *>();
+}
+
+vector<dataPos* > EnemyManager::getPositionEnemies()
+{
+	vector<dataPos *> res;
+	for (Enemy * enemy : enemies) {
+		dataPos *dp;
+		dp->topLeftPos = enemy->getTopLeftPos();
+		glm::ivec2 size = enemy->getSize();
+		dp->width = size.x;
+		dp->height = size.y;
+		res.push_back(dp);
+	}
+	return res;
 }

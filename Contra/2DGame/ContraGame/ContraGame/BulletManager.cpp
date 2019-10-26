@@ -90,3 +90,15 @@ void BulletManager::render()
 		if (bullet != NULL) bullet->render();
 	}
 }
+
+vector<glm::ivec2> BulletManager::getPositionBullets()
+{
+	vector<glm::ivec2> res;
+	for (Bullet *b: bullets) {
+		glm::vec2 bPos = b->getPosition();
+		bPos.x = bPos.x + 16;
+		bPos.y = bPos.y + 16;
+		res.push_back(bPos);
+	}
+	return res;
+}

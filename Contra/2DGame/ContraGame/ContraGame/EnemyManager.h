@@ -4,6 +4,12 @@
 
 using namespace std;
 
+struct dataPos {
+	glm::ivec2 topLeftPos;
+	int width;
+	int height;
+};
+
 class EnemyManager
 {
 public:
@@ -32,6 +38,8 @@ public:
 	bool canAdvance();
 	void setCanAdvance(int i);
 	void deleteAll();
+
+	vector<dataPos* > getPositionEnemies();
 
 private:
 	vector<Enemy *> enemies;

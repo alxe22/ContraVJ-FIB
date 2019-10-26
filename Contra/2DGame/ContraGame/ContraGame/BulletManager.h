@@ -26,6 +26,7 @@ public:
 	bool existsBulletColision(glm::vec2 topLeft, int width, int height, string type);
 	void update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime, string level);
 	void render();
+	vector<glm::ivec2> getPositionBullets();
 
 private:
 	vector<Bullet *> bullets;
