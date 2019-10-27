@@ -329,7 +329,7 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL02;
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -347,7 +347,7 @@ void Scene::init()
 
 void Scene::updateLv01(int deltaTime) 
 {
-	if (player->getLifes() == 0) {
+	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
 		state = "GAME_OVER";
 		updateGameOverScreen(deltaTime);
 	}
@@ -367,32 +367,38 @@ void Scene::updateLv01(int deltaTime)
 
 void Scene::updateLv02(int deltaTime)
 {
-	player->updateLv2(deltaTime, EnemyManager::instance().canAdvance());
-	spriteCounter->changeAnimation(EnemyManager::instance().getGreenSoldiersKilled());
-	Icon1->update(deltaTime);
-	Icon2->update(deltaTime);
-	Icon3->update(deltaTime);
-	if (EnemyManager::instance().canAdvance()) {
-		int animNum = sprite->animation();
-		if (Game::instance().getSpecialKey(GLUT_KEY_UP) && (animNum == 4 || animNum == 8 || animNum == 12 || animNum == 16)) {
-			EnemyManager::instance().setCanAdvance(0);
-		}
-		if ((animNum == 0 || animNum == 4 || animNum == 8 || animNum == 12 || animNum == 16) && EnemyManager::instance().canAdvance()) {
-			sprite->changeAnimation(sprite->animation() + 1);
-			EnemyManager::instance().deleteAll();
-		}
-		//else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
-		long long diff = Time::instance().NowToMili() - lastSecondFired;
-		if (diff > FIRE_FRAME_INTERVAL) {
-			lastSecondFired = Time::instance().NowToMili();
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
-		}
+	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
+		state = "GAME_OVER";
+		updateGameOverScreen(deltaTime);
 	}
 	else {
-		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
-		EnemyManager::instance().detectBulletCollisions("level02");
+		player->updateLv2(deltaTime, EnemyManager::instance().canAdvance());
+		spriteCounter->changeAnimation(EnemyManager::instance().getGreenSoldiersKilled());
+		Icon1->update(deltaTime);
+		Icon2->update(deltaTime);
+		Icon3->update(deltaTime);
+		if (EnemyManager::instance().canAdvance()) {
+			int animNum = sprite->animation();
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP) && (animNum == 4 || animNum == 8 || animNum == 12 || animNum == 16)) {
+				EnemyManager::instance().setCanAdvance(0);
+			}
+			if ((animNum == 0 || animNum == 4 || animNum == 8 || animNum == 12 || animNum == 16) && EnemyManager::instance().canAdvance()) {
+				sprite->changeAnimation(sprite->animation() + 1);
+				EnemyManager::instance().deleteAll();
+			}
+			//else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+			long long diff = Time::instance().NowToMili() - lastSecondFired;
+			if (diff > FIRE_FRAME_INTERVAL) {
+				lastSecondFired = Time::instance().NowToMili();
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP)) sprite->changeAnimation(sprite->animation() + 1);
+			}
+		}
+		else {
+			EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level02");
+			EnemyManager::instance().detectBulletCollisions("level02");
+		}
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
 	}
-	BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level02");
 }
 
 void Scene::updateLv03(int deltaTime)
@@ -463,10 +469,11 @@ void Scene::render()
 
 void Scene::renderLv01()
 {
-	if (player->getLifes() == 0) {
+	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
 		renderGameOverScreen();
 	}
 	else {
+		if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
 		map->render();
 		if (player->getLifes() > 0) Icon1->render();
 		if (player->getLifes() > 1) Icon2->render();
@@ -482,19 +489,25 @@ void Scene::renderLv01()
 
 void Scene::renderLv02()
 {
-	sprite->render(); //coment this line when testing level01
-	player->render(); //coment this line when testing level01
-	//counter stuff
-	spriteKilled->render();
-	spriteCounter->render();
-	spriteSlash->render();
-	spriteCounterMissing->render();
-	//lifes
-	if (player->getLifes() > 0) Icon1->render();
-	if (player->getLifes() > 1) Icon2->render();
-	if (player->getLifes() > 2) Icon3->render();
-	EnemyManager::instance().render(); //coment this line when testing level01
-	BulletManager::instance().render(); //coment this line when testing level01
+	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
+		renderGameOverScreen();
+	}
+	else {
+		if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
+		sprite->render(); //coment this line when testing level01
+		player->render(); //coment this line when testing level01
+		//counter stuff
+		spriteKilled->render();
+		spriteCounter->render();
+		spriteSlash->render();
+		spriteCounterMissing->render();
+		//lifes
+		if (player->getLifes() > 0) Icon1->render();
+		if (player->getLifes() > 1) Icon2->render();
+		if (player->getLifes() > 2) Icon3->render();
+		EnemyManager::instance().render(); //coment this line when testing level01
+		BulletManager::instance().render(); //coment this line when testing level01
+	}
 }
 
 void Scene::renderLv03()

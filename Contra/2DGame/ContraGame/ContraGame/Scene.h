@@ -56,6 +56,7 @@ private:
 	void initShaders();
 
 private:
+	int countToShowGameOverScreen = 0;
 	string state = "MENU"; // MENU, CONTROLS, PLAYING
 	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
 	int currentLevel;
