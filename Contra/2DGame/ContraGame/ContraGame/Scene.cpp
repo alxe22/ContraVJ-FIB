@@ -45,6 +45,8 @@ void Scene::loadMenu() {
 	spriteSelector = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1.f, 1.f), &spritesheetSelector, &texProgram);
 	spriteSelector->setNumberAnimations(0);
 	spriteSelector->setPosition(glm::vec2(float(135), float(267)));
+
+	SoundSystem::instance().playMusic("", "MENU");
 }
 
 void Scene::menuUpdate(int deltaTime) {
@@ -322,6 +324,8 @@ void Scene::initLv02()
 	spritePreScreenLv02 = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &spritesheetPreScreenLv02, &texProgram);
 	spritePreScreenLv02->setNumberAnimations(0);
 	spritePreScreenLv02->setPosition(glm::vec2(float(0), float(0)));
+
+	SoundSystem::instance().playMusic("level01", state);
 }
 
 void Scene::initLv03()
@@ -378,12 +382,11 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL03;
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
 		loadMenu();
-		SoundSystem::instance().playMusic("", "MENU");
 	}
 	else if (state == "CONTROLS") loadControls();
 	else {
@@ -402,7 +405,7 @@ void Scene::updateLv01(int deltaTime)
 		updateGameOverScreen(deltaTime);
 	}
 	else {
-		if (countToShowStagePreScreen < 50) spritePreScreenLv01->update(deltaTime);
+		if (countToShowStagePreScreen < 100) spritePreScreenLv01->update(deltaTime);
 		else {
 			player->update(deltaTime);
 			spriteBossDestroyed->update(deltaTime);
@@ -431,7 +434,7 @@ void Scene::updateLv02(int deltaTime)
 		updateGameOverScreen(deltaTime);
 	}
 	else {
-		if (countToShowStagePreScreen < 50) spritePreScreenLv02->update(deltaTime);
+		if (countToShowStagePreScreen < 100) spritePreScreenLv02->update(deltaTime);
 		else {
 			if (sprite->animation() == 19) {
 				currentLevel = LEVEL03;
@@ -477,7 +480,7 @@ void Scene::updateLv03(int deltaTime)
 		updateGameOverScreen(deltaTime);
 	}
 	else {
-		if (countToShowStagePreScreen < 50) spritePreScreenBoss->update(deltaTime);
+		if (countToShowStagePreScreen < 100) spritePreScreenBoss->update(deltaTime);
 		else {
 			player->update(deltaTime);
 			boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -557,7 +560,7 @@ void Scene::renderLv01()
 		renderGameOverScreen();
 	}
 	else {
-		if (countToShowStagePreScreen < 50) {
+		if (countToShowStagePreScreen < 100) {
 			spritePreScreenLv01->render();
 			++countToShowStagePreScreen;
 		}
@@ -582,7 +585,7 @@ void Scene::renderLv02()
 		renderGameOverScreen();
 	}
 	else {
-		if (countToShowStagePreScreen < 50) {
+		if (countToShowStagePreScreen < 100) {
 			spritePreScreenLv02->render();
 			++countToShowStagePreScreen;
 		}
@@ -611,7 +614,7 @@ void Scene::renderLv03()
 		renderGameOverScreen();
 	}
 	else {
-		if (countToShowStagePreScreen < 50) {
+		if (countToShowStagePreScreen < 100) {
 			spritePreScreenBoss->render();
 			++countToShowStagePreScreen;
 		}
@@ -622,10 +625,10 @@ void Scene::renderLv03()
 			if (player->getLifes() > 1) Icon2->render();
 			if (player->getLifes() > 2) Icon3->render();
 			bossSprite->render();
-			player->render();
 			boss->render();
 			bossTerrainSprite->render();
 			BulletManager::instance().render();
+			player->render();
 		}
 	}
 }

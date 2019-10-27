@@ -131,13 +131,13 @@ void EnemyManager::loadSoldiers(string level, ShaderProgram &shaderProgram, Tile
 
 	enemy = new Soldier();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(45 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setPosition(glm::vec2(33 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);
 
 	enemy = new Soldier();
 	enemy->init(glm::ivec2(SCREEN_X, SCREEN_Y), shaderProgram);
-	enemy->setPosition(glm::vec2(48 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
+	enemy->setPosition(glm::vec2(34 * tileMap->getTileSize(), 5 * tileMap->getTileSize()));
 	enemy->setTileMap(tileMap);
 	enemies.push_back(enemy);
 

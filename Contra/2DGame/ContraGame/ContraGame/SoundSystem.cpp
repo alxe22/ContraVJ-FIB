@@ -4,8 +4,9 @@ ISoundEngine *SoundEngine = createIrrKlangDevice();
 
 void SoundSystem::playMusic(const string &level, const string &gameState) {
 	if (gameState == "MENU") {
+		SoundEngine->stopAllSounds();
 		SoundEngine->play2D("audio/menu-music.mp3", GL_FALSE);
-	 }
+	}
 	if (gameState == "PLAYING") {
 		if (level == "level01") {
 			SoundEngine->stopAllSounds();
