@@ -19,7 +19,7 @@ void BossArm::init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 {
 	Life = 20;
 	spritesheet.loadFromFile("images/BossArm1.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(1 / 4.f, 1 / 4.f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(0);
 }
 

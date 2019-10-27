@@ -360,7 +360,6 @@ void Scene::initLv03()
 	boss = new Boss();
 	boss->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 
-
 	spritesheetPreScreenBoss.loadFromFile("images/stageBossFightPreScreen.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritePreScreenBoss = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &spritesheetPreScreenBoss, &texProgram);
 	spritePreScreenBoss->setNumberAnimations(0);
@@ -471,8 +470,22 @@ void Scene::updateLv02(int deltaTime)
 
 void Scene::updateLv03(int deltaTime)
 {
-	boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	spritePreScreenBoss->update(deltaTime);
+	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
+		countToShowStagePreScreen = 0;
+		state = "GAME_OVER";
+		updateGameOverScreen(deltaTime);
+	}
+	else {
+		if (countToShowStagePreScreen < 50) spritePreScreenLv01->update(deltaTime);
+		else {
+			player->update(deltaTime);
+			Icon1->update(deltaTime);
+			Icon2->update(deltaTime);
+			Icon3->update(deltaTime);
+			boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			spritePreScreenBoss->update(deltaTime);
+		}
+	}
 }
 
 void Scene::updateGameOverScreen(int deltaTime)
@@ -602,9 +615,15 @@ void Scene::renderLv03()
 		}
 		else {
 			if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
+			map->render();
+			if (player->getLifes() > 0) Icon1->render();
+			if (player->getLifes() > 1) Icon2->render();
+			if (player->getLifes() > 2) Icon3->render();
+			player->render();
 			bossSprite->render();
 			bossTerrainSprite->render();
 			boss->render();
+			BulletManager::instance().render();
 		}
 	}
 }
