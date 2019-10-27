@@ -220,7 +220,7 @@ void Player::update(int deltaTime)
 	}
 	else {
 		if (Time::instance().NowToMili() - DieSec > 3000) reviving = false;
-		if (!powerup && posPlayer.x + 90 > 126 * 32 + 5 && posPlayer.x + 16 < 126 * 32 + 5 && posPlayer.y + 90 > 126 && posPlayer.y + 90 < 156) powerup = true;	
+		if (!powerup && posPlayer.x + 90 > 126 * 32 + 5 && posPlayer.x + 16 < 126 * 32 + 5 && posPlayer.y + 90 > 126 && posPlayer.y + 90< 166) powerup = true;	
 		if (Game::instance().getKey('z')) {
 			if (!shooting) {
 				if (PlayerState != running && PlayerState != water_run) shooting = true;
@@ -1015,7 +1015,7 @@ glm::ivec2 Player::getPosition()
 
 int Player::getLifes()
 {
-	return RestLifes;
+ 	return RestLifes;
 }
 
 bool Player::getPower()

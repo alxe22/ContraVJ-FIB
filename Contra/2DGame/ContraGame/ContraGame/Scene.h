@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "SpreadGun.h"
 #include "IconLife.h"
+#include "Boss.h"
 
 
 // Scene contains all the entities of our game.
@@ -62,8 +63,8 @@ private:
 	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
 	int currentLevel;
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver, spritesheetPreScreenLv01, spritesheetPreScreenLv02, spritesheetPreScreenBoss;
-	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver, *spritePreScreenLv01, *spritePreScreenLv02, *spritePreScreenBoss;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver, spritesheetPreScreenLv01, spritesheetPreScreenLv02, spritesheetPreScreenBoss, bossSpritesheet, bossTerrainSpritesheet;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver, *spritePreScreenLv01, *spritePreScreenLv02, *spritePreScreenBoss, *bossSprite, *bossTerrainSprite;;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;
@@ -75,6 +76,7 @@ private:
 	// testing only
 	long long lastSecondFired = 0;
 	float limitCamera;
+	Boss *boss;
 };
 
 

@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_X_TILES 120
 #define INIT_PLAYER_Y_TILES 1
 
 // testing only
@@ -327,6 +327,40 @@ void Scene::initLv02()
 void Scene::initLv03()
 {
 	countToShowStagePreScreen = 0;
+
+	map = TileMap::createTileMap("levels/boss.txt", glm::vec2(0, SCREEN_Y), texProgram);
+	player = new Player();
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
+	player->setTileMap(map);
+	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+
+	Icon1 = new IconLife();
+	Icon2 = new IconLife();
+	Icon3 = new IconLife();
+
+	Icon1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	Icon1->setPosition(glm::vec2(float(30), float(30)));
+	Icon2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	Icon2->setPosition(glm::vec2(float(60), float(30)));
+	Icon3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	Icon3->setPosition(glm::vec2(float(90), float(30)));
+
+	BulletManager::instance().initBulletManager(texProgram, map);
+
+	bossSpritesheet.loadFromFile("images/boss.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	bossSprite = Sprite::createSprite(glm::ivec2(640, 400), glm::vec2(1.f, 1.f), &bossSpritesheet, &texProgram);
+	bossSprite->setNumberAnimations(0);
+	bossSprite->setPosition(glm::vec2(float(0), float(0)));
+	bossTerrainSpritesheet.loadFromFile("images/bossTerrain.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	bossTerrainSprite = Sprite::createSprite(glm::ivec2(640, 64), glm::vec2(1.f, 1.f), &bossTerrainSpritesheet, &texProgram);
+	bossTerrainSprite->setNumberAnimations(0);
+	bossTerrainSprite->setPosition(glm::vec2(float(0), float(432)));
+
+	boss = new Boss();
+	boss->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+
+
 	spritesheetPreScreenBoss.loadFromFile("images/stageBossFightPreScreen.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritePreScreenBoss = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &spritesheetPreScreenBoss, &texProgram);
 	spritePreScreenBoss->setNumberAnimations(0);
@@ -344,7 +378,7 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL01;
+	currentLevel = LEVEL03;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -437,6 +471,7 @@ void Scene::updateLv02(int deltaTime)
 
 void Scene::updateLv03(int deltaTime)
 {
+	boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	spritePreScreenBoss->update(deltaTime);
 }
 
@@ -519,7 +554,6 @@ void Scene::renderLv01()
 			if (player->getLifes() > 2) Icon3->render();
 			spriteBossDestroyed->render();
 			player->render();
-			//spriteLifes->render();
 			EnemyManager::instance().render();
 			BulletManager::instance().render();
 			if (!player->getPower()) spread->render();
@@ -568,6 +602,9 @@ void Scene::renderLv03()
 		}
 		else {
 			if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
+			bossSprite->render();
+			bossTerrainSprite->render();
+			boss->render();
 		}
 	}
 }
