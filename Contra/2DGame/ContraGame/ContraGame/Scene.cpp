@@ -362,6 +362,11 @@ void Scene::updateLv01(int deltaTime)
 		Icon1->update(deltaTime);
 		Icon2->update(deltaTime);
 		Icon3->update(deltaTime);
+		if ((player->getPosition()).x > 6400) {
+			// load change screen
+			currentLevel = LEVEL02;
+			initLv02();
+		}
 	}
 }
 
