@@ -40,10 +40,12 @@ private:
 	TileMap *map;
 	int RestLifes;
 	bool F;
+	bool reviving;
 	bool swimming;
 	bool shooting;
 	bool powerup;
 	long long DieSec;
+	int angle_aux;
 
 };
 

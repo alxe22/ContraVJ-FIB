@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 190
+#define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 1
 
 // testing only
@@ -105,11 +105,11 @@ void Scene::initLv01()
 	Icon3 = new IconLife();
 
 	Icon1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	Icon1->setPosition(glm::vec2(float(30), float(60)));
+	Icon1->setPosition(glm::vec2(float(30), float(30)));
 	Icon2->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	Icon2->setPosition(glm::vec2(float(60), float(60)));
+	Icon2->setPosition(glm::vec2(float(60), float(30)));
 	Icon3->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	Icon3->setPosition(glm::vec2(float(90), float(60)));
+	Icon3->setPosition(glm::vec2(float(90), float(30)));
 	SoundSystem::instance().playMusic("level01", state);
 	EnemyManager::instance().initEnemies(190, 0, 0, texProgram, map, "level01");
 	BulletManager::instance().initBulletManager(texProgram, map);
@@ -393,9 +393,9 @@ void Scene::CameraUpdate()
 	glm::ivec2 pos = player->getPosition();
 	if (pos.x - 240 > limitCamera && pos.x + 240 < 200*32) {
 		limitCamera = pos.x - 240;
-		Icon1->setPosition(glm::vec2(float(limitCamera + 30), float(60)));
-		Icon2->setPosition(glm::vec2(float(limitCamera + 60), float(60)));
-		Icon3->setPosition(glm::vec2(float(limitCamera + 90), float(60)));
+		Icon1->setPosition(glm::vec2(float(limitCamera + 30), float(30)));
+		Icon2->setPosition(glm::vec2(float(limitCamera + 60), float(30)));
+		Icon3->setPosition(glm::vec2(float(limitCamera + 90), float(30)));
 	}
 	projection = glm::ortho(limitCamera, float(SCREEN_WIDTH - 1)+limitCamera, float(SCREEN_HEIGHT - 1), 30.f);
 }

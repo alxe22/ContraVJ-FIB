@@ -38,8 +38,16 @@ bool BulletManager::existsBulletColision(glm::vec2 topLeft, int width, int heigh
 			if ((bPos.x > topLeft.x) && (bPos.x < topLeft.x + width)) {
 				if ((bPos.y > topLeft.y) && (bPos.y < topLeft.y + height)) {
 					if (b->getFiredBy() == "CHARACTER") {
-						if (b->getAnimation() != 1) b->changeBulletAnimation(1);
-						return true;
+						if (type != "PLAYER") {
+							if (b->getAnimation() != 1) b->changeBulletAnimation(1);
+							return true;
+						}
+					}
+					else {
+						if (type == "PLAYER") {
+							if (b->getAnimation() != 1) b->changeBulletAnimation(1);
+							return true;
+						}
 					}
 				}
 			}

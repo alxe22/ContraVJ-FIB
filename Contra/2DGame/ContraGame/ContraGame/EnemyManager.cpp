@@ -281,3 +281,21 @@ vector<dataPos* > EnemyManager::getPositionEnemies()
 	}
 	return res;
 }
+
+bool EnemyManager::existsPlayerColision(glm::vec2 topLeft, int width, int height)
+{
+	for (Enemy * enemy : enemies) {
+		if (enemy != NULL) {
+			glm::vec2 ePos = enemy->getTopLeftPos();
+			ePos.x = ePos.x - 16;
+			ePos.y = ePos.y - 16;
+			if ((ePos.x + 16 > topLeft.x + width) && (ePos.x + 10 < topLeft.x + width) || (ePos.x + 64 > topLeft.x) && (ePos.x + 10 < topLeft.x)) {
+				if ((ePos.y > topLeft.y) && (ePos.y + 20 < topLeft.y + height)) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+

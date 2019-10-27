@@ -43,6 +43,7 @@ public:
 	void deleteAll();
 
 	vector<dataPos* > getPositionEnemies();
+	bool existsPlayerColision(glm::vec2 topLeft, int width, int height);
 
 private:
 	vector<Enemy *> enemies;

@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "BulletManager.h"
+#include "EnemyManager.h"
 #include "Time.h"
 #include "SoundSystem.h"
 #include <Windows.h>
@@ -36,6 +37,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	PlayerDir = "R";
 	RestLifes = 3;
 	F = false;
+	reviving = false;
+	angle_aux = 0;
 	shooting = false;
 	swimming = false;
 	powerup = false;
@@ -179,22 +182,27 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 void Player::update(int deltaTime)
 {
+	angle_aux += 45;
+	if (angle_aux == 360) angle_aux = 0;
 	sprite->update(deltaTime);
-	if (!F && posPlayer.y + 96> SCREEN_HEIGHT) {
-		F = true;
-		RestLifes -= 1;
-		if (PlayerDir == "R") {
-			//if (sprite->animation() != DIE_RIGHT)
-			//	sprite->changeAnimation(DIE_RIGHT);
+	if(PlayerState == laying || swimming) {
+		if (!F && !reviving && (posPlayer.y + 96> SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 56), 32, 40, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
+			F = true;
+			reviving = true;
+			RestLifes -= 1;
+			DieSec = Time::instance().NowToMili();
 		}
-		else {
-		//	if (sprite->animation() != DIE_LEFT)
-		//		sprite->changeAnimation(DIE_LEFT);
-		}
-		DieSec = Time::instance().NowToMili();
 	}
-	else if (F) {
-		posPlayer.y = SCREEN_HEIGHT-80;
+	else {
+		if (!F && !reviving && (posPlayer.y + 96 > SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
+			F = true;
+			reviving = true;
+			RestLifes -= 1;
+			DieSec = Time::instance().NowToMili();
+		}
+	}
+	if (F && reviving) {
+		if((posPlayer.y + 96> SCREEN_HEIGHT)) posPlayer.y = SCREEN_HEIGHT-100;
 		if (PlayerDir == "R") {
 			if (sprite->animation() != DIE_RIGHT)
 				sprite->changeAnimation(DIE_RIGHT);
@@ -204,14 +212,15 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(DIE_LEFT);
 		}
 		if (Time::instance().NowToMili() - DieSec > 1000) {
-			posPlayer.x -= 80;
+			posPlayer.x -= 50;
 			posPlayer.y = 30;
 			PlayerState = standing;
 			F = false;
 		}
 	}
 	else {
-		if (!powerup && posPlayer.x + 90 > 126 * 32 + 5 && posPlayer.x + 16 < 126 * 32 + 5 && posPlayer.y + 90 > 126 && posPlayer.y + 90 < 156) powerup = true;	//posPlayer.x+90 > 126*32+5 && posPlayer.x+16 < 126 * 32 + 5 && posPlayer.y > 136 && posPlayer.y < 166
+		if (Time::instance().NowToMili() - DieSec > 3000) reviving = false;
+		if (!powerup && posPlayer.x + 90 > 126 * 32 + 5 && posPlayer.x + 16 < 126 * 32 + 5 && posPlayer.y + 90 > 126 && posPlayer.y + 90 < 156) powerup = true;	
 		if (Game::instance().getKey('z')) {
 			if (!shooting) {
 				if (PlayerState != running && PlayerState != water_run) shooting = true;
@@ -310,7 +319,7 @@ void Player::update(int deltaTime)
 					}
 					break;
 				case running_up:
-					d = glm::vec2(0.75*d.x, -0.25);
+					d = glm::vec2(0.5*d.x, -0.5);
 					dir.push_back(d);
 					if (PlayerDir == "R") {
 						p = glm::ivec2(posPlayer.x + 55, posPlayer.y + 5);
@@ -332,7 +341,7 @@ void Player::update(int deltaTime)
 					}
 					break;
 				case water_runup:
-					d = glm::vec2(0.75*d.x, -0.25);
+					d = glm::vec2(0.5*d.x, -0.5);
 					dir.push_back(d);
 					if (PlayerDir == "R") {
 						p = glm::ivec2(posPlayer.x + 55, posPlayer.y + 27);
@@ -354,7 +363,7 @@ void Player::update(int deltaTime)
 					}
 					break;
 				case running_down:
-					d = glm::vec2(0.75*d.x, 0.25);
+					d = glm::vec2(0.5*d.x, 0.5);
 					dir.push_back(d);
 					if (PlayerDir == "R") {
 						p = glm::ivec2(posPlayer.x + 55, posPlayer.y + 40);
@@ -583,7 +592,7 @@ void Player::update(int deltaTime)
 				}
 				else
 				{
-					if (!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 96), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+					if (!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
 					else PlayerState = standing;
 				}
 				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) posPlayer.x += 2;
@@ -598,7 +607,7 @@ void Player::update(int deltaTime)
 					PlayerState = water_stand;
 					if (sprite->animation() != SPLASH)sprite->changeAnimation(SPLASH);
 				}
-				else if (map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 96), &posPlayer.y)) {
+				else if (map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) {
 					if (Game::instance().getKey(VK_SPACE) && PlayerState != laying) {
 						startY = posPlayer.y;
 						jumpAngle = 0;
@@ -930,7 +939,11 @@ void Player::updateLv2(int deltaTime, bool canMoveForward)
 
 void Player::render()
 {
-	sprite->render();
+	if (reviving) {
+		float x = sin(3.14159f * angle_aux / 180.f);
+		if (x >= 0.0f) sprite->render();
+	}
+	else sprite->render();
 }
 
 void Player::setTileMap(TileMap *tileMap)
