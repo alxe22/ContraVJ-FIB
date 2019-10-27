@@ -352,6 +352,7 @@ void Scene::initLv03()
 	bossSprite = Sprite::createSprite(glm::ivec2(640, 400), glm::vec2(1.f, 1.f), &bossSpritesheet, &texProgram);
 	bossSprite->setNumberAnimations(0);
 	bossSprite->setPosition(glm::vec2(float(0), float(0)));
+	
 	bossTerrainSpritesheet.loadFromFile("images/bossTerrain.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	bossTerrainSprite = Sprite::createSprite(glm::ivec2(640, 64), glm::vec2(1.f, 1.f), &bossTerrainSpritesheet, &texProgram);
 	bossTerrainSprite->setNumberAnimations(0);
@@ -377,7 +378,7 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL01;
+	currentLevel = LEVEL03;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -476,7 +477,7 @@ void Scene::updateLv03(int deltaTime)
 		updateGameOverScreen(deltaTime);
 	}
 	else {
-		if (countToShowStagePreScreen < 50) spritePreScreenLv01->update(deltaTime);
+		if (countToShowStagePreScreen < 50) spritePreScreenBoss->update(deltaTime);
 		else {
 			player->update(deltaTime);
 			boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -484,6 +485,7 @@ void Scene::updateLv03(int deltaTime)
 			Icon1->update(deltaTime);
 			Icon2->update(deltaTime);
 			Icon3->update(deltaTime);
+			bossTerrainSprite->update(deltaTime);
 		}
 	}
 }
@@ -605,10 +607,10 @@ void Scene::renderLv02()
 
 void Scene::renderLv03()
 {
-//	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
-//		renderGameOverScreen();
-//	}
-//	else {
+	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
+		renderGameOverScreen();
+	}
+	else {
 		if (countToShowStagePreScreen < 50) {
 			spritePreScreenBoss->render();
 			++countToShowStagePreScreen;
@@ -622,9 +624,10 @@ void Scene::renderLv03()
 			bossSprite->render();
 			player->render();
 			boss->render();
+			bossTerrainSprite->render();
 			BulletManager::instance().render();
 		}
-//	}
+	}
 }
 
 void Scene::renderGameOverScreen()
