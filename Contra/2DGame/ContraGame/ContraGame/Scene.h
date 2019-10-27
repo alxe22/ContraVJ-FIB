@@ -36,11 +36,13 @@ public:
 	void initLv01();
 	void initLv02();
 	void initLv03();
+	void initGameOverScreen();
 
 	void update(int deltaTime);
 	void updateLv01(int deltaTime);
 	void updateLv02(int deltaTime);
 	void updateLv03(int deltaTime);
+	void updateGameOverScreen(int deltaTime);
 
 	void CameraUpdate();
 
@@ -48,6 +50,7 @@ public:
 	void renderLv01();
 	void renderLv02();
 	void renderLv03();
+	void renderGameOverScreen();
 
 private:
 	void initShaders();
@@ -57,8 +60,8 @@ private:
 	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
 	int currentLevel;
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed;
-	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;

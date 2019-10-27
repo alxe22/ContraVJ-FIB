@@ -308,6 +308,14 @@ void Scene::initLv03()
 
 }
 
+void Scene::initGameOverScreen()
+{
+	spritesheetGameOver.loadFromFile("images/gameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spriteGameOver = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &spritesheetGameOver, &texProgram);
+	spriteGameOver->setNumberAnimations(0);
+	spriteGameOver->setPosition(glm::vec2(float(0), float(0)));
+}
+
 void Scene::init()
 {
 	initShaders();
@@ -320,6 +328,7 @@ void Scene::init()
 	}
 	else if (state == "CONTROLS") loadControls();
 	else {
+		initGameOverScreen();
 		if (currentLevel == LEVEL01) initLv01();
 		else if (currentLevel == LEVEL02) initLv02();
 		else if (currentLevel == LEVEL03) initLv03();
@@ -328,16 +337,22 @@ void Scene::init()
 
 void Scene::updateLv01(int deltaTime) 
 {
-	player->update(deltaTime);
-	spriteBossDestroyed->update(deltaTime);
-	EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
-	BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
-	EnemyManager::instance().detectBulletCollisions("level01");
-	CameraUpdate();
-	spread->update(deltaTime);
-	Icon1->update(deltaTime);
-	Icon2->update(deltaTime);
-	Icon3->update(deltaTime);
+	if (player->getLifes() == 0) {
+		state = "GAME_OVER";
+		updateGameOverScreen(deltaTime);
+	}
+	else {
+		player->update(deltaTime);
+		spriteBossDestroyed->update(deltaTime);
+		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
+		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
+		EnemyManager::instance().detectBulletCollisions("level01");
+		CameraUpdate();
+		spread->update(deltaTime);
+		Icon1->update(deltaTime);
+		Icon2->update(deltaTime);
+		Icon3->update(deltaTime);
+	}
 }
 
 void Scene::updateLv02(int deltaTime)
@@ -370,6 +385,15 @@ void Scene::updateLv02(int deltaTime)
 void Scene::updateLv03(int deltaTime)
 {
 
+}
+
+void Scene::updateGameOverScreen(int deltaTime)
+{
+	spriteGameOver->update(deltaTime);
+	if (Game::instance().getKey('b')) {
+		state = "MENU";
+		loadMenu();
+	}
 }
 
 void Scene::update(int deltaTime)
@@ -426,16 +450,21 @@ void Scene::render()
 
 void Scene::renderLv01()
 {
-	map->render();
-	if (player->getLifes() > 0) Icon1->render();
-	if (player->getLifes() > 1) Icon2->render();
-	if (player->getLifes() > 2) Icon3->render();
-	spriteBossDestroyed->render();
-	player->render();
-	//spriteLifes->render();
-	EnemyManager::instance().render();
-	BulletManager::instance().render();
-	if (!player->getPower()) spread->render();
+	if (player->getLifes() == 0) {
+		renderGameOverScreen();
+	}
+	else {
+		map->render();
+		if (player->getLifes() > 0) Icon1->render();
+		if (player->getLifes() > 1) Icon2->render();
+		if (player->getLifes() > 2) Icon3->render();
+		spriteBossDestroyed->render();
+		player->render();
+		//spriteLifes->render();
+		EnemyManager::instance().render();
+		BulletManager::instance().render();
+		if (!player->getPower()) spread->render();
+	}
 }
 
 void Scene::renderLv02()
@@ -453,6 +482,14 @@ void Scene::renderLv02()
 void Scene::renderLv03()
 {
 
+}
+
+void Scene::renderGameOverScreen()
+{
+	if (state == "GAME_OVER") {
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		spriteGameOver->render();
+	}
 }
 
 void Scene::initShaders()
