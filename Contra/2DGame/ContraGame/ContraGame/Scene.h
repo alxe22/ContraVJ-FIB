@@ -57,12 +57,13 @@ private:
 
 private:
 	int countToShowGameOverScreen = 0;
+	int countToShowStagePreScreen = 0;
 	string state = "MENU"; // MENU, CONTROLS, PLAYING
 	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
 	int currentLevel;
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver;
-	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver, spritesheetPreScreenLv01, spritesheetPreScreenLv02, spritesheetPreScreenBoss;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver, *spritePreScreenLv01, *spritePreScreenLv02, *spritePreScreenBoss;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;

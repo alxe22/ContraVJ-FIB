@@ -118,6 +118,11 @@ void Scene::initLv01()
 	spriteBossDestroyed = Sprite::createSprite(glm::ivec2(128, 480), glm::vec2(1, 1), &spritesheetBossDestroyed, &texProgram);
 	spriteBossDestroyed->setNumberAnimations(0);
 	spriteBossDestroyed->setPosition(glm::vec2(float(6432), float(0)));
+
+	spritesheetPreScreenLv01.loadFromFile("images/stage1PreScreen.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritePreScreenLv01 = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &spritesheetPreScreenLv01, &texProgram);
+	spritePreScreenLv01->setNumberAnimations(0);
+	spritePreScreenLv01->setPosition(glm::vec2(float(0), float(0)));
 }
 
 
@@ -348,24 +353,28 @@ void Scene::init()
 void Scene::updateLv01(int deltaTime) 
 {
 	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
+		countToShowStagePreScreen = 0;
 		state = "GAME_OVER";
 		updateGameOverScreen(deltaTime);
 	}
 	else {
-		player->update(deltaTime);
-		spriteBossDestroyed->update(deltaTime);
-		EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
-		BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
-		EnemyManager::instance().detectBulletCollisions("level01");
-		CameraUpdate();
-		spread->update(deltaTime);
-		Icon1->update(deltaTime);
-		Icon2->update(deltaTime);
-		Icon3->update(deltaTime);
-		if ((player->getPosition()).x > 6400) {
-			// load change screen
-			currentLevel = LEVEL02;
-			initLv02();
+		if (countToShowStagePreScreen < 50) spritePreScreenLv01->update(deltaTime);
+		else {
+			player->update(deltaTime);
+			spriteBossDestroyed->update(deltaTime);
+			EnemyManager::instance().updateEnemies(player->getPosition(), player->getPosition(), deltaTime, "level01");
+			BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
+			EnemyManager::instance().detectBulletCollisions("level01");
+			CameraUpdate();
+			spread->update(deltaTime);
+			Icon1->update(deltaTime);
+			Icon2->update(deltaTime);
+			Icon3->update(deltaTime);
+			if ((player->getPosition()).x > 6400) {
+				// load change screen
+				currentLevel = LEVEL02;
+				initLv02();
+			}
 		}
 	}
 }
@@ -408,7 +417,6 @@ void Scene::updateLv02(int deltaTime)
 
 void Scene::updateLv03(int deltaTime)
 {
-
 }
 
 void Scene::updateGameOverScreen(int deltaTime)
@@ -478,17 +486,23 @@ void Scene::renderLv01()
 		renderGameOverScreen();
 	}
 	else {
-		if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
-		map->render();
-		if (player->getLifes() > 0) Icon1->render();
-		if (player->getLifes() > 1) Icon2->render();
-		if (player->getLifes() > 2) Icon3->render();
-		spriteBossDestroyed->render();
-		player->render();
-		//spriteLifes->render();
-		EnemyManager::instance().render();
-		BulletManager::instance().render();
-		if (!player->getPower()) spread->render();
+		if (countToShowStagePreScreen < 50) {
+			spritePreScreenLv01->render();
+			++countToShowStagePreScreen;
+		}
+		else {
+			if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
+			map->render();
+			if (player->getLifes() > 0) Icon1->render();
+			if (player->getLifes() > 1) Icon2->render();
+			if (player->getLifes() > 2) Icon3->render();
+			spriteBossDestroyed->render();
+			player->render();
+			//spriteLifes->render();
+			EnemyManager::instance().render();
+			BulletManager::instance().render();
+			if (!player->getPower()) spread->render();
+		}
 	}
 }
 
