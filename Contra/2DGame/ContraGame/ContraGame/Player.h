@@ -44,6 +44,8 @@ private:
 	bool swimming;
 	bool shooting;
 	bool powerup;
+	bool RageMode;
+	float RageLevel;
 	long long DieSec;
 	int angle_aux;
 

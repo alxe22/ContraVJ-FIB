@@ -42,6 +42,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	shooting = false;
 	swimming = false;
 	powerup = false;
+	RageMode = false;
+	RageLevel = 1;
 	spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(1/11.f, 1/11.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(29);
@@ -52,7 +54,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->setAnimationSpeed(STAND_RIGHT, 8);
 		sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.f, 0.f));
 		
-		sprite->setAnimationSpeed(MOVE_RIGHT, 8);
+		sprite->setAnimationSpeed(MOVE_RIGHT, 8*RageLevel);
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(6/11.f, 3/11.f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(7/11.f, 3/11.f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(8/11.f, 3/11.f));
@@ -60,7 +62,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(10/11.f, 2/11.f));
 		sprite->addKeyframe(MOVE_RIGHT, glm::vec2(10/11.f, 3/11.f));
 		
-		sprite->setAnimationSpeed(MOVE_LEFT, 8);
+		sprite->setAnimationSpeed(MOVE_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(6/11.f, 4/11.f));
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(6/11.f, 5/11.f));
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(7/11.f, 4/11.f));
@@ -68,32 +70,32 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(9/11.f, 4/11.f));
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2(10/11.f, 4/11.f));
 
-		sprite->setAnimationSpeed(MOVESH_LEFT, 8);
+		sprite->setAnimationSpeed(MOVESH_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(MOVESH_LEFT, glm::vec2(5 / 11.f, 3 / 11.f));
 		sprite->addKeyframe(MOVESH_LEFT, glm::vec2(4 / 11.f, 3 / 11.f));
 		sprite->addKeyframe(MOVESH_LEFT, glm::vec2(3 / 11.f, 3 / 11.f));
 
-		sprite->setAnimationSpeed(MOVESH_RIGHT, 8);
+		sprite->setAnimationSpeed(MOVESH_RIGHT, 8 * RageLevel);
 		sprite->addKeyframe(MOVESH_RIGHT, glm::vec2(0 / 11.f, 3 / 11.f));
 		sprite->addKeyframe(MOVESH_RIGHT, glm::vec2(1 / 11.f, 3 / 11.f));
 		sprite->addKeyframe(MOVESH_RIGHT, glm::vec2(2 / 11.f, 3 / 11.f));
 
-		sprite->setAnimationSpeed(MOVEU45_RIGHT, 8);
+		sprite->setAnimationSpeed(MOVEU45_RIGHT, 8 * RageLevel);
 		sprite->addKeyframe(MOVEU45_RIGHT, glm::vec2(0 / 11.f, 4 / 11.f));
 		sprite->addKeyframe(MOVEU45_RIGHT, glm::vec2(1 / 11.f, 4 / 11.f));
 		sprite->addKeyframe(MOVEU45_RIGHT, glm::vec2(2 / 11.f, 4 / 11.f));
 
-		sprite->setAnimationSpeed(MOVED45_RIGHT, 8);
+		sprite->setAnimationSpeed(MOVED45_RIGHT, 8 * RageLevel);
 		sprite->addKeyframe(MOVED45_RIGHT, glm::vec2(0 / 11.f, 5 / 11.f));
 		sprite->addKeyframe(MOVED45_RIGHT, glm::vec2(1 / 11.f, 5 / 11.f));
 		sprite->addKeyframe(MOVED45_RIGHT, glm::vec2(2 / 11.f, 5 / 11.f));
 
-		sprite->setAnimationSpeed(MOVEU45_LEFT, 8);
+		sprite->setAnimationSpeed(MOVEU45_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(MOVEU45_LEFT, glm::vec2(3 / 11.f, 4 / 11.f));
 		sprite->addKeyframe(MOVEU45_LEFT, glm::vec2(4 / 11.f, 4 / 11.f));
 		sprite->addKeyframe(MOVEU45_LEFT, glm::vec2(5 / 11.f, 4 / 11.f));
 
-		sprite->setAnimationSpeed(MOVED45_LEFT, 8);
+		sprite->setAnimationSpeed(MOVED45_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(MOVED45_LEFT, glm::vec2(3 / 11.f, 5 / 11.f));
 		sprite->addKeyframe(MOVED45_LEFT, glm::vec2(4 / 11.f, 5 / 11.f));
 		sprite->addKeyframe(MOVED45_LEFT, glm::vec2(5 / 11.f, 5 / 11.f));
@@ -146,16 +148,16 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->setAnimationSpeed(WAT_STAND_RIGHT, 8);
 		sprite->addKeyframe(WAT_STAND_RIGHT, glm::vec2(2 / 11.f, 6/11.f));
 		
-		sprite->setAnimationSpeed(WAT_RUN_LEFT, 8);
+		sprite->setAnimationSpeed(WAT_RUN_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(WAT_RUN_LEFT, glm::vec2(10 / 11.f, 6 / 11.f));
 		
-		sprite->setAnimationSpeed(WAT_RUN_RIGHT, 8);
+		sprite->setAnimationSpeed(WAT_RUN_RIGHT, 8 * RageLevel);
 		sprite->addKeyframe(WAT_RUN_RIGHT, glm::vec2(1 / 11.f, 6 / 11.f));
 
-		sprite->setAnimationSpeed(WAT_RUNUP_LEFT, 8);
+		sprite->setAnimationSpeed(WAT_RUNUP_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(WAT_RUNUP_LEFT, glm::vec2(7 / 11.f, 6 / 11.f));
 
-		sprite->setAnimationSpeed(WAT_RUNUP_RIGHT, 8);
+		sprite->setAnimationSpeed(WAT_RUNUP_RIGHT, 8 * RageLevel);
 		sprite->addKeyframe(WAT_RUNUP_RIGHT, glm::vec2(4 / 11.f, 6 / 11.f));
 		
 		sprite->setAnimationSpeed(WAT_UP_LEFT, 8);
@@ -164,10 +166,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->setAnimationSpeed(WAT_UP_RIGHT, 8);
 		sprite->addKeyframe(WAT_UP_RIGHT, glm::vec2(5 / 11.f, 6 / 11.f));
 
-		sprite->setAnimationSpeed(WAT_SHOOT_LEFT, 8);
+		sprite->setAnimationSpeed(WAT_SHOOT_LEFT, 8 * RageLevel);
 		sprite->addKeyframe(WAT_SHOOT_LEFT, glm::vec2(8 / 11.f, 6 / 11.f));
 
-		sprite->setAnimationSpeed(WAT_SHOOT_RIGHT, 8);
+		sprite->setAnimationSpeed(WAT_SHOOT_RIGHT, 8 * RageLevel);
 		sprite->addKeyframe(WAT_SHOOT_RIGHT, glm::vec2(3 / 11.f, 6 / 11.f));
 
 		sprite->setAnimationSpeed(SPLASH, 8);
@@ -185,20 +187,37 @@ void Player::update(int deltaTime)
 	angle_aux += 45;
 	if (angle_aux == 360) angle_aux = 0;
 	sprite->update(deltaTime);
+	if (RestLifes == 1 && !RageMode) {
+		RageLevel = 1.5;
+		RageMode = true;
+		spritesheet.loadFromFile("images/soldadoRaged.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	}
 	if(PlayerState == laying || swimming) {
 		if (!F && !reviving && (posPlayer.y + 96> SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 56), 32, 40, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
-			F = true;
-			reviving = true;
-			RestLifes -= 1;
-			DieSec = Time::instance().NowToMili();
+			if (RageLevel > 1) {
+				RageLevel = 1;
+				if (RageMode) spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
+			}
+			else {
+				F = true;
+				reviving = true;
+				RestLifes -= 1;
+				DieSec = Time::instance().NowToMili();
+			}
 		}
 	}
 	else {
 		if (!F && !reviving && (posPlayer.y + 96 > SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
-			F = true;
-			reviving = true;
-			RestLifes -= 1;
-			DieSec = Time::instance().NowToMili();
+			if (RageLevel > 1) {
+				RageLevel = 1;
+				if (RageMode) spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
+			}
+			else {
+				F = true;
+				reviving = true;
+				RestLifes -= 1;
+				DieSec = Time::instance().NowToMili();
+			}
 		}
 	}
 	if (F && reviving) {
@@ -224,7 +243,7 @@ void Player::update(int deltaTime)
 		if (Game::instance().getKey('z')) {
 			if (!shooting) {
 				if (PlayerState != running && PlayerState != water_run) shooting = true;
-				int speed = 4;
+				int speed = 4 * RageLevel;
 				vector<glm::vec2> dir;
 				vector<glm::vec2> pos;
 				glm::vec2 d = glm::vec2(1, 0);
@@ -413,7 +432,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVEU45_RIGHT);
 					PlayerState = running_up;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
 					{
 						posPlayer.x -= 2;
@@ -425,7 +444,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVED45_RIGHT);
 					PlayerState = running_down;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
 					{
 						posPlayer.x -= 2;
@@ -437,7 +456,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVESH_RIGHT);
 					PlayerState = running;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
 					{
 						posPlayer.x -= 2;
@@ -460,7 +479,7 @@ void Player::update(int deltaTime)
 							dir.push_back(glm::vec2(d.x, d.y - 0.1));
 							dir.push_back(glm::vec2(d.x, d.y - 0.3));
 						}
-						BulletManager::instance().fire(dir, pos, 4, "CHARACTER");
+						BulletManager::instance().fire(dir, pos, 4 * RageLevel, "CHARACTER");
 						SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
 					}
 				}
@@ -470,7 +489,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVE_RIGHT);
 					PlayerState = running;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					shooting = false;
 					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
 					{
@@ -483,7 +502,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVED45_LEFT);
 					PlayerState = running_down;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
 					{
 						posPlayer.x += 2;
@@ -495,7 +514,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVEU45_LEFT);
 					PlayerState = running_up;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
 					{
 						posPlayer.x += 2;
@@ -507,7 +526,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVESH_LEFT);
 					PlayerState = running;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
 					{
 						posPlayer.x += 2;
@@ -530,7 +549,7 @@ void Player::update(int deltaTime)
 							dir.push_back(glm::vec2(d.x, d.y - 0.1));
 							dir.push_back(glm::vec2(d.x, d.y - 0.3));
 						}
-						BulletManager::instance().fire(dir, pos, 4, "CHARACTER");
+						BulletManager::instance().fire(dir, pos, 4 * RageLevel, "CHARACTER");
 						SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
 					}
 				}
@@ -540,7 +559,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(MOVE_LEFT);
 					PlayerState = running;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					shooting = false;
 					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
 					{
@@ -595,8 +614,8 @@ void Player::update(int deltaTime)
 					if (!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
 					else PlayerState = standing;
 				}
-				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) posPlayer.x += 2;
-				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) posPlayer.x -= 2;
+				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) posPlayer.x += 2 * RageLevel;
+				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) posPlayer.x -= 2 * RageLevel;
 
 			}
 			else
@@ -630,7 +649,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(WAT_RUNUP_RIGHT);
 					PlayerState = water_runup;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					if (map->collisionOutWaterRight(glm::vec2(posPlayer.x + 64, posPlayer.y + 40), glm::ivec2(32, 52)))
 					{
 						posPlayer.x += 30;
@@ -646,7 +665,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(WAT_SHOOT_RIGHT);
 					PlayerState = water_run;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					if (map->collisionOutWaterRight(glm::vec2(posPlayer.x + 64, posPlayer.y + 40), glm::ivec2(32, 52)))
 					{
 						posPlayer.x += 30;
@@ -673,7 +692,7 @@ void Player::update(int deltaTime)
 							dir.push_back(glm::vec2(d.x, d.y - 0.1));
 							dir.push_back(glm::vec2(d.x, d.y - 0.3));
 						}
-						BulletManager::instance().fire(dir, pos, 4, "CHARACTER");
+						BulletManager::instance().fire(dir, pos, 4 * RageLevel, "CHARACTER");
 						SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
 					}
 				}
@@ -683,7 +702,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(WAT_RUN_RIGHT);
 					PlayerState = water_run;
 					PlayerDir = "R";
-					posPlayer.x += 2;
+					posPlayer.x += 2 * RageLevel;
 					shooting = false;
 					if (map->collisionOutWaterRight(glm::vec2(posPlayer.x + 64, posPlayer.y + 40), glm::ivec2(32, 52)))
 					{
@@ -700,7 +719,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(WAT_RUNUP_LEFT);
 					PlayerState = water_runup;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					if (map->collisionOutWaterLeft(glm::vec2(posPlayer.x, posPlayer.y + 40), glm::ivec2(64, 52)))
 					{
 						posPlayer.x += 30;
@@ -716,7 +735,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(WAT_SHOOT_LEFT);
 					PlayerState = water_run;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					if (map->collisionOutWaterLeft(glm::vec2(posPlayer.x, posPlayer.y + 40), glm::ivec2(64, 52)))
 					{
 						posPlayer.x += 30;
@@ -743,7 +762,7 @@ void Player::update(int deltaTime)
 							dir.push_back(glm::vec2(d.x, d.y - 0.1));
 							dir.push_back(glm::vec2(d.x, d.y - 0.3));
 						}
-						BulletManager::instance().fire(dir, pos, 4, "CHARACTER");
+						BulletManager::instance().fire(dir, pos, 4 * RageLevel, "CHARACTER");
 						SoundSystem::instance().playSoundEffect("level01", "SHOOT", "CHARACTER");
 					}
 				}
@@ -753,7 +772,7 @@ void Player::update(int deltaTime)
 						sprite->changeAnimation(WAT_RUN_LEFT);
 					PlayerState = water_run;
 					PlayerDir = "L";
-					posPlayer.x -= 2;
+					posPlayer.x -= 2 * RageLevel;
 					shooting = false;
 					if (map->collisionOutWaterLeft(glm::vec2(posPlayer.x, posPlayer.y + 40), glm::ivec2(64, 52)))
 					{

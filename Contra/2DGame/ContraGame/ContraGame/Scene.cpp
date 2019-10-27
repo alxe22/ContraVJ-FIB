@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 120
+#define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 1
 
 // testing only
@@ -377,7 +377,7 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL03;
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -479,11 +479,11 @@ void Scene::updateLv03(int deltaTime)
 		if (countToShowStagePreScreen < 50) spritePreScreenLv01->update(deltaTime);
 		else {
 			player->update(deltaTime);
+			boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
 			Icon1->update(deltaTime);
 			Icon2->update(deltaTime);
 			Icon3->update(deltaTime);
-			boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-			spritePreScreenBoss->update(deltaTime);
 		}
 	}
 }
@@ -605,10 +605,10 @@ void Scene::renderLv02()
 
 void Scene::renderLv03()
 {
-	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
-		renderGameOverScreen();
-	}
-	else {
+//	if (player->getLifes() == 0 && countToShowGameOverScreen > 50) {
+//		renderGameOverScreen();
+//	}
+//	else {
 		if (countToShowStagePreScreen < 50) {
 			spritePreScreenBoss->render();
 			++countToShowStagePreScreen;
@@ -619,13 +619,12 @@ void Scene::renderLv03()
 			if (player->getLifes() > 0) Icon1->render();
 			if (player->getLifes() > 1) Icon2->render();
 			if (player->getLifes() > 2) Icon3->render();
-			player->render();
 			bossSprite->render();
-			bossTerrainSprite->render();
+			player->render();
 			boss->render();
 			BulletManager::instance().render();
 		}
-	}
+//	}
 }
 
 void Scene::renderGameOverScreen()
