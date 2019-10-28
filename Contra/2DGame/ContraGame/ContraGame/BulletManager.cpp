@@ -116,3 +116,8 @@ vector<glm::ivec2> BulletManager::getPositionBullets()
 	}
 	return res;
 }
+
+void BulletManager::resetBullets()
+{
+	bullets = vector<Bullet *>();
+}

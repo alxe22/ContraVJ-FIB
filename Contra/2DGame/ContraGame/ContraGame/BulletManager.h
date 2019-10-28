@@ -27,6 +27,7 @@ public:
 	void update(glm::ivec2 &posPlayer1, glm::ivec2 &posPlayer2, int deltaTime, string level);
 	void render();
 	vector<glm::ivec2> getPositionBullets();
+	void resetBullets();
 
 private:
 	vector<Bullet *> bullets;

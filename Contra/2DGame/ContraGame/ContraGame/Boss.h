@@ -23,6 +23,9 @@ public:
 	void createBullet(glm::vec2 pos, glm::vec2 dir, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram);
 	void render();
 	bool existsBulletColision(glm::vec2 topLeft, int width, int height);
+	int getLifes();
+	void deleteBullets();
+
 
 private:
 	int Life;

@@ -91,6 +91,7 @@ void Scene::loadControls() {
 
 void Scene::initLv01()
 {
+	Boss::instance().deleteBullets();
 	map = TileMap::createTileMap("levels/leveltest.txt", glm::vec2(0, 0), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -326,6 +327,7 @@ void Scene::initLv02()
 	spritePreScreenLv02->setPosition(glm::vec2(float(0), float(0)));
 
 	SoundSystem::instance().playMusic("level01", state);
+	EnemyManager::instance().setCanAdvance(0);
 }
 
 void Scene::initLv03()
@@ -378,6 +380,14 @@ void Scene::initGameOverScreen()
 	spriteGameOver->setPosition(glm::vec2(float(0), float(0)));
 }
 
+void Scene::initYouWinScreen()
+{
+	youWinSpritesheet.loadFromFile("images/youWin.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	youWinSprite = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &youWinSpritesheet, &texProgram);
+	youWinSprite->setNumberAnimations(0);
+	youWinSprite->setPosition(glm::vec2(float(0), float(0)));
+}
+
 void Scene::init()
 {
 	initShaders();
@@ -390,6 +400,7 @@ void Scene::init()
 	else if (state == "CONTROLS") loadControls();
 	else {
 		initGameOverScreen();
+		initYouWinScreen();
 		if (currentLevel == LEVEL01) initLv01();
 		else if (currentLevel == LEVEL02) initLv02();
 		else if (currentLevel == LEVEL03) initLv03();
@@ -478,6 +489,10 @@ void Scene::updateLv03(int deltaTime)
 		state = "GAME_OVER";
 		updateGameOverScreen(deltaTime);
 	}
+	else if (Boss::instance().getLifes() == 0) {
+		state = "YOU_WIN";
+		updateYouWinScreen(deltaTime);
+	}
 	else {
 		if (countToShowStagePreScreen < 100) spritePreScreenBoss->update(deltaTime);
 		else {
@@ -496,8 +511,22 @@ void Scene::updateGameOverScreen(int deltaTime)
 {
 	spriteGameOver->update(deltaTime);
 	if (Game::instance().getKey('b')) {
+		if (currentLevel == LEVEL02) EnemyManager::instance().setCanAdvance(0);
 		state = "MENU";
-		loadMenu();
+		currentLevel = LEVEL01;
+		BulletManager::instance().resetBullets();
+		init();
+	}
+}
+
+void Scene::updateYouWinScreen(int deltaTime)
+{
+	youWinSprite->update(deltaTime);
+	if (Game::instance().getKey('b')) {
+		state = "MENU";
+		currentLevel = LEVEL01;
+		BulletManager::instance().resetBullets();
+		init();
 	}
 }
 
@@ -619,15 +648,18 @@ void Scene::renderLv03()
 		}
 		else {
 			if (player->getLifes() == 0 && countToShowGameOverScreen <= 50) ++countToShowGameOverScreen;
-			map->render();
-			if (player->getLifes() > 0) Icon1->render();
-			if (player->getLifes() > 1) Icon2->render();
-			if (player->getLifes() > 2) Icon3->render();
-			bossSprite->render();
-			Boss::instance().render();
-			bossTerrainSprite->render();
-			BulletManager::instance().render();
-			player->render();
+			if (Boss::instance().getLifes() == 0) renderYouWinScreen();
+			else {
+				map->render();
+				bossSprite->render();
+				if (player->getLifes() > 0) Icon1->render();
+				if (player->getLifes() > 1) Icon2->render();
+				if (player->getLifes() > 2) Icon3->render();
+				Boss::instance().render();
+				bossTerrainSprite->render();
+				BulletManager::instance().render();
+				player->render();
+			}
 		}
 	}
 }
@@ -637,6 +669,14 @@ void Scene::renderGameOverScreen()
 	if (state == "GAME_OVER") {
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		spriteGameOver->render();
+	}
+}
+
+void Scene::renderYouWinScreen()
+{
+	if (state == "YOU_WIN") {
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		youWinSprite->render();
 	}
 }
 

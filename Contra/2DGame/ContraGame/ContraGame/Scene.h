@@ -38,12 +38,15 @@ public:
 	void initLv02();
 	void initLv03();
 	void initGameOverScreen();
+	void initYouWinScreen();
+
 
 	void update(int deltaTime);
 	void updateLv01(int deltaTime);
 	void updateLv02(int deltaTime);
 	void updateLv03(int deltaTime);
 	void updateGameOverScreen(int deltaTime);
+	void updateYouWinScreen(int deltaTime);
 
 	void CameraUpdate();
 
@@ -52,6 +55,7 @@ public:
 	void renderLv02();
 	void renderLv03();
 	void renderGameOverScreen();
+	void renderYouWinScreen();
 
 	int getLevel();
 
@@ -61,12 +65,12 @@ private:
 private:
 	int countToShowGameOverScreen = 0;
 	int countToShowStagePreScreen = 0;
-	string state = "MENU"; // MENU, CONTROLS, PLAYING
+	string state = "MENU"; // MENU, CONTROLS, PLAYING, GAME_OVER, YOU_WIN
 	//string currentLevel = "LEVEL02"; // LEVEL01, LEVEL02, LEVEL03
 	int currentLevel;
 	TileMap *map;
-	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver, spritesheetPreScreenLv01, spritesheetPreScreenLv02, spritesheetPreScreenBoss, bossSpritesheet, bossTerrainSpritesheet;
-	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver, *spritePreScreenLv01, *spritePreScreenLv02, *spritePreScreenBoss, *bossSprite, *bossTerrainSprite;;
+	Texture spritesheet, spritesheetSelector, spritesheetControls, spritesheetLifes, spritesheetPower, spritesheetKilled, spritesheetCounter, spritesheetCounterMissing, spritesheetSlash, spritesheetBossDestroyed, spritesheetGameOver, spritesheetPreScreenLv01, spritesheetPreScreenLv02, spritesheetPreScreenBoss, bossSpritesheet, bossTerrainSpritesheet, youWinSpritesheet;
+	Sprite *sprite, *spriteSelector, *spriteControls, *spriteLifes, *spritePower, *spriteKilled, *spriteCounter, *spriteCounterMissing, *spriteSlash, *spriteBossDestroyed, *spriteGameOver, *spritePreScreenLv01, *spritePreScreenLv02, *spritePreScreenBoss, *bossSprite, *bossTerrainSprite, *youWinSprite;
 	Player *player;
 	ShaderProgram texProgram;
 	Enemy *enemy;

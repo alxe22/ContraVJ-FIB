@@ -121,7 +121,7 @@ void Boss::update(int deltaTime, const glm::ivec2 & tileMapPos, ShaderProgram & 
 			if (bullet != NULL) {
 				bullet->update(deltaTime);
 			}
-			if (bullet->getPosition().y > SCREEN_HEIGHT) bullet = NULL;
+			//if (bullet != NULL && bullet->getPosition().y > SCREEN_HEIGHT) bullet = NULL;
 		}
 	}
 }
@@ -153,4 +153,14 @@ bool Boss::existsBulletColision(glm::vec2 topLeft, int width, int height)
 		}
 	}
 	return false;
+}
+
+int Boss::getLifes()
+{
+	return Life;
+}
+
+void Boss::deleteBullets()
+{
+	bullets = vector<BossBullet *>();
 }
