@@ -335,7 +335,7 @@ void Scene::initLv03()
 	map = TileMap::createTileMap("levels/boss.txt", glm::vec2(0, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, INIT_PLAYER_Y_TILES * map->getTileSize()));
+	player->setPosition(glm::vec2((INIT_PLAYER_X_TILES * map->getTileSize()) - 32, 9 * map->getTileSize()));
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 
@@ -382,7 +382,7 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL01;
+	currentLevel = LEVEL03;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {

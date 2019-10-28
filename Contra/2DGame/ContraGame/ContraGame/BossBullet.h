@@ -10,8 +10,8 @@ public:
 	BossBullet();
 	~BossBullet();
 
-	void init(glm::vec2 &pos, glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
-	void update(int deltaTime, glm::vec2 dir);
+	void init(glm::vec2 &pos, glm::vec2 &dir, const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void update(int deltaTime);
 	void render();
 
 	void setTileMap(TileMap *tileMap);
@@ -23,4 +23,5 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	glm::vec2 pos;
+	glm::vec2 dir;
 };

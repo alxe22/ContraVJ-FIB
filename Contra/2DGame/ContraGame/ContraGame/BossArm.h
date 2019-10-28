@@ -13,7 +13,6 @@ public:
 
 	void init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram);
 	int getLife();
-	void createBullet(glm::vec2 dir, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram);
 	void update(int deltaTime);
 	void render();
 
@@ -22,6 +21,7 @@ public:
 
 private:
 	glm::ivec2 tileMapDispl;
+	ShaderProgram shaderProgram;
 	TileMap *map;
 	Texture spritesheet;
 	Sprite *sprite;

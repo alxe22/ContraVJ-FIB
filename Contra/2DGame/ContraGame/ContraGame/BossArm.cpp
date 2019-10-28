@@ -21,16 +21,14 @@ void BossArm::init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 	spritesheet.loadFromFile("images/BossArm1.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(0);
+
+	this->tileMapDispl = tileMapPos;
+	this->shaderProgram = shaderProgram;
 }
 
 int BossArm::getLife()
 {
 	return Life;
-}
-
-void BossArm::createBullet(glm::vec2 dir, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
-{
-	//b->init(pos,tileMapPos, shaderProgram);
 }
 
 void BossArm::update(int deltaTime)
