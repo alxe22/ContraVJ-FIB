@@ -11,7 +11,7 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
+#define INIT_PLAYER_X_TILES 5
 #define INIT_PLAYER_Y_TILES 1
 
 // testing only
@@ -362,8 +362,7 @@ void Scene::initLv03()
 	bossTerrainSprite->setNumberAnimations(0);
 	bossTerrainSprite->setPosition(glm::vec2(float(0), float(432)));
 
-	boss = new Boss();
-	boss->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	Boss::instance().init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	spritesheetPreScreenBoss.loadFromFile("images/stageBossFightPreScreen.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritePreScreenBoss = Sprite::createSprite(glm::ivec2(640, 480), glm::vec2(1, 1), &spritesheetPreScreenBoss, &texProgram);
@@ -382,7 +381,7 @@ void Scene::initGameOverScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL03;
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {
@@ -483,7 +482,7 @@ void Scene::updateLv03(int deltaTime)
 		if (countToShowStagePreScreen < 100) spritePreScreenBoss->update(deltaTime);
 		else {
 			player->update(deltaTime);
-			boss->update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			Boss::instance().update(deltaTime, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 			BulletManager::instance().update(player->getPosition(), player->getPosition(), deltaTime, "level01");
 			Icon1->update(deltaTime);
 			Icon2->update(deltaTime);
@@ -625,7 +624,7 @@ void Scene::renderLv03()
 			if (player->getLifes() > 1) Icon2->render();
 			if (player->getLifes() > 2) Icon3->render();
 			bossSprite->render();
-			boss->render();
+			Boss::instance().render();
 			bossTerrainSprite->render();
 			BulletManager::instance().render();
 			player->render();
@@ -669,6 +668,10 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 	vShader.free();
 	fShader.free();
+}
+
+int Scene::getLevel() {
+	return currentLevel;
 }
 
 

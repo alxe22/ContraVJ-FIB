@@ -7,6 +7,7 @@
 #include "BulletManager.h"
 #include "EnemyManager.h"
 #include "Time.h"
+#include "Boss.h"
 #include "SoundSystem.h"
 #include <Windows.h>
 #include <stdio.h>
@@ -193,7 +194,7 @@ void Player::update(int deltaTime)
 		spritesheet.loadFromFile("images/soldadoRaged.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	}
 	if(PlayerState == laying || swimming) {
-		if (!F && !reviving && (posPlayer.y + 96> SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 56), 32, 40, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
+		if (!F && !reviving && (posPlayer.y + 96> SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 56), 32, 40, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90) || Boss::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 56), 32, 40))) {
 			if (RageLevel > 1) {
 				RageLevel = 1;
 				if (RageMode) spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -207,7 +208,7 @@ void Player::update(int deltaTime)
 		}
 	}
 	else {
-		if (!F && !reviving && (posPlayer.y + 96 > SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
+		if (!F && !reviving && (posPlayer.y + 96 > SCREEN_HEIGHT || BulletManager::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90, "PLAYER") || EnemyManager::instance().existsPlayerColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90) || Boss::instance().existsBulletColision(glm::vec2(posPlayer.x + 32, posPlayer.y + 6), 32, 90))) {
 			if (RageLevel > 1) {
 				RageLevel = 1;
 				if (RageMode) spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);

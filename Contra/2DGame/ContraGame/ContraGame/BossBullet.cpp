@@ -30,9 +30,9 @@ void BossBullet::init(glm::vec2 &pos, glm::vec2 &dir, const glm::ivec2 &tileMapP
 	sprite->setAnimationSpeed(CREATING, 8);
 	sprite->addKeyframe(CREATING, glm::vec2(0.f, 0 / 3.f));
 	sprite->addKeyframe(CREATING, glm::vec2(0.f, 1 / 3.f));
-	sprite->addKeyframe(CREATING, glm::vec2(0.f, 2 / 3.f));
+	//sprite->addKeyframe(CREATING, glm::vec2(0.f, 2 / 3.f));
 
-	sprite->changeAnimation(1);
+	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	this->pos = pos;
 	this->dir = dir;
@@ -60,4 +60,9 @@ void BossBullet::setTileMap(TileMap * tileMap)
 void BossBullet::setPosition(const glm::vec2 & pos)
 {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + pos.x), float(tileMapDispl.y + pos.y)));
+}
+
+glm::ivec2 BossBullet::getPosition() const
+{
+	return pos;
 }

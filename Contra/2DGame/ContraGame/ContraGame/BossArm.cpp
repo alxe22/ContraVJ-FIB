@@ -34,11 +34,12 @@ int BossArm::getLife()
 void BossArm::update(int deltaTime)
 {
 	sprite->update(deltaTime);
+	if (Life < 0) Life = 0;
 }
 
 void BossArm::render()
 {
-	sprite->render();
+	if(Life > 0) sprite->render();
 }
 
 void BossArm::setTileMap(TileMap * tileMap)
@@ -50,4 +51,8 @@ void BossArm::setPosition(const glm::vec2 & pos)
 {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + pos.x), float(tileMapDispl.y + pos.y)));
 	this->pos = pos;
+}
+
+void BossArm::RestLife(int damage) {
+	Life -= damage;
 }

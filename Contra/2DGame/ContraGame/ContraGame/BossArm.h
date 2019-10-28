@@ -19,6 +19,8 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 
+	void RestLife(int damage);
+
 private:
 	glm::ivec2 tileMapDispl;
 	ShaderProgram shaderProgram;

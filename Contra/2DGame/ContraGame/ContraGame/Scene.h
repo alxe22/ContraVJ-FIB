@@ -53,6 +53,8 @@ public:
 	void renderLv03();
 	void renderGameOverScreen();
 
+	int getLevel();
+
 private:
 	void initShaders();
 
