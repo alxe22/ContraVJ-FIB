@@ -53,6 +53,7 @@ void Boss::createBullet(glm::vec2 pos, glm::vec2 dir, const glm::ivec2 & tileMap
 	BossBullet* b = new BossBullet();
 	b->init(pos, dir, tileMapPos, shaderProgram);
 	bullets.push_back(b);
+	SoundSystem::instance().playSoundEffect("level01", "SHOOT", "SNIPER");
 }
 
 void Boss::update(int deltaTime, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
@@ -145,7 +146,7 @@ bool Boss::existsBulletColision(glm::vec2 topLeft, int width, int height)
 		BossBullet * b = bullets[i];
 		if (b != NULL) {
 			glm::vec2 bPos = b->getPosition();
-			if ((bPos.x + 60 > topLeft.x) && (bPos.x + 60 < topLeft.x + width) || (bPos.x > topLeft.x) && (bPos.x < topLeft.x + width)) {
+			if ((bPos.x + 60 > topLeft.x) && (bPos.x + 60 < topLeft.x + width) || (bPos.x > topLeft.x) && (bPos.x < topLeft.x + width) || (topLeft.x < bPos.x+60 && topLeft.x > bPos.x)) {
 				if ((bPos.y + 32 > topLeft.y) && (bPos.y + 32 < topLeft.y + height)) {
 					return true;
 				}

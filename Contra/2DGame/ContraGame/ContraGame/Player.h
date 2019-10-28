@@ -15,7 +15,7 @@ class Player
 {
 
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, bool level);
 	void initlevel2(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void updateLv2(int deltaTime, bool canMoveForward);
@@ -45,6 +45,7 @@ private:
 	bool shooting;
 	bool powerup;
 	bool RageMode;
+	bool level1;
 	float RageLevel;
 	long long DieSec;
 	int angle_aux;

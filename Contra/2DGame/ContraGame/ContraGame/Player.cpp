@@ -32,7 +32,7 @@ enum PlayerStates
 };
 
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, bool level)
 {
 	PlayerState = standing;
 	PlayerDir = "R";
@@ -44,6 +44,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	swimming = false;
 	powerup = false;
 	RageMode = false;
+	level1 = level;
 	RageLevel = 1;
 	spritesheet.loadFromFile("images/soldado.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(96, 96), glm::vec2(1/11.f, 1/11.f), &spritesheet, &shaderProgram);
@@ -232,8 +233,8 @@ void Player::update(int deltaTime)
 				sprite->changeAnimation(DIE_LEFT);
 		}
 		if (Time::instance().NowToMili() - DieSec > 1000) {
-			posPlayer.x -= 50;
-			posPlayer.y = 30;
+			if(level1) posPlayer.x -= 50;
+			if(level1) posPlayer.y = 30;
 			PlayerState = standing;
 			F = false;
 		}
@@ -434,10 +435,13 @@ void Player::update(int deltaTime)
 					PlayerState = running_up;
 					PlayerDir = "R";
 					posPlayer.x += 2 * RageLevel;
-					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x -= 2;
+					if (level1) {
+						if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x -= 2;
+						}
 					}
+					else if (posPlayer.x > 510) posPlayer.x -= 2;
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 				{
@@ -446,10 +450,13 @@ void Player::update(int deltaTime)
 					PlayerState = running_down;
 					PlayerDir = "R";
 					posPlayer.x += 2 * RageLevel;
-					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x -= 2;
+					if (level1) {
+						if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x -= 2;
+						}
 					}
+					else if (posPlayer.x > 496) posPlayer.x -= 2;
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && Game::instance().getKey('z'))
 				{
@@ -458,10 +465,13 @@ void Player::update(int deltaTime)
 					PlayerState = running;
 					PlayerDir = "R";
 					posPlayer.x += 2 * RageLevel;
-					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x -= 2;
+					if (level1) {
+						if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x -= 2;
+						}
 					}
+					else if (posPlayer.x > 496) posPlayer.x -= 2;
 					if (!shooting) {
 						shooting = true;
 						vector<glm::vec2> dir;
@@ -492,10 +502,13 @@ void Player::update(int deltaTime)
 					PlayerDir = "R";
 					posPlayer.x += 2 * RageLevel;
 					shooting = false;
-					if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x -= 2;
+					if (level1) {
+						if (map->collisionMoveRight(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x -= 2;
+						}
 					}
+					else if (posPlayer.x > 525) posPlayer.x -= 2;
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_DOWN))
 				{
@@ -504,10 +517,13 @@ void Player::update(int deltaTime)
 					PlayerState = running_down;
 					PlayerDir = "L";
 					posPlayer.x -= 2 * RageLevel;
-					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x += 2;
+					if (level1) {
+						if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x += 2;
+						}
 					}
+					else if (posPlayer.x < -30) posPlayer.x += 2;
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getSpecialKey(GLUT_KEY_UP))
 				{
@@ -516,10 +532,13 @@ void Player::update(int deltaTime)
 					PlayerState = running_up;
 					PlayerDir = "L";
 					posPlayer.x -= 2 * RageLevel;
-					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x += 2;
+					if (level1) {
+						if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x += 2;
+						}
 					}
+					else if (posPlayer.x < -30) posPlayer.x += 2;
 				}
 				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && Game::instance().getKey('z'))
 				{
@@ -528,10 +547,13 @@ void Player::update(int deltaTime)
 					PlayerState = running;
 					PlayerDir = "L";
 					posPlayer.x -= 2 * RageLevel;
-					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x += 2;
+					if (level1) {
+						if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x += 2;
+						}
 					}
+					else if (posPlayer.x < -30) posPlayer.x += 2;
 					if (!shooting) {
 						shooting = true;
 						vector<glm::vec2> dir;
@@ -562,10 +584,13 @@ void Player::update(int deltaTime)
 					PlayerDir = "L";
 					posPlayer.x -= 2 * RageLevel;
 					shooting = false;
-					if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
-					{
-						posPlayer.x += 2;
+					if (level1) {
+						if (map->collisionMoveLeft(posPlayer, glm::ivec2(64, 92)))
+						{
+							posPlayer.x += 2;
+						}
 					}
+					else if (posPlayer.x < -30) posPlayer.x += 2;
 				}
 
 				else if (Game::instance().getSpecialKey(GLUT_KEY_UP))
@@ -612,8 +637,14 @@ void Player::update(int deltaTime)
 				}
 				else
 				{
-					if (!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-					else PlayerState = standing;
+					if (!level1) {
+						if (!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 80), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+						else PlayerState = standing;
+					}
+					else {
+						if (!map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+						else PlayerState = standing;
+					}
 				}
 				if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) posPlayer.x += 2 * RageLevel;
 				else if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) posPlayer.x -= 2 * RageLevel;
@@ -627,16 +658,35 @@ void Player::update(int deltaTime)
 					PlayerState = water_stand;
 					if (sprite->animation() != SPLASH)sprite->changeAnimation(SPLASH);
 				}
-				else if (map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) {
-					if (Game::instance().getKey(VK_SPACE) && PlayerState != laying) {
-						startY = posPlayer.y;
-						jumpAngle = 0;
-						PlayerState = jumping;
-						if (PlayerDir == "L") {
-							if (sprite->animation() != JUMP_LEFT)sprite->changeAnimation(JUMP_LEFT);
+				else {
+					if (!level1) {
+						if (map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 80), &posPlayer.y)) {
+							if (Game::instance().getKey(VK_SPACE) && PlayerState != laying) {
+								startY = posPlayer.y;
+								jumpAngle = 0;
+								PlayerState = jumping;
+								if (PlayerDir == "L") {
+									if (sprite->animation() != JUMP_LEFT)sprite->changeAnimation(JUMP_LEFT);
+								}
+								else {
+									if (sprite->animation() != JUMP_RIGHT) sprite->changeAnimation(JUMP_RIGHT);
+								}
+							}
 						}
-						else {
-							if (sprite->animation() != JUMP_RIGHT) sprite->changeAnimation(JUMP_RIGHT);
+					}
+					else {
+						if (map->collisionMoveDown(glm::vec2(posPlayer.x + 64, posPlayer.y), glm::ivec2(32, 90), &posPlayer.y)) {
+							if (Game::instance().getKey(VK_SPACE) && PlayerState != laying) {
+								startY = posPlayer.y;
+								jumpAngle = 0;
+								PlayerState = jumping;
+								if (PlayerDir == "L") {
+									if (sprite->animation() != JUMP_LEFT)sprite->changeAnimation(JUMP_LEFT);
+								}
+								else {
+									if (sprite->animation() != JUMP_RIGHT) sprite->changeAnimation(JUMP_RIGHT);
+								}
+							}
 						}
 					}
 				}
