@@ -391,7 +391,7 @@ void Scene::initYouWinScreen()
 void Scene::init()
 {
 	initShaders();
-	currentLevel = LEVEL03;
+	currentLevel = LEVEL01;
 	//map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	//el vector ens indica des d'on comencem a pintar el primer tile en la pantalla
 	if (state == "MENU") {

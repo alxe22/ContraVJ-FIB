@@ -1,0 +1,33 @@
+﻿Contra
+Autors
+Àlex Valls
+Roger Guasch
+
+
++ Funcionalitats implementades
+
+
+El joc compta amb les pantalles de menú principal, controls i el propi joc. A més a més, compta amb tres pantalles no navegables que informen a l’usuari quin nivell començarà a jugar. Hem afegit dues pantalles més que informen al jugador que ha perdut totes les vides de les quals disposava o que ha guanyat el joc.
+
+
+El primer nivell ha estat programat per ser el màxim fidel al Stage 1, Jungle del joc original de la NES. Compta amb una càmera lateral, animacions completes del jugador i els enemics que apareixen en el joc original, col·locats en posicions gairebé idèntiques per ser el més fidels possibles al joc original. Les diferències principals del nostre nivell amb l'original són: el boss final està per defecte destruït i dóna accés al següent nivell, la Spread Gun es pot obtenir agafant un objecte situat en un punt del mapa i la mecànica addicional que hem dissenyat. Aquesta mecànica l’hem anomenat Rage Mode i consisteix en què quan al jugador només li queda una vida, entra en un mode de joc en el que dispara i es mou el doble de ràpid. A més també li permet aguantar l’impacte d’una bala més però això provoca que el mode es desactiviï i el personatge torni al seu estat original.
+
+
+En arribar al final del primer nivell es passa directament al següent, on un comptador es mostra per pantalla indicant el nombre de soldats verds que s’han de matar per tal que la barrera laser desaparegui i permeti avançar al jugador. El personatge torna a tenir 3 vides al començar el nivell independentment del que hagi passat en l’anterior. A diferència del nivell original, en el nostre nivell només és necessari matar soldats per avançar, no és necessari disparar bales a la pared per trencar-la.
+Hem volgut donar un efecte de profunditat a les bales, limitant la distància que recorren segons on han sigut disparades, així com també impedir que el player pogués sortir del mapa pels costats.
+
+
+Finalment s’arriba a la Boss Fight, la qual té 2 fases. En la primera l’enemic tindrà 4 nuclis que generaran boles elèctriques en els seus braços i el jugador haurà de destruir-los disparant. Un cop destruits apareixerà un 5é nucli a la boca de l’enemic que dispararà de forma diferent als anteriors i que si es destrueix el jugador completa el nivell. Un cop el jugador hagi guanyat al Boss, li apareixerà una finestra indicant-li que s’ha passat tot el joc i donant-li l’oportunitat de tornar al menú principal en cas que desitgi  tornar a jugar.
+
+
+
+
++ Instruccions
+- Fletxa Dreta -> Córrer cap a la dreta
+- Fletxa Esquerre -> Córrer cap a l'esquerra
+- Fletxa Dalt -> Apuntar amunt
+- Fletxa Baix -> Estirar-se a terra
+- Fletxa Baix + Fletxa Dreta/Esquerra -> Apuntar avall corrent dreta/esquerra
+- Fletxa Dalt + Fletxa Dreta/Esquerra -> Apuntar amunt corrent dreta/esquerra
+- Espai -> Saltar
+- Z -> Disparar
