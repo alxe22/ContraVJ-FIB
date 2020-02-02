@@ -16,7 +16,11 @@
 
 ## What we have learned:
 
-
+* Although we had some experience with C++, doing this project has helped us gaining more experience with the lenguage
+* OpenGL API in depth
+* Sprites and Photoshop
+* Software design and patterns
+* Teamwork and organization
 
 ## License and some considerations:
 
