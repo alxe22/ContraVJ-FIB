@@ -22,6 +22,14 @@
 * Software design and patterns
 * Teamwork and organization
 
+## Gifs!
+
+![gif](Contra/media/level01.gif)
+![gif](Contra/media/superpower.gif)
+![gif](Contra/media/level02.gif)
+![gif](Contra/media/boss.gif)
+
+
 ## License and some considerations:
 
 Feel free to read, use or modify all or part of our work. Some credit would be apreciated :blush:.
