@@ -2,30 +2,32 @@
 
 ISoundEngine *SoundEngine = createIrrKlangDevice();
 
-SoundSystem *SoundSystem::createSoundSystem(const string &levelFile)
-{
-	SoundSystem *sy = new SoundSystem(levelFile);
-
-	return sy;
-}
-
-SoundSystem::SoundSystem(const string& level)
-{
-	playMusic(level);
-}
-
-
-SoundSystem::~SoundSystem()
-{
-}
-
-void SoundSystem::playMusic(const string &level) {
-	if (STATE == "PLAYING") {
+void SoundSystem::playMusic(const string &level, const string &gameState) {
+	if (gameState == "MENU") {
+		SoundEngine->stopAllSounds();
+		SoundEngine->play2D("audio/menu-music.mp3", GL_FALSE);
 	}
-	STATE = "PLAYING";
-	if(level == "level01")
-		SoundEngine->play2D("audio/level01-music.mp3", GL_TRUE);
-	else if(level == "level02")
-		SoundEngine->play2D("audio/level01-music.mp3", GL_TRUE);
+	if (gameState == "PLAYING") {
+		if (level == "level01") {
+			SoundEngine->stopAllSounds();
+			SoundEngine->play2D("audio/level01-music.mp3", GL_TRUE);
+		}
+		else if (level == "level02") {
+			SoundEngine->stopAllSounds();
+			SoundEngine->play2D("audio/level01-music.mp3", GL_TRUE);
+		}
+	}
+}
 
+void SoundSystem::playSoundEffect(const string &level, const string &effect, const string &triggerer) 
+{
+	if (level == "level01") {
+		if (effect == "SHOOT") {
+			if (triggerer == "CHARACTER") SoundEngine->play2D("audio/level01-shoot.mp3", GL_FALSE);
+			else if (triggerer == "SNIPER") SoundEngine->play2D("audio/level01-sniper-shoot.mp3", GL_FALSE);
+			else if (triggerer == "TURRET") SoundEngine->play2D("audio/level01-turret-shoot.mp3", GL_FALSE);
+			else if (triggerer == "SUPER_TURRET") SoundEngine->play2D("audio/level01-turret-shoot.mp3", GL_FALSE);
+
+		}
+	}
 }

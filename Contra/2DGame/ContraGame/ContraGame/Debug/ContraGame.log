@@ -1,6 +1,89 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (02-Bubble.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Turret.cpp
+  Time.cpp
+  TileMap.cpp
+  Texture.cpp
+  SuperTurret.cpp
+  Sprite.cpp
+  SpreadGun.cpp
+  SoundSystem.cpp
+  Soldier.cpp
+  Sniper.cpp
+  ShaderProgram.cpp
+  Shader.cpp
   Scene.cpp
-c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\scene.cpp(55): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\scene.cpp(553): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Player.cpp
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(75): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(90): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(100): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(153): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(156): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(159): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(162): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(171): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(174): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(248): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(437): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(452): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(467): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(493): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(503): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(519): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(534): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(549): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(575): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(585): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(649): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(650): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(703): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(719): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(746): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(756): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(773): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(789): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(816): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\player.cpp(826): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  main.cpp
+  IconLife.cpp
+  GreenSoldier.cpp
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\greensoldier.cpp(98): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\greensoldier.cpp(102): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  Game.cpp
+  EnemyManager.cpp
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\enemymanager.cpp(222): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\enemymanager.cpp(237): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\enemymanager.cpp(250): warning C4018: '<': signed/unsigned mismatch
+  Enemy.cpp
+  Generating Code...
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\enemymanager.cpp(276): warning C4700: uninitialized local variable 'dp' used
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\greensoldier.cpp(133): warning C4715: 'GreenSoldier::getSize': not all control paths return a value
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\greensoldier.cpp(156): warning C4715: 'GreenSoldier::getTopLeftPos': not all control paths return a value
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\soldier.cpp(101): warning C4715: 'Soldier::getSize': not all control paths return a value
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\soldier.cpp(107): warning C4715: 'Soldier::getTopLeftPos': not all control paths return a value
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\tilemap.cpp(197): warning C4715: 'TileMap::isTerrainAhead': not all control paths return a value
+  Compiling...
+  BulletManager.cpp
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(14): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(26): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(63): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(68): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(69): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(71): warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\bulletmanager.cpp(76): warning C4018: '<': signed/unsigned mismatch
+  Bullet.cpp
+  BossBullet.cpp
+  BossArm.cpp
+  Boss.cpp
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\boss.cpp(101): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\boss.cpp(120): warning C4018: '<': signed/unsigned mismatch
+c:\users\avall\desktop\contravj-fib\contra\2dgame\contragame\contragame\boss.cpp(145): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
 SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'C:\Users\avall\Desktop\ContraVJ-FIB\Contra\2DGame\ContraGame\Debug\vc100.pdb'; linking object as if no debug info
 SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'C:\Users\avall\Desktop\ContraVJ-FIB\Contra\2DGame\ContraGame\Debug\vc100.pdb'; linking object as if no debug info
 SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'C:\Users\avall\Desktop\ContraVJ-FIB\Contra\2DGame\ContraGame\Debug\vc100.pdb'; linking object as if no debug info
