@@ -32,4 +32,4 @@
 
 ## License and some considerations:
 
-Feel free to read, use or modify all or part of our work. Some credit would be apreciated :blush:.
+Feel free to read, use or modify all or part of our work. Some credit would be apreciated :blush:
